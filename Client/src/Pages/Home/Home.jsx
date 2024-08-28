@@ -4,11 +4,17 @@ import { FaFacebook } from "react-icons/fa";
 import { IoLogoLinkedin } from "react-icons/io";
 import { FaYoutube } from "react-icons/fa";
 import { IoArrowForward } from "react-icons/io5";
+
+// gsap animation
+import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export const Home = ({ timeline }) => {
+export const Home = () => {
+  // gsap animainon
+  let timelineAnimation = new gsap.timeline();
+
   useGSAP(() => {
-    timeline.from("#animation", {
+    timelineAnimation.from("#animation", {
       y: 100,
       opacity: 0,
       duration: 1,
@@ -17,6 +23,7 @@ export const Home = ({ timeline }) => {
       },
     });
   });
+
   return (
     <section id={styles.homePage}>
       <div id="wrap" className={styles.homeSection}>

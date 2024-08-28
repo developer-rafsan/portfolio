@@ -5,6 +5,10 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { Loading } from "../../Components/Loading/Loading";
 import { getYoutubeApi } from "../../Services/allAPI";
 
+// gsap animation
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
 export const Youtube = () => {
   const [videoData, setVideoData] = useState([]);
   const [videoShow, setvideoShow] = useState(false);
@@ -25,6 +29,20 @@ export const Youtube = () => {
     fetchYoutubeData();
   }, []);
 
+  // gsap animainon
+  let timelineAnimation = new gsap.timeline();
+
+  useGSAP(() => {
+    timelineAnimation.from("#animation", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: {
+        amount: 1,
+      },
+    });
+  }, [isloading]);
+
   return (
     <section id={styles.youtube}>
       <h2>youtube video</h2>
@@ -34,7 +52,7 @@ export const Youtube = () => {
           <Loading />
         ) : (
           videoData?.map((item, index) => (
-            <div key={index} className={styles.item}>
+            <div id="animation" key={index} className={styles.item}>
               <img
                 src={item.snippet.thumbnails.standard.url}
                 alt="video image"

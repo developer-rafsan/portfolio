@@ -6,6 +6,10 @@ import { Loading } from "../../Components/Loading/Loading";
 import { getCategoryApi, getProjectApi } from "../../Services/allAPI";
 import { Pagenation } from "../../Components/Pagenation/Pagenation";
 
+// gsap animation
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
 export const Project = () => {
   const [stor, setStor] = useState();
   const [page, setPage] = useState(1);
@@ -40,6 +44,20 @@ export const Project = () => {
     background: "var(--primaryColor)",
     color: "var(--primaryBackground)",
   };
+
+  // gsap animainon
+  let timelineAnimation = new gsap.timeline();
+
+  useGSAP(() => {
+    timelineAnimation.from("#animation", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: {
+        amount: 1,
+      },
+    });
+  }, [loading]);
 
   return (
     <section id={styles.projectSection}>
@@ -90,6 +108,7 @@ export const Project = () => {
                 to={`/project/single-page/${_id}`}
                 key={_id}
                 className={styles.card}
+                id="animation"
               >
                 <img
                   src={thumbnail ? thumbnail[0].url : image[0].url}

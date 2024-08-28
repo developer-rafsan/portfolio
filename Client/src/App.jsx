@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useGSAP } from "@gsap/react";
 
 import { Header } from "./Components/Header/Header";
 import { Home } from "./Pages/Home/Home";
@@ -19,6 +18,7 @@ import { darkModeTheme } from "./THEME/dark.mode";
 
 // gsap animation
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 function App() {
   // preloader option start
@@ -36,9 +36,6 @@ function App() {
   const [themeActive, setThemeActive] = useState(
     localStorage.getItem("THEME") || "DARK"
   );
-
-  // gsap animainon
-  let tl = new gsap.timeline();
 
   useEffect(() => {
     // theme call
@@ -59,17 +56,13 @@ function App() {
       <BrowserRouter>
         {/*  custom cursor */}
         <div id="customCursor"></div>
-        <Header
-          timeline={tl}
-          themeActive={themeActive}
-          setThemeActive={setThemeActive}
-        />
+        <Header themeActive={themeActive} setThemeActive={setThemeActive} />
         <Routes>
           <Route
             path="/"
             element={
               <>
-                <Home timeline={tl} />
+                <Home />
                 <About />
                 <Portfolio />
                 <Experience />

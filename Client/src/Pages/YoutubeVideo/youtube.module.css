@@ -12,6 +12,7 @@ section#youtube h2 {
   -webkit-background-clip: text;
   color: transparent;
   margin: 0px auto;
+  margin-top: 50px;
 }
 
 .videoDisplay {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import { GoMoon } from "react-icons/go";
@@ -6,11 +6,15 @@ import { GoSun } from "react-icons/go";
 import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 
+// theme lite mode and dark mode
 import { darkModeTheme } from "../../THEME/dark.mode.js";
 import { liteModeTheme } from "../../THEME/lite.mode.js";
+
+// gsap animation
+import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export const Header = ({ themeActive, setThemeActive, timeline }) => {
+export const Header = ({ themeActive, setThemeActive }) => {
   // theme change function
   const themeChange = () => {
     if (themeActive === "DARK") {
@@ -26,14 +30,18 @@ export const Header = ({ themeActive, setThemeActive, timeline }) => {
     }
   };
 
+  // lite mode and dark mode icons animation
   const themeStyleIcons = {
     transform: "rotate(0deg)",
   };
 
   const [activeNav, setActiveNav] = useState(screen.width < 900 ? false : true);
 
+  // gsap animainon
+  let timelineAnimation = new gsap.timeline();
+
   useGSAP(() => {
-    timeline.from("#headerAnimation", {
+    timelineAnimation.from(["#headerAnimation", "#headerMeneIcons"], {
       y: 100,
       opacity: 0,
       duration: 1,
@@ -42,6 +50,19 @@ export const Header = ({ themeActive, setThemeActive, timeline }) => {
       },
     });
   });
+
+  // only for phone version
+  const menuClose = () => {
+    if (screen.width < 900) {
+      window.addEventListener("click", (e) => {
+        if (e.target.id !== "headerMeneIcons") setActiveNav(false);
+      });
+    }
+  };
+
+  useEffect(() => {
+    menuClose();
+  }, []);
 
   return (
     <header>
@@ -72,7 +93,7 @@ export const Header = ({ themeActive, setThemeActive, timeline }) => {
 
         {/* menu icons */}
         <HiMenu
-          id="headerAnimation"
+          id="headerMeneIcons"
           onClick={() => setActiveNav(true)}
           className={styles.menuIcons}
         />
