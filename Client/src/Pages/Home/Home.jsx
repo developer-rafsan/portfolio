@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./home.module.css";
 import { FaFacebook } from "react-icons/fa";
 import { IoLogoLinkedin } from "react-icons/io";
@@ -8,24 +8,31 @@ import { IoArrowForward } from "react-icons/io5";
 // gsap animation
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(useGSAP);
 
 export const Home = () => {
   // gsap animainon
   let timelineAnimation = new gsap.timeline();
 
-  useGSAP(() => {
-    timelineAnimation.from("#animation", {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      stagger: {
-        amount: 1,
-      },
-    });
-  });
+  // useref
+  const homeRaf = useRef();
+
+  useGSAP(
+    () => {
+      timelineAnimation.from("#animation", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: {
+          amount: 1,
+        },
+      });
+    },
+    { scope: homeRaf }
+  );
 
   return (
-    <section id={styles.homePage}>
+    <section ref={homeRaf} id={styles.homePage}>
       <div id="wrap" className={styles.homeSection}>
         <div className={styles.content}>
           <h4 id="animation">mern stack web application</h4>

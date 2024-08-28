@@ -4,7 +4,7 @@ import { SKILL_DATA } from "./Skill.Data.jsx";
 
 export const About = () => {
   return (
-    <section id={styles.about}>
+    <section id="about" className={styles.about}>
       <div
         style={{
           "--height": "100px",
@@ -13,7 +13,7 @@ export const About = () => {
         }}
         className={styles.skillPage}
       >
-        <h2>my skills</h2>
+        <h2 id="anima">my skills</h2>
         <div className={styles.skilAnimation}>
           {SKILL_DATA?.map((item) => (
             <div

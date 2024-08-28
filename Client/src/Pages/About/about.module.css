@@ -1,4 +1,4 @@
-section#about {
+section.about {
   overflow: hidden;
   min-height: fit-content;
   width: 100%;

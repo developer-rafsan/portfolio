@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import { GoMoon } from "react-icons/go";
@@ -13,6 +13,7 @@ import { liteModeTheme } from "../../THEME/lite.mode.js";
 // gsap animation
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(useGSAP);
 
 export const Header = ({ themeActive, setThemeActive }) => {
   // theme change function
@@ -30,6 +31,9 @@ export const Header = ({ themeActive, setThemeActive }) => {
     }
   };
 
+  // useRef
+  const headerRef = useRef();
+
   // lite mode and dark mode icons animation
   const themeStyleIcons = {
     transform: "rotate(0deg)",
@@ -40,16 +44,19 @@ export const Header = ({ themeActive, setThemeActive }) => {
   // gsap animainon
   let timelineAnimation = new gsap.timeline();
 
-  useGSAP(() => {
-    timelineAnimation.from(["#headerAnimation", "#headerMeneIcons"], {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      stagger: {
-        amount: 1,
-      },
-    });
-  });
+  useGSAP(
+    () => {
+      timelineAnimation.from(["#headerAnimation", "#headerMeneIcons"], {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: {
+          amount: 1,
+        },
+      });
+    },
+    { scope: headerRef }
+  );
 
   // only for phone version
   const menuClose = () => {
@@ -65,7 +72,7 @@ export const Header = ({ themeActive, setThemeActive }) => {
   }, []);
 
   return (
-    <header>
+    <header ref={headerRef}>
       <div className={styles.headerContent} id="wrap">
         {/* logo */}
         <div id="headerAnimation" className={styles.logo}>

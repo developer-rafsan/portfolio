@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./youtube.module.css";
 import { FaCirclePlay } from "react-icons/fa6";
 import { IoMdCloseCircle } from "react-icons/io";
 import { Loading } from "../../Components/Loading/Loading";
 import { getYoutubeApi } from "../../Services/allAPI";
-
-// gsap animation
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 
 export const Youtube = () => {
   const [videoData, setVideoData] = useState([]);
@@ -29,20 +25,6 @@ export const Youtube = () => {
     fetchYoutubeData();
   }, []);
 
-  // gsap animainon
-  let timelineAnimation = new gsap.timeline();
-
-  useGSAP(() => {
-    timelineAnimation.from("#animation", {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      stagger: {
-        amount: 1,
-      },
-    });
-  }, [isloading]);
-
   return (
     <section id={styles.youtube}>
       <h2>youtube video</h2>
@@ -52,7 +34,7 @@ export const Youtube = () => {
           <Loading />
         ) : (
           videoData?.map((item, index) => (
-            <div id="animation" key={index} className={styles.item}>
+            <div key={index} className={styles.item}>
               <img
                 src={item.snippet.thumbnails.standard.url}
                 alt="video image"
