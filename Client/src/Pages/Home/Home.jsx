@@ -1,0 +1,58 @@
+import React from "react";
+import styles from "./home.module.css";
+import { FaFacebook } from "react-icons/fa";
+import { IoLogoLinkedin } from "react-icons/io";
+import { FaYoutube } from "react-icons/fa";
+import { IoArrowForward } from "react-icons/io5";
+import { useGSAP } from "@gsap/react";
+
+export const Home = ({ timeline }) => {
+  useGSAP(() => {
+    timeline.from("#animation", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: {
+        amount: 1,
+      },
+    });
+  });
+  return (
+    <section id={styles.homePage}>
+      <div id="wrap" className={styles.homeSection}>
+        <div className={styles.content}>
+          <h4 id="animation">mern stack web application</h4>
+          <h1 id="animation">develop</h1>
+        </div>
+        <div className={styles.buttonSection}>
+          <h6 id="animation"> &copy; MERN Stack Animation Website || 2024</h6>
+
+          <button id="animation">
+            watch our video <IoArrowForward />
+          </button>
+
+          <div id="animation" className={styles.iconsGroup}>
+            <a
+              target="_Blank"
+              href="https://www.linkedin.com/in/jahid-islam-rafsan-72515a30a/"
+            >
+              <IoLogoLinkedin />
+            </a>
+            <a
+              target="_Blank"
+              href="https://www.facebook.com/developer.rafsan/"
+            >
+              <FaFacebook />
+            </a>
+            <a
+              target="_Blank"
+              href="https://www.linkedin.com/in/jahid-islam-rafsan-72515a30a/"
+            >
+              <FaYoutube />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/assets/favicons.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jahid Islam Rafsan - Portfolio</title>
+
+    <style>
+      /* preloading style start */
+      #preloading {
+        height: 100vh;
+        width: 100%;
+        background: var(--preloader);
+        position: fixed;
+        top: 0%;
+        left: 0%;
+        z-index: 9999999999999999;
+        display: grid;
+        place-content: center;
+        overflow: hidden;
+      }
+
+      #preloading h4 {
+        text-align: center;
+      }
+      /* preloading style end */
+    </style>
+  </head>
+  <body>
+    <!-- preloading option start -->
+    <div id="preloading">
+      <h4>Welcome</h4>
+      <h4>MERN Stack</h4>
+      <h4>World</h4>
+    </div>
+    <!-- preloading option end -->
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

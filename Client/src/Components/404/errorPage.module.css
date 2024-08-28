@@ -1,0 +1,50 @@
+.ErrorPage {
+    min-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ErrorPage img {
+    max-width: 500px;
+}
+
+.ErrorPage button {
+    height: 40px;
+    width: 200px;
+    background: var(--secondaryColor);
+    font-family: var(--secondaryFont);
+    font-weight: 600;
+    text-transform: capitalize;
+    cursor: pointer;
+    border-radius: 10px;
+    color: var(--primaryBackground);
+}
+
+/* 
+responsive size
+1360
+1260
+1060
+900
+500
+450
+375
+345
+*/
+
+/* responsive section */
+@media screen and (max-width: 900px) {
+    .ErrorPage img {
+        max-width: 400px;
+    }
+}
+
+/* responsive section */
+@media screen and (max-width: 500px) {
+    .ErrorPage img {
+        max-width: 300px;
+    }
+}

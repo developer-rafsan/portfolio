@@ -1,0 +1,205 @@
+/* font style incloud */
+@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+/* universel style */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+/* scrollbar display none */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+/* DAHK THEME STYLE */
+[DATA-THEME="DARK"] {
+  /* Default style for dark theme */
+  background: url("/public/assets/background.svg") no-repeat;
+  background-size: cover;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+
+  /* bankground colod */
+  --primaryBackground: #31333b;
+  --secondaryBackground: #292a31;
+
+  /* Text Color */
+  --primaryColor: #dcfb50;
+  --secondaryColor: #5336ff;
+  --gradianColor: linear-gradient(to left, #5336ff, #c51ecc, #fb2a74, #fb7b50);
+
+  /* border color */
+  --borderColor: #4d5263;
+
+  /* font style */
+  --primaryFont: "Open Sans", sans-serif;
+  --secondaryFont: "Lilita One", sans-serif;
+
+  /* project section color */
+  --PBC: #dcfb50;
+
+  /* icons color */
+  --ICC: #ffffff;
+
+  /* preloader color */
+  --preloader: #292a31;
+
+  /* single page discription color */
+  --discripttionColor: #ffffff;
+}
+
+/* DAHK THEME STYLE */
+[DATA-THEME="LITE"] {
+  /* Default style for dark theme */
+  background: #fafafa;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+
+  /* bankground colod */
+  --primaryBackground: #fafafa;
+  --secondaryBackground: #605db8;
+
+  /* Text Color */
+  --primaryColor: #d3eb67;
+  --secondaryColor: #605db8;
+  --gradianColor: linear-gradient(to left, #b1afff, #d3eb67);
+
+  /* border color */
+  --borderColor: #ebebeb;
+
+  /* font style */
+  --primaryFont: "Open Sans", sans-serif;
+  --secondaryFont: "Lilita One", sans-serif;
+
+  /* project section color */
+  --PBC: #ffffff;
+
+  /* icons color */
+  --ICC: #605db8;
+
+  /* preloader color */
+  --preloader: #605db8;
+
+  /* single page discription color */
+  --discripttionColor: #000000;
+}
+
+#wrap {
+  max-width: 90%;
+  margin: auto;
+}
+
+ul > li,
+a {
+  list-style: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+#customCursor {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+h1 {
+  font-size: 15rem;
+}
+
+h2 {
+  font-size: 5rem;
+}
+
+h3 {
+  font-size: 2.5rem;
+}
+
+h4 {
+  font-size: 2rem;
+}
+
+h5 {
+  font-size: 1.5rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  font-size: 0.8rem;
+}
+
+/* 
+responsive size
+1360
+1260
+1060
+900
+500
+450
+375
+345
+*/
+
+/* responsive section */
+@media screen and (max-width: 1360px) {
+  html {
+    font-size: 55.5%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 1260px) {
+  html {
+    font-size: 50.5%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 1060px) {
+  html {
+    font-size: 45.5%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 900px) {
+  #wrap {
+    max-width: 95%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 450px) {
+  html {
+    font-size: 45.5%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 375px) {
+  html {
+    font-size: 40.5%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 345px) {
+  html {
+    font-size: 35.5%;
+  }
+}

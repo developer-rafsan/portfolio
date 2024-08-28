@@ -1,0 +1,132 @@
+footer {
+  min-height: 400px;
+  width: 100%;
+  border-top: 5px solid var(--primaryColor);
+  border-bottom: 5px solid var(--primaryColor);
+  position: relative;
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer .iconsGroup {
+  background: #000000;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 200px;
+  padding: 10px 0px;
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+footer .iconsGroup svg {
+  cursor: pointer;
+  color: var(--ICC);
+}
+
+footer h2 {
+  padding: 10px 20px;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: fit-content;
+  font-family: var(--secondaryFont);
+  text-transform: capitalize;
+  background: var(--gradianColor);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-wrap: nowrap;
+}
+
+footer .contact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+footer .contact a {
+  font-size: 2rem;
+  padding: 10px 20px;
+  text-align: center;
+  background: var(--secondaryBackground);
+  cursor: pointer;
+}
+
+footer .contact a:nth-child(3) {
+  grid-column: 1 / -1;
+  background-color: var(--primaryColor);
+  color: #000000;
+}
+
+.welcome {
+  font-size: 4rem;
+  color: var(--primaryColor);
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 150px;
+  font-family: var(--secondaryFont);
+  text-transform: capitalize;
+  cursor: default;
+  user-select: none;
+}
+
+/* 
+responsive size
+1360
+1260
+1060
+900
+500
+450
+375
+345
+*/
+
+/* responsive section */
+@media screen and (max-width: 900px) {
+  footer .contact {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  footer .contact a {
+    width: 500px;
+  }
+
+  footer .contact a:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 500px) {
+  footer .contact a {
+    width: 300px;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 450px) {
+  footer h1 {
+    font-size: 3rem;
+    top: -30px;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 375px) {
+  footer h1 {
+    font-size: 3rem;
+    top: -30px;
+  }
+
+  footer .contact a {
+    width: 250px;
+  }
+}

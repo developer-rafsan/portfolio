@@ -1,0 +1,171 @@
+section#youtube {
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 60px;
+}
+
+section#youtube h2 {
+  width: fit-content;
+  font-family: var(--secondaryFont);
+  text-transform: capitalize;
+  background: var(--gradianColor);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin: 0px auto;
+}
+
+.videoDisplay {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  place-items: center;
+  position: relative;
+  top: 50px;
+  padding-bottom: 120px;
+}
+
+.videoDisplay .item {
+  width: 300px;
+  height: 200px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.videoDisplay .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hoverEffect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  transition: width 0.5s;
+}
+
+.hoverEffect svg {
+  font-size: 5rem;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.videoDisplay .item:hover svg {
+  opacity: 1;
+}
+
+.videoPlayer {
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+  backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+}
+
+.videoPlayer .videoBox {
+  width: 70%;
+  height: 80%;
+  background: var(--secondaryBackground);
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.videoPlayer .videoBox button {
+  font-size: 4rem;
+  position: relative;
+  top: 10px;
+  left: 92%;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--secondaryColor);
+}
+
+.videoPlayer .videoBox iframe {
+  width: 100%;
+  height: 90%;
+}
+
+/* 
+responsive size
+1360
+1260
+1060
+900
+500
+450
+375
+345
+*/
+
+/* responsive section */
+@media screen and (max-width: 1360px) {
+  .videoDisplay {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .videoDisplay .item {
+    width: 300px;
+    height: 200px;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 1060px) {
+  .videoDisplay {
+    gap: 30px;
+  }
+  .videoDisplay .item {
+    width: 250px;
+    height: 180px;
+  }
+  .videoPlayer .videoBox {
+    width: 90%;
+    height: 70%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 900px) {
+  section#youtube {
+    padding-top: 20px;
+  }
+
+  .videoDisplay {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .videoPlayer .videoBox {
+    width: 95%;
+    height: 60%;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 500px) {
+  .videoDisplay {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .videoDisplay .item {
+    width: 300px;
+    height: 200px;
+  }
+
+  .videoPlayer .videoBox {
+    height: 40%;
+  }
+}
