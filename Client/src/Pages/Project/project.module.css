@@ -11,7 +11,7 @@ section#projectSection {
   justify-content: space-between;
   align-items: center;
   margin-top: 100px;
-  background: var(--borderColor);
+  background: var(--primaryBackground);
 }
 
 .filter ul {
@@ -49,9 +49,10 @@ section#projectSection {
   grid-template-columns: repeat(5, 1fr);
   place-items: center;
   gap: 20px;
-  padding: 0px 0px;
+  padding: 0px 20px;
   border-radius: 0px 0px 20px 20px;
   min-height: 300px;
+  margin-top: 20px;
 }
 
 .card {
