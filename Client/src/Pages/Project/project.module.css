@@ -5,12 +5,13 @@ section#projectSection {
 .filter {
   width: 100%;
   padding: 20px 20px;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px;
   z-index: 5;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 100px;
+  background: var(--borderColor);
 }
 
 .filter ul {
@@ -48,7 +49,7 @@ section#projectSection {
   grid-template-columns: repeat(5, 1fr);
   place-items: center;
   gap: 20px;
-  padding: 20px 20px 20px 20px;
+  padding: 0px 0px;
   border-radius: 0px 0px 20px 20px;
   min-height: 300px;
 }
@@ -132,10 +133,6 @@ responsive size
 
 /* responsive section */
 @media screen and (max-width: 900px) {
-  section#projectSection {
-    padding-top: 20px;
-  }
-
   .projectDisplay {
     grid-template-columns: repeat(2, 1fr);
   }
