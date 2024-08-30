@@ -1,19 +1,16 @@
 section#projectSection {
   min-height: 100vh;
-  padding-top: 20px;
 }
 
 .filter {
-  background: var(--secondaryBackground);
   width: 100%;
   padding: 20px 20px;
   border-radius: 10px 10px 0px 0px;
-  position: sticky;
-  top: 100px;
   z-index: 5;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 100px;
 }
 
 .filter ul {
@@ -51,12 +48,9 @@ section#projectSection {
   grid-template-columns: repeat(5, 1fr);
   place-items: center;
   gap: 20px;
-  background: var(--secondaryBackground);
   padding: 20px 20px 20px 20px;
   border-radius: 0px 0px 20px 20px;
   min-height: 300px;
-  padding-top: 100px;
-  overflow: hidden;
 }
 
 .card {

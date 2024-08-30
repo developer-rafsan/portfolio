@@ -10,12 +10,8 @@ import { IoClose } from "react-icons/io5";
 import { darkModeTheme } from "../../THEME/dark.mode.js";
 import { liteModeTheme } from "../../THEME/lite.mode.js";
 
-// gsap animation
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-gsap.registerPlugin(useGSAP);
-
 export const Header = ({ themeActive, setThemeActive }) => {
+  const [headerActive, setheaderActive] = useState(false);
   // theme change function
   const themeChange = () => {
     if (themeActive === "DARK") {
@@ -31,9 +27,6 @@ export const Header = ({ themeActive, setThemeActive }) => {
     }
   };
 
-  // useRef
-  const headerRef = useRef();
-
   // lite mode and dark mode icons animation
   const themeStyleIcons = {
     transform: "rotate(0deg)",
@@ -41,38 +34,28 @@ export const Header = ({ themeActive, setThemeActive }) => {
 
   const [activeNav, setActiveNav] = useState(screen.width < 900 ? false : true);
 
-  // gsap animainon
-  let timelineAnimation = new gsap.timeline();
-
-  useGSAP(
-    () => {
-      timelineAnimation.from(["#headerAnimation", "#headerMeneIcons"], {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        stagger: {
-          amount: 1,
-        },
-      });
-    },
-    { scope: headerRef }
-  );
-
-  // only for phone version
-  const menuClose = () => {
-    if (screen.width < 900) {
-      window.addEventListener("click", (e) => {
-        if (e.target.id !== "headerMeneIcons") setActiveNav(false);
-      });
-    }
-  };
-
   useEffect(() => {
-    menuClose();
+    const navHiddenEffect = window.addEventListener("click", (e) => {
+      if (screen.width < 900 && e.target.id !== "headerMeneIcons")
+        return setActiveNav(false);
+    });
+
+    const scrollEffect = window.addEventListener("scroll", () => {
+      setheaderActive(true);
+
+      setTimeout(() => {
+        setheaderActive(false);
+      }, 2000);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", scrollEffect);
+      window.removeEventListener("click", navHiddenEffect);
+    };
   }, []);
 
   return (
-    <header ref={headerRef}>
+    <header className={headerActive ? styles.hidden : ""}>
       <div className={styles.headerContent} id="wrap">
         {/* logo */}
         <div id="headerAnimation" className={styles.logo}>
@@ -105,7 +88,7 @@ export const Header = ({ themeActive, setThemeActive }) => {
           className={styles.menuIcons}
         />
 
-        {/* button */}
+        {/* button lite mood and dark mood */}
         <button
           id="headerAnimation"
           onClick={themeChange}

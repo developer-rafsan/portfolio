@@ -59,7 +59,7 @@ section#homePage {
   font-size: 1.2rem;
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
 }
 
 .homeSection .buttonSection button {
@@ -70,6 +70,12 @@ section#homePage {
   border: 2px solid #ffffff;
   color: #ffffff;
   text-transform: uppercase;
+  overflow: hidden;
+}
+
+.homeSection .buttonSection button a {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

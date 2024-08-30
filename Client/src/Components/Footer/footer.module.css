@@ -4,7 +4,6 @@ footer {
   border-top: 5px solid var(--primaryColor);
   border-bottom: 5px solid var(--primaryColor);
   position: relative;
-  margin-top: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -69,8 +68,8 @@ footer .contact a:nth-child(3) {
   font-size: 4rem;
   color: var(--primaryColor);
   text-align: center;
-  margin-top: 100px;
-  margin-bottom: 150px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   font-family: var(--secondaryFont);
   text-transform: capitalize;
   cursor: default;

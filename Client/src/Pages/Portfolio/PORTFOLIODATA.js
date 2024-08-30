@@ -25,8 +25,8 @@ export const PORTFOLIODATA = [
   },
   {
     id: 5,
-    imaURL: "/portfolio/portfolio1.jpg",
-    titel: "Email Template",
+    imaURL: "/portfolio/mern_project.png",
+    titel: "mern project",
     type: "image",
   },
   {

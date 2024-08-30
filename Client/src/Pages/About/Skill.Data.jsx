@@ -70,6 +70,6 @@ export const SKILL_DATA = [
   {
     id: 11,
     svg: <MotionSvg />,
-    text: "Framer Motion",
+    text: "Site Animation",
   },
 ];

@@ -21,7 +21,7 @@ html {
 /* DAHK THEME STYLE */
 [DATA-THEME="DARK"] {
   /* Default style for dark theme */
-  background: url("/public/assets/background.svg") no-repeat;
+  background: url("/assets/background.svg") no-repeat;
   background-size: cover;
   color: #ffffff;
   font-family: "Open Sans", sans-serif;

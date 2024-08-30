@@ -8,6 +8,7 @@ import { IoArrowForward } from "react-icons/io5";
 // gsap animation
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { Link } from "react-router-dom";
 gsap.registerPlugin(useGSAP);
 
 export const Home = () => {
@@ -42,7 +43,9 @@ export const Home = () => {
           <h6 id="animation"> &copy; MERN Stack Animation Website || 2024</h6>
 
           <button id="animation">
-            watch our video <IoArrowForward />
+            <Link id="headerAnimation" to="/youtube-video">
+              watch our video <IoArrowForward />
+            </Link>
           </button>
 
           <div id="animation" className={styles.iconsGroup}>

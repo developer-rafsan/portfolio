@@ -6,6 +6,11 @@ header {
   width: 100%;
   backdrop-filter: blur(10px);
   z-index: 9;
+  transition: 1s;
+}
+
+header.hidden {
+  top: -100%;
 }
 
 header .headerContent {
@@ -99,6 +104,10 @@ header .menuHeader a {
 
 .closeIcons {
   display: none;
+}
+
+.closeIcons path {
+  pointer-events: none;
 }
 
 /* 
