@@ -36,7 +36,7 @@ export const SinglePage = () => {
     const response = await downloadApi(id);        
     const aTag = document.createElement('a')
     aTag.href = response.config.url
-    aTag.setAttribute("download", "rafsan")
+    aTag.setAttribute("download", "source-code")
     document.body.appendChild(aTag)
     aTag.click()
     aTag.remove()
