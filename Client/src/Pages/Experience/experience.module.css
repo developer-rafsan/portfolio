@@ -1,12 +1,12 @@
 section#experience {
   min-height: 700px;
   width: 100%;
-  margin-top: 80px;
+  background: url('/assets/border01.png');
+  padding-top: 100px;
 }
 
 section#experience h2 {
   position: relative;
-  top: -30px;
   width: fit-content;
   font-family: var(--secondaryFont);
   text-transform: capitalize;

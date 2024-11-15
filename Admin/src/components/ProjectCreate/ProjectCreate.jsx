@@ -78,7 +78,7 @@ export const ProjectCreate = () => {
 
     // axios post back-end call
     const response = await projectCreateApi(formData);
-
+    
     setLoading(false);
 
     if (response.status === 200) {

@@ -1,75 +1,56 @@
-import BootStrapSvg from "../../Components/SVG/BootstrapSvg.jsx";
-import CssSvg from "../../Components/SVG/CssSvg.jsx";
-import ExpressSvg from "../../Components/SVG/ExpressSvg.jsx";
-import GitSvg from "../../Components/SVG/GitSvg.jsx";
-import HtmlSvg from "../../Components/SVG/HtmlSvg.jsx";
-import JsSvg from "../../Components/SVG/JsSvg.jsx";
-import MongodbSvg from "../../Components/SVG/MongodbSvg.jsx";
-import MotionSvg from "../../Components/SVG/MotionSvg.jsx";
-import MysqlSvg from "../../Components/SVG/MysqlSvg.jsx";
-import NodeSvg from "../../Components/SVG/NodeSvg.jsx";
-import ReactSvg from "../../Components/SVG/ReactSvg.jsx";
-import TailwindSvg from "../../Components/SVG/TailwindSvg.jsx";
-
 export const SKILL_DATA = [
   {
     id: 0,
-    svg: <HtmlSvg />,
-    text: "HTML",
+    icon: '/icons/wordpress.png',
+    text: "wordpress",
+    persent: 90
   },
   {
     id: 1,
-    svg: <CssSvg />,
-    text: "CSS",
+    icon: '/icons/elementor.png',
+    text: "elementor",
+    persent: 95
   },
   {
     id: 2,
-    svg: <JsSvg />,
-    text: "JavaScript",
+    icon: '/icons/figma.png',
+    text: "figma",
+    persent: 90
   },
   {
     id: 3,
-    svg: <ReactSvg />,
-    text: "React JS",
+    icon: '/icons/html.png',
+    text: "HTML",
+    persent: 100
   },
   {
     id: 4,
-    svg: <NodeSvg />,
-    text: "Node JS",
+    icon: '/icons/js.png',
+    text: "js",
+    persent: 90
   },
   {
     id: 5,
-    svg: <ExpressSvg />,
-    text: "Express JS",
+    icon: '/icons/node.png',
+    text: "node.js",
+    persent: 90
   },
   {
     id: 6,
-    svg: <MongodbSvg />,
-    text: "MongoDB",
+    icon: '/icons/express.png',
+    text: "express.js",
+    persent: 90
   },
   {
     id: 7,
-    svg: <MysqlSvg />,
-    text: "MySQL",
+    icon: '/icons/react.png',
+    text: "react.js",
+    persent: 100
   },
   {
     id: 8,
-    svg: <TailwindSvg />,
-    text: "Tailwind CSS",
-  },
-  {
-    id: 9,
-    svg: <BootStrapSvg />,
-    text: "BootStrap",
-  },
-  {
-    id: 10,
-    svg: <GitSvg />,
-    text: "Git & GitBash",
-  },
-  {
-    id: 11,
-    svg: <MotionSvg />,
-    text: "Site Animation",
+    icon: '/icons/mongodb.png',
+    text: "mongodb",
+    persent: 100
   },
 ];

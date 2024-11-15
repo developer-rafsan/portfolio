@@ -5,7 +5,7 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { GrView } from "react-icons/gr";
 import { FaGithub } from "react-icons/fa6";
 import { FaCloudDownloadAlt } from "react-icons/fa";
-import { getSinglePageApi } from "../../Services/allAPI";
+import { downloadApi, getSinglePageApi } from "../../Services/allAPI";
 
 // import Swiper core and required modules
 import { Pagination, A11y, Autoplay } from "swiper/modules";
@@ -30,6 +30,17 @@ export const SinglePage = () => {
     setPageData(response.data.data);
     setloading(false);
   };
+
+  // download file
+  const downloadFile = async()=> {
+    const response = await downloadApi(id);        
+    const aTag = document.createElement('a')
+    aTag.href = response.config.url
+    aTag.setAttribute("download", "rafsan")
+    document.body.appendChild(aTag)
+    aTag.click()
+    aTag.remove()
+  }
 
   useEffect(() => {
     fatchSinglepageData();
@@ -106,10 +117,8 @@ export const SinglePage = () => {
                     )}
                     {/* file downlode button */}
                     {pageData?.file && (
-                      <button>
-                        <a href={pageData.file[0].public_id} download>
+                      <button onClick={downloadFile}>
                           <FaCloudDownloadAlt />
-                        </a>
                       </button>
                     )}
                   </div>

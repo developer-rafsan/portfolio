@@ -3,9 +3,10 @@ section.about {
   min-height: fit-content;
   width: 100%;
   padding-bottom: 20px;
+  background: url('/assets/border01.png');
 }
 
-.skillPage h2 {
+section.about h2 {
   width: fit-content;
   font-family: var(--secondaryFont);
   text-transform: capitalize;
@@ -16,63 +17,47 @@ section.about {
   margin-top: 50px;
 }
 
-.skilAnimation {
-  min-height: var(--height);
-  width: 100%;
-  min-width: calc(var(--width) * var(--quntity));
-  display: flex;
-  position: relative;
-  margin-top: 50px;
+.skillSection {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  place-items: center;
+  flex-wrap: wrap;
+  gap: 50px;
+  margin-top: 60px;
 }
 
-.skilAnimation .item {
-  height: var(--height);
-  width: var(--width);
-  position: absolute;
-  left: calc(var(--width) * -1);
-  animation: autoSlied 20s infinite linear;
-  animation-delay: calc((20s / var(--quntity)) * (var(--position) - 1));
-  cursor: pointer;
-  background: var(--secondaryBackground);
-  border-radius: 10px;
+.skillSection .item {
+  width: 200px;
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 5px;
-  outline: 8px solid var(--borderColor);
+  background: url('/assets/bg-1.png') no-repeat;
+  background-size: contain;
+  background-position: center;
+  padding: 20px;
 }
 
-.skilAnimation .item svg {
-  fill: var(--primaryBackground);
-  height: 50px;
-  width: 50px;
+.skillSection .item img {
+  width: 50%;
+  margin-top: 10px;
 }
 
-.skilAnimation .item h4 {
-  font-size: 1.2rem;
-  font-family: var(--secondaryFont);
-  color: #ffffff;
+.skillSection .item h3 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-top: 10px;
 }
 
-.skilAnimation .item:hover svg {
-  fill: red;
-  filter: drop-shadow(2px 2px 5px rgb(255, 0, 0));
+.skillSection .item h1 {
+  font-size: 3.5rem;
+  margin-top: 10px;
+  font-weight: 700;
+  text-shadow: 1px 1px 5px #e9dfff6b, -2px -2px 5px #ffffff63;
 }
 
-.skilAnimation img {
-  height: 75px;
-}
-
-@keyframes autoSlied {
-  from {
-    left: calc(var(--width) * -1);
-  }
-
-  to {
-    left: 100%;
-  }
-}
 
 /* 
 responsive size
@@ -88,24 +73,38 @@ responsive size
 
 /* responsive section */
 @media screen and (max-width: 1360px) {
-  .skilAnimation .item {
-    animation: autoSlied 15s infinite linear;
-    animation-delay: calc((20s / var(--quntity)) * (var(--position) - 1));
+  .skillSection {
+    grid-template-columns: repeat(5,1fr);
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 1260px) {
+  .skillSection {
+    grid-template-columns: repeat(4,1fr);
   }
 }
 
 /* responsive section */
 @media screen and (max-width: 900px) {
-  section#about .aboutPage h1 {
-    text-align: center;
+  .skillSection {
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
   }
 
-  .aboutPage #line {
-    display: none;
+  .skillSection .item {
+    width: 150px;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 500px) {
+  .skillSection {
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
   }
 
-  .aboutPage p {
-    width: 90%;
-    margin: auto;
+  .skillSection .item {
+    width: 150px;
   }
 }

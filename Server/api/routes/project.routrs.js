@@ -5,6 +5,7 @@ import { upload } from "../middlewares/multer.middlewares.js";
 import {
   createProject,
   deleteProject,
+  downloadFile,
   projectData,
   singlePageData,
 } from "../controllers/project.contorllers.js";
@@ -27,4 +28,7 @@ projectRoutes.get("/project", projectData);
 projectRoutes.delete("/project/:id", deleteProject);
 
 // get single data
-projectRoutes.get("/project/single-page/:id", singlePageData);
+projectRoutes.get("/project/:id", singlePageData);
+
+// get download file
+projectRoutes.get("/download/:id", downloadFile);

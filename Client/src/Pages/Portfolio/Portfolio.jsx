@@ -20,14 +20,14 @@ export const Portfolio = () => {
             <div key={item.id}>
               <div className={styles.item}>
                 {item.type === "image" && (
-                  <img src={item.imaURL} alt="portfolio image" />
+                  <img src={item?.imaURL} alt="portfolio image" />
                 )}
 
                 {item.type === "video" &&
                   (!isPlay ? <FaRegCirclePlay className={styles.playVideoIcons} /> : <FaRegCirclePause className={styles.pauseVideoIcons} />)}
                 {item.type === "video" && (
                   <video onClick={(e) => playVideo(e)}>
-                    <source src={item.imaURL} type="video/mp4" />
+                    <source src={item?.imaURL} type="video/mp4" />
                   </video>
                 )}
               </div>

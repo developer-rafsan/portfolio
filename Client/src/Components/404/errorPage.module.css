@@ -12,15 +12,18 @@
 }
 
 .ErrorPage button {
-    height: 40px;
-    width: 200px;
-    background: var(--secondaryColor);
-    font-family: var(--secondaryFont);
-    font-weight: 600;
+    background: none;
+    font-weight: 400;
     text-transform: capitalize;
     cursor: pointer;
-    border-radius: 10px;
-    color: var(--primaryBackground);
+    border: none;
+    outline: none;
+    color: var(--ICC);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.5rem;
 }
 
 /* 

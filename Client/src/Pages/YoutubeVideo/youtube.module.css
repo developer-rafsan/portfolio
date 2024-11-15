@@ -2,6 +2,7 @@ section#youtube {
   min-height: 100vh;
   width: 100%;
   padding-top: 60px;
+  background: url('/assets/border01.png');
 }
 
 section#youtube h2 {
@@ -69,36 +70,31 @@ section#youtube h2 {
   background: transparent;
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 99999;
   backdrop-filter: blur(10px);
   display: grid;
   place-items: center;
 }
 
-.videoPlayer .videoBox {
+.videoPlayer iframe {
   width: 70%;
-  height: 80%;
-  background: var(--secondaryBackground);
-  border-radius: 30px;
-  overflow: hidden;
-  position: relative;
+  min-height: 70%;
+  border: 30px;
+  border-radius: 20px;
+  border: 1px solid #FFF;
 }
 
-.videoPlayer .videoBox button {
+.videoPlayer button {
   font-size: 4rem;
-  position: relative;
-  top: 10px;
-  left: 92%;
+  position: absolute;
+  top: 30px;
+  right: 50px;
   cursor: pointer;
   background: transparent;
   border: none;
   outline: none;
-  color: var(--secondaryColor);
-}
-
-.videoPlayer .videoBox iframe {
-  width: 100%;
-  height: 90%;
+  color: var(--ICC);
 }
 
 /* 
@@ -134,7 +130,7 @@ responsive size
     width: 250px;
     height: 180px;
   }
-  .videoPlayer .videoBox {
+  .videoPlayer iframe {
     width: 90%;
     height: 70%;
   }
@@ -150,7 +146,7 @@ responsive size
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .videoPlayer .videoBox {
+  .videoPlayer iframe {
     width: 95%;
     height: 60%;
   }
@@ -166,7 +162,7 @@ responsive size
     height: 200px;
   }
 
-  .videoPlayer .videoBox {
+  .videoPlayer iframe {
     height: 40%;
   }
 }

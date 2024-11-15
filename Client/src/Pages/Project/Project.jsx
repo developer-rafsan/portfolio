@@ -21,7 +21,8 @@ export const Project = () => {
   const fatchProjectData = async () => {
     setLoading(true);
     const response = await getProjectApi(page, filterCategory, sort, search);
-
+    console.log(response);
+    
     setStor(response.data);
     setLoading(false);
   };
@@ -29,6 +30,8 @@ export const Project = () => {
   // fatch category item
   const fatchCategory = async () => {
     const response = await getCategoryApi();
+    console.log(response);
+    
     setCategory(response.data.data);
   };
 
@@ -88,7 +91,7 @@ export const Project = () => {
             // project section display
             stor.data?.map(({ _id, image, thumbnail, title, date }) => (
               <Link
-                to={`/project/single-page/${_id}`}
+                to={`/project/${_id}`}
                 key={_id}
                 className={styles.card}
               >

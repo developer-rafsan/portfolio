@@ -4,6 +4,8 @@ section#portfolio {
   overflow: hidden;
   position: relative;
   padding-bottom: 30px;
+  padding-top: 100px;
+  background: url('/assets/border01.png');
 }
 
 section#portfolio h2 {
@@ -14,7 +16,7 @@ section#portfolio h2 {
   -webkit-background-clip: text;
   color: transparent;
   margin: 0px auto;
-  margin-top: 50px;
+  margin-bottom: 60px;
   cursor: default;
 }
 
@@ -34,7 +36,7 @@ section#portfolio h2 {
   cursor: pointer;
   overflow: hidden;
   outline: 10px solid var(--borderColor);
-  transition: transform 0.5s;
+  transition: transform 0.2s;
   position: relative;
 }
 
@@ -75,6 +77,13 @@ section#portfolio h2 {
   background: transparent;
   border-radius: 30px;
   border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.itemGroup div button:hover {
+  background: #7260607a;
+  border: none;
 }
 
 .itemGroup div button a {
@@ -88,7 +97,7 @@ section#portfolio h2 {
 }
 
 .itemGroup div button a svg {
-  transform: rotate(-30deg);
+  transform: rotate(-45deg);
   font-size: 2rem;
 }
 
@@ -96,15 +105,10 @@ section#portfolio h2 {
   transform: scale(0.95);
 }
 
-.itemGroup .item:hover img {
-  transform: scaleX(1.1);
-}
-
 .itemGroup .item img {
   width: 100%;
   object-fit: cover;
   object-position: top;
-  transition: 0.5s;
 }
 
 .itemGroup .item video {

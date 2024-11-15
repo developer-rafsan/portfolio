@@ -26,3 +26,4 @@ export const Pagenation = ({ limit, total, setPage, page }) => {
     </div>
   );
 };
+ 

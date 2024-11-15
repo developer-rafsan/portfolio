@@ -22,22 +22,9 @@ const createProjectSchema = new mongoose.Schema({
     type: String,
     require: [true, "description must be required"],
   },
-  file: [
-    {
-      public_id: {
-        type: String,
-      },
-      format: {
-        type: String,
-      },
-      secure_url: {
-        type: String,
-      },
-      url: {
-        type: String,
-      },
-    },
-  ],
+  file: {
+    type : Object
+  },
   thumbnail: [
     {
       public_id: {

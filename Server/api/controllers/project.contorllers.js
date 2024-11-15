@@ -2,6 +2,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { cloudinaryFileUplode } from "../utils/cloudinary.js";
 import { createProjectModel } from "../model/projectUplode.model.js";
 import { customErrorHandel } from "../utils/customErrorHandel.js";
+import fs from "fs";
 import pLimit from "p-limit";
 
 const limit = pLimit(5);
@@ -11,18 +12,40 @@ export const createProject = async (req, res, next) => {
   try {
     const { title, git, liveview, category, description } = req.body;
 
+    // check title,category and description data
+    if (!title || !category || !description) {
+      req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
+      req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
+      req.files?.image &&
+        req.files?.image?.map((localpath) => {
+          fs.unlinkSync(localpath?.path);
+        });
+      return next(
+        customErrorHandel(
+          404,
+          "must be requard title, category, description and image"
+        )
+      );
+    }
+
     //  thumbnail upload optional
     const thumbnaillocalpath =
       req.files?.thumbnail && req.files?.thumbnail[0]?.path;
     const uplodedthumbnail = await cloudinaryFileUplode(thumbnaillocalpath);
 
     //  file upload optional
-    const filelocalpath = req.files?.file && req.files?.file[0]?.path;
-    const uplodedfile = await cloudinaryFileUplode(filelocalpath);
+    const filelocalpath = req.files?.file && req.files?.file[0];
 
     // check images
-    if (!req.files?.image)
+    if (!req.files?.image) {
+      req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
+      req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
+      req.files?.image &&
+        req.files?.image?.map((localpath) => {
+          fs.unlinkSync(localpath?.path);
+        });
       return next(customErrorHandel(402, "image not found"));
+    }
 
     // upload images
     const imagelocalpath = req.files?.image;
@@ -40,15 +63,6 @@ export const createProject = async (req, res, next) => {
         return next(customErrorHandel(404, "server error place try late"));
     }
 
-    // check title,category and description data
-    if (!title || !category || !description)
-      return next(
-        customErrorHandel(
-          404,
-          "must be requard title, category, description and image"
-        )
-      );
-
     // stor mongodb databash
     const responceProject = await createProjectModel.create({
       title,
@@ -57,7 +71,7 @@ export const createProject = async (req, res, next) => {
       category,
       description,
       thumbnail: uplodedthumbnail,
-      file: uplodedfile,
+      file: filelocalpath,
       image: [...uploads],
     });
 
@@ -67,6 +81,12 @@ export const createProject = async (req, res, next) => {
       message: "project created success",
     });
   } catch (error) {
+    req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
+    req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
+    req.files?.image &&
+      req.files?.image?.map((localpath) => {
+        fs.unlinkSync(localpath?.path);
+      });
     return next(customErrorHandel());
   }
 };
@@ -182,4 +202,10 @@ export const deleteProject = async (req, res, next) => {
   } catch (error) {
     return next(customErrorHandel());
   }
+};
+
+export const downloadFile = async(req, res, next) => {
+  let _id = req.params.id;
+  const downloadProject = await createProjectModel.findById({ _id });
+  res.download(`${downloadProject?.file?.path}`)
 };

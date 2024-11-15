@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import { GoMoon } from "react-icons/go";
@@ -40,10 +40,11 @@ export const Header = ({ themeActive, setThemeActive }) => {
         return setActiveNav(false);
     });
 
+    let hidenHeaderTime;
     const scrollEffect = window.addEventListener("scroll", () => {
       setheaderActive(true);
 
-      setTimeout(() => {
+      hidenHeaderTime = setTimeout(() => {
         setheaderActive(false);
       }, 2000);
     });
@@ -51,6 +52,7 @@ export const Header = ({ themeActive, setThemeActive }) => {
     return () => {
       window.removeEventListener("scroll", scrollEffect);
       window.removeEventListener("click", navHiddenEffect);
+      clearTimeout(hidenHeaderTime)
     };
   }, []);
 

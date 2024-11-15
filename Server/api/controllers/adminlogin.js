@@ -15,5 +15,4 @@ export const adminlogin = (req, res, next) => {
   } catch (error) {
     return next(customErrorHandel());
   }
-};  
- 
+}; 

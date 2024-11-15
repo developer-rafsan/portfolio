@@ -150,11 +150,22 @@ responsive size
     flex-direction: column;
     top: 0;
     left: 0;
-    background: var(--primaryBackground);
-    width: 100%;
+    background: url('/public/assets/background.svg');
+    width: 70%;
     height: 100vh;
     z-index: 999;
     gap: 20px;
+    animation: headerAnimation .5s ease-in-out;
+    transform: translateX(0%);
+  }
+
+  @keyframes headerAnimation {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+    }
   }
 
   header .menuHeader li,

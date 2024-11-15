@@ -5,8 +5,8 @@ import { loginApi } from "../../Services/apiCall";
 
 export const Login = ({ setAdminLogin }) => {
   const [inputFill, setInputFill] = useState({
-    email: "",
-    password: "",
+    email: "developer.rafsanx@gmail.com",
+    password: "@Rafsan",
   });
   const [loading, setLoading] = useState(false);
 
@@ -17,7 +17,7 @@ export const Login = ({ setAdminLogin }) => {
       return toast.error("Mast Require Email and Password");
 
     setLoading(true);
-    const response = await loginApi(inputFill);
+    const response = await loginApi(inputFill);    
 
     if (response.status !== 200) {
       setLoading(false);
@@ -45,12 +45,14 @@ export const Login = ({ setAdminLogin }) => {
           placeholder="enter your email"
           name="email"
           onChange={inputHandeler}
+          value={inputFill.email}
         />
         <input
           type="password"
           placeholder="enter your password"
           name="password"
           onChange={inputHandeler}
+          value={inputFill.password}
         />
         <button type="submit">{loading ? "loading..." : "login"}</button>
       </form>
