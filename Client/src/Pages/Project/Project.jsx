@@ -1,14 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./project.module.css";
-import { Link } from "react-router-dom";
 import { DataNotFound } from "../../Components/DataNotFound/DataNotFound";
 import { Loading } from "../../Components/Loading/Loading";
-import { getCategoryApi, getProjectApi } from "../../Services/allAPI";
+import {
+  downloadApi,
+  getCategoryApi,
+  getProjectApi,
+} from "../../Services/allAPI";
 import { Pagenation } from "../../Components/Pagenation/Pagenation";
-
+import { HiDotsVertical } from "react-icons/hi";
+import { FaCloudDownloadAlt } from "react-icons/fa";
+import { GrView } from "react-icons/gr";
+import { FaGithub } from "react-icons/fa";
 
 export const Project = () => {
   const [stor, setStor] = useState();
+  const [isShow, setShow] = useState(false);
   const [page, setPage] = useState(1);
   const [filterCategory, setFilterCategory] = useState("All");
   const [search, setSearch] = useState("");
@@ -21,8 +28,6 @@ export const Project = () => {
   const fatchProjectData = async () => {
     setLoading(true);
     const response = await getProjectApi(page, filterCategory, sort, search);
-    console.log(response);
-    
     setStor(response.data);
     setLoading(false);
   };
@@ -30,9 +35,20 @@ export const Project = () => {
   // fatch category item
   const fatchCategory = async () => {
     const response = await getCategoryApi();
-    console.log(response);
-    
     setCategory(response.data.data);
+  };
+
+  // download file
+  const downloadFile = async (id) => {
+    console.log(id);
+
+    const response = await downloadApi(id);
+    const aTag = document.createElement("a");
+    aTag.href = response.config.url;
+    aTag.setAttribute("download", "source-code");
+    document.body.appendChild(aTag);
+    aTag.click();
+    aTag.remove();
   };
 
   useEffect(() => {
@@ -89,29 +105,41 @@ export const Project = () => {
             <DataNotFound />
           ) : (
             // project section display
-            stor.data?.map(({ _id, image, thumbnail, title, date }) => (
-              <Link
-                to={`/project/${_id}`}
-                key={_id}
-                className={styles.card}
-              >
+            stor.data?.map(({ _id, image, thumbnail, title, git, liveview }) => (
+              <div key={_id} className={styles.card}>
                 <img
                   src={thumbnail ? thumbnail[0].url : image[0].url}
                   alt={title}
                 />
                 <div className={styles.content}>
-                  <h1>{title ? title.substring(0, 40) : ""}</h1>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "0px 10px",
-                    }}
-                  >
-                    <p>{date}</p>
+                  <div>
+                    <h1>{title ? title.substring(0, 40) : ""}</h1>
+                  </div>
+                  <div>
+                    <HiDotsVertical onClick={() => setShow((prev) => !prev)} />
+                    {isShow && (
+                      <div>
+                        <button
+                          onClick={() => downloadFile(_id)}
+                          title="source code"
+                        >
+                          <FaCloudDownloadAlt />
+                        </button>
+                        <button title="view">
+                          <a target="_blank" href={liveview ? liveview : image[0].url}>
+                            <GrView />
+                          </a>
+                        </button>
+                        <button title="gitHub">
+                          <a target="_blank" href={git}>
+                            <FaGithub />
+                          </a>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </Link>
+              </div>
             ))
           )}
         </div>

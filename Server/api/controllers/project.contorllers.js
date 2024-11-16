@@ -10,10 +10,10 @@ const limit = pLimit(5);
 // project create api
 export const createProject = async (req, res, next) => {
   try {
-    const { title, git, liveview, category, description } = req.body;
+    const { title, git, liveview, category } = req.body;
 
     // check title,category and description data
-    if (!title || !category || !description) {
+    if (!title || !category || !req.files?.image) {
       req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
       req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
       req.files?.image &&
@@ -23,7 +23,7 @@ export const createProject = async (req, res, next) => {
       return next(
         customErrorHandel(
           404,
-          "must be requard title, category, description and image"
+          "must be requard title, category and image"
         )
       );
     }
@@ -35,17 +35,6 @@ export const createProject = async (req, res, next) => {
 
     //  file upload optional
     const filelocalpath = req.files?.file && req.files?.file[0];
-
-    // check images
-    if (!req.files?.image) {
-      req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
-      req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
-      req.files?.image &&
-        req.files?.image?.map((localpath) => {
-          fs.unlinkSync(localpath?.path);
-        });
-      return next(customErrorHandel(402, "image not found"));
-    }
 
     // upload images
     const imagelocalpath = req.files?.image;
@@ -69,7 +58,6 @@ export const createProject = async (req, res, next) => {
       git,
       liveview,
       category,
-      description,
       thumbnail: uplodedthumbnail,
       file: filelocalpath,
       image: [...uploads],
@@ -176,12 +164,7 @@ export const deleteProject = async (req, res, next) => {
       .then(console.log);
 
     // cloidinary raw file delete
-    await cloudinary.uploader
-      .destroy(findProject.file[0].public_id, {
-        type: "upload",
-        resource_type: "raw",
-      })
-      .then(console.log);
+    findProject?.file && fs.unlinkSync(findProject?.file?.path)
 
     // cloudinary thumbnail image delete
     for (let i = 0; i < findProject.image.length; i++) {

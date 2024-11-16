@@ -1,6 +1,6 @@
 section#projectSection {
   min-height: 100vh;
-  background: url('/assets/border01.png');
+  background: url("/assets/border01.png");
   padding-top: 100px;
 }
 
@@ -59,15 +59,10 @@ section#projectSection {
 .card {
   height: 210px;
   width: 290px;
-  cursor: pointer;
-  overflow: hidden;
   border-radius: 20px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.219),
     -1px -3px 5px rgba(0, 0, 0, 0.144);
-    position: relative;
-}
-
-.card:hover {
+  position: relative;
   outline: 5px solid var(--borderColor);
 }
 
@@ -76,34 +71,68 @@ section#projectSection {
   height: 100%;
   object-fit: cover;
   object-position: top;
+  border-radius: 20px;
 }
 
 .content {
   position: absolute;
   bottom: 0%;
-  height: 100%;
+  height: 50px;
   width: 100%;
   display: flex;
-  justify-content: end;
-  align-items: space-between;
+  justify-content: space-between;
+  align-items: center;
+  background-image: linear-gradient(#ffffff00 10%, #000000de 50%);
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+.content div:nth-child(1) {
+  width: 90%;
+  display: flex;
+  align-items: start;
   flex-direction: column;
-  background-image: linear-gradient(#ffffff00 50%, #000000de 90%);
+}
+
+.content div:nth-child(2) {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  & div {
+    position: absolute;
+    bottom: 100%;
+    left: 100%;
+    background: rgb(236, 236, 236);
+    height: 100px;
+    width: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 0px;
+
+    & button {
+      border: none;
+      outline: none;
+      background: unset;
+    }
+  }
+}
+
+.content div:nth-child(2) svg {
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 .content h1 {
   color: var(--PBC);
   text-transform: capitalize;
-  padding: 5px 15px;
   font-weight: 400;
   font-size: 1.5rem;
-}
-
-.content p {
-  color: var(--PBC);
-  opacity: 0.5;
-  font-weight: bold;
-  padding: 0px 5px;
-  margin-bottom: 10px;
 }
 
 /* 
@@ -176,10 +205,6 @@ responsive size
 
   .content h1 {
     font-size: 2rem;
-  }
-
-  .content p {
-    font-size: 1.5rem;
   }
 }
 
