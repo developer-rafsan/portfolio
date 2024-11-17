@@ -11,7 +11,8 @@ const limit = pLimit(5);
 export const createProject = async (req, res, next) => {
   try {
     const { title, git, liveview } = req.body;
-    const category = req.body.toLowerCase();
+    
+    const category = req.body.category.toLowerCase();    
 
     // check title,category and description data
     if (!title || !category || !req.files?.image) {
