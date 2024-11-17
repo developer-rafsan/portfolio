@@ -100,11 +100,11 @@ responsive size
 /* responsive section */
 @media screen and (max-width: 500px) {
   .skillSection {
-    grid-template-columns: repeat(2,1fr);
-    gap: 10px;
+    gap: 20px;
   }
 
   .skillSection .item {
-    width: 150px;
+    width: 100px;
+    height: 150px;
   }
 }

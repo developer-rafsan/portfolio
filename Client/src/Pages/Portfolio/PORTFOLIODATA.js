@@ -13,13 +13,13 @@ export const PORTFOLIODATA = [
   },
   {
     id: 3,
-    imaURL: "/portfolio/project1.png",
+    imaURL: "/portfolio/project1.jpg",
     titel: "Elementor Template Website",
     type: "image",
   },
   {
     id: 4,
-    imaURL: "/portfolio/project2.png",
+    imaURL: "/portfolio/project2.jpg",
     titel: "WordPress website buold using Elementor",
     type: "image",
   },

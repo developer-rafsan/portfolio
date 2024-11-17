@@ -26,12 +26,12 @@ section#homePage {
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 4px;
+  text-align: center;
 }
 
 .homeSection .content h4 span{
   font-size: 1.8rem;
   font-weight: 600;
-  color: var(--primaryColor);
 }
 
 .homeSection .content h1 {

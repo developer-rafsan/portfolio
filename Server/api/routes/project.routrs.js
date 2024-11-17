@@ -6,8 +6,7 @@ import {
   createProject,
   deleteProject,
   downloadFile,
-  projectData,
-  singlePageData,
+  projectData
 } from "../controllers/project.contorllers.js";
 
 // create poject router for admin
@@ -26,9 +25,6 @@ projectRoutes.get("/project", projectData);
 
 // delete project for admin
 projectRoutes.delete("/project/:id", deleteProject);
-
-// get single data
-projectRoutes.get("/project/:id", singlePageData);
 
 // get download file
 projectRoutes.get("/download/:id", downloadFile);

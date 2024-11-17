@@ -15,7 +15,7 @@ import { FaGithub } from "react-icons/fa";
 
 export const Project = () => {
   const [stor, setStor] = useState();
-  const [isShow, setShow] = useState(false);
+  const [isShow, setShow] = useState(null);
   const [page, setPage] = useState(1);
   const [filterCategory, setFilterCategory] = useState("All");
   const [search, setSearch] = useState("");
@@ -40,8 +40,6 @@ export const Project = () => {
 
   // download file
   const downloadFile = async (id) => {
-    console.log(id);
-
     const response = await downloadApi(id);
     const aTag = document.createElement("a");
     aTag.href = response.config.url;
@@ -105,20 +103,22 @@ export const Project = () => {
             <DataNotFound />
           ) : (
             // project section display
-            stor.data?.map(({ _id, image, thumbnail, title, git, liveview }) => (
-              <div key={_id} className={styles.card}>
-                <img
-                  src={thumbnail ? thumbnail[0].url : image[0].url}
-                  alt={title}
-                />
-                <div className={styles.content}>
-                  <div>
-                    <h1>{title ? title.substring(0, 40) : ""}</h1>
-                  </div>
-                  <div>
-                    <HiDotsVertical onClick={() => setShow((prev) => !prev)} />
-                    {isShow && (
-                      <div>
+            stor.data?.map(
+              ({ _id, image, thumbnail, title, git, liveview }) => (
+                <div key={_id} className={styles.card}>
+                  <img
+                    src={thumbnail ? thumbnail[0].url : image[0].url}
+                    alt={title}
+                  />
+                  <div className={styles.content}>
+                    <div>
+                      <h1>{title ? title.substring(0, 40) : ""}</h1>
+                    </div>
+                    <div>
+                      <HiDotsVertical
+                        onClick={() => setShow((prev) => (!prev ? _id : null))}
+                      />
+                      <div className={isShow === _id ? styles.active : ""}>
                         <button
                           onClick={() => downloadFile(_id)}
                           title="source code"
@@ -126,7 +126,10 @@ export const Project = () => {
                           <FaCloudDownloadAlt />
                         </button>
                         <button title="view">
-                          <a target="_blank" href={liveview ? liveview : image[0].url}>
+                          <a
+                            target="_blank"
+                            href={liveview ? liveview : image[0].url}
+                          >
                             <GrView />
                           </a>
                         </button>
@@ -136,11 +139,11 @@ export const Project = () => {
                           </a>
                         </button>
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
+              )
+            )
           )}
         </div>
         <Pagenation {...stor} setPage={setPage} page={page} />

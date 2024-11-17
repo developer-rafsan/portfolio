@@ -18,6 +18,7 @@ section#portfolio h2 {
   margin: 0px auto;
   margin-bottom: 60px;
   cursor: default;
+  text-align: center;
 }
 
 .itemGroup {

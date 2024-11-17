@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import styles from "./dashbord.module.css";
 import { projectDeletetApi, projectGetApi } from "../../Services/apiCall";
 import toast, { Toaster } from "react-hot-toast";
@@ -22,8 +22,8 @@ export const Dashbord = () => {
     if (response.status === 200) setStor(response.data);
   };
 
-  const deleteHandeler = async (id) => {
-    const response = await projectDeletetApi(id);
+  const deleteHandeler = async (id) => {  
+    const response = await projectDeletetApi(id);    
     if (response.status === 200) settesting(response.data);
     return toast.success("project delete success");
   };

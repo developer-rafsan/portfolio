@@ -129,23 +129,6 @@ export const projectData = async (req, res, next) => {
   }
 };
 
-// get single page data
-export const singlePageData = async (req, res, next) => {
-  try {
-    let _id = req.params.id;
-    const singleProject = await createProjectModel.findById({ _id });
-    if (!singleProject)
-      return next(customErrorHandel(402, "page data not found"));
-    return res.status(200).json({
-      success: true,
-      statusCode: 200,
-      message: "single project get success",
-      data: singleProject,
-    });
-  } catch (error) {
-    return next(customErrorHandel());
-  }
-};
 
 // delete project
 export const deleteProject = async (req, res, next) => {

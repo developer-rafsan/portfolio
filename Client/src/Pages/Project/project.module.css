@@ -109,11 +109,11 @@ section#projectSection {
     height: 100px;
     width: 50px;
     border-radius: 10px;
-    display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
     padding: 10px 0px;
+    display: none;
 
     & button {
       border: none;
@@ -121,6 +121,10 @@ section#projectSection {
       background: unset;
     }
   }
+}
+
+.content div:nth-child(2) .active {
+  display: flex;
 }
 
 .content div:nth-child(2) svg {
