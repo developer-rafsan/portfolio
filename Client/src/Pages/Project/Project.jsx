@@ -81,7 +81,7 @@ export const Project = () => {
                 }}
                 key={category._id}
               >
-                {category.category}
+                {category.category.toUpperCase()}
               </li>
             ))}
           </ul>
