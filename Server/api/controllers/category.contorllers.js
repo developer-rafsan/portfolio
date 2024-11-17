@@ -3,7 +3,8 @@ import { customErrorHandel } from "../utils/customErrorHandel.js";
 
 // create category option for admin
 export const createCategory = async (req, res, next) => {
-  const { category, password } = req.body;
+  const category = req.body.category.toLowerCase();
+  const password = req.body.password;
 
   if (!category)
     return next(customErrorHandel(402, "place enter category fill"));
@@ -11,14 +12,10 @@ export const createCategory = async (req, res, next) => {
   if (password !== process.env.PASSWORD)
     return next(customErrorHandel(402, "invalid credentials"));
 
-  const findCategory = await createCategoryModel.find();
-  for (let i = 0; i < findCategory.length; i++) {
-    if (
-      findCategory[i].category.toLocaleLowerCase() ===
-      category.toLocaleLowerCase()
-    )
-      return next(customErrorHandel(402, "all ready exite"));
-  }
+  const findCategory = await createCategoryModel.find({ category });
+
+  if (findCategory.length)
+    return next(customErrorHandel(402, "all ready exite"));
 
   try {
     await createCategoryModel.create({ category });
@@ -30,7 +27,7 @@ export const createCategory = async (req, res, next) => {
   } catch (error) {
     return next(customErrorHandel());
   }
-}; 
+};
 
 // gat all category
 export const getAllCategory = async (req, res, next) => {

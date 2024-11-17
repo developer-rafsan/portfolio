@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 // ******************************
 // mongoose connect
 // ******************************
-
 const uri = process.env.MONGOOSE_URL;
 export default function () {
   mongoose

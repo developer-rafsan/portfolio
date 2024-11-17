@@ -10,7 +10,8 @@ const limit = pLimit(5);
 // project create api
 export const createProject = async (req, res, next) => {
   try {
-    const { title, git, liveview, category } = req.body;
+    const { title, git, liveview } = req.body;
+    const category = req.body.toLowerCase();
 
     // check title,category and description data
     if (!title || !category || !req.files?.image) {
@@ -85,17 +86,17 @@ export const projectData = async (req, res, next) => {
     const page = req.query.page - 1 || 0;
     const limit = req.query.limit || 10;
     const search = req.query.search || "";
-    const category = req.query.category || "All";
+    const category = req.query.category.toLowerCase() || "All";
     const sort = req.query.sort || "asc";
 
     // search query
     const query = {
       title: { $regex: search, $options: "i" },
     };
-
+    
     // filter by category
-    if (category !== "All") query.category = category;
-
+    if (category !== "all") query.category = category;
+    
     // node ase sort and dsc sort query
     const sortQuery = {};
 
