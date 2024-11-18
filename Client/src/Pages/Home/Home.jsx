@@ -51,21 +51,21 @@ export const Home = () => {
             <a
               id="animation"
               target="_Blank"
-              href="https://www.linkedin.com/in/jahid-islam-rafsan-72515a30a/"
+              href="https://www.linkedin.com/in/jahid-islam-rafsan-72515a30a"
             >
               <IoLogoLinkedin />
             </a>
             <a
               id="animation"
               target="_Blank"
-              href="https://www.facebook.com/developer.rafsan/"
+              href="https://www.facebook.com/developer.rafsan"
             >
               <FaFacebook />
             </a>
             <a
               id="animation"
               target="_Blank"
-              href="https://www.linkedin.com/in/jahid-islam-rafsan-72515a30a/"
+              href="https://www.youtube.com/@jahidislamrafsan"
             >
               <FaYoutube />
             </a>
