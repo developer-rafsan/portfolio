@@ -2,6 +2,7 @@ import { cloudinaryFileUplode } from "../utils/cloudinary.js";
 import { createProjectModel } from "../model/projectUplode.model.js";
 import { customErrorHandel } from "../utils/customErrorHandel.js";
 import fs from "fs";
+import { v2 as cloudinary } from "cloudinary";
 
 // project create api
 export const createProject = async (req, res, next) => {
@@ -112,9 +113,9 @@ export const deleteProject = async (req, res, next) => {
   try {
     const findProject = await createProjectModel.findById({ _id });
 
-    if (!findProject) return next(customErrorHandel(402, "project not found"));
+    if (!findProject) return next(customErrorHandel(402, "project not found"));    
 
-    if (findProject.thumbnail) {
+    if (findProject.thumbnail) {      
       await cloudinary.uploader
         .destroy(findProject.thumbnail?.public_id, {
           type: "upload",
@@ -126,7 +127,7 @@ export const deleteProject = async (req, res, next) => {
     if (findProject.file) {
       fs.unlinkSync(findProject.file?.path);
     }
-
+    
     if (findProject.image) {
       await cloudinary.uploader
         .destroy(findProject.image?.public_id, {
@@ -141,7 +142,7 @@ export const deleteProject = async (req, res, next) => {
       success: true,
       statusCode: 200,
       message: "project delete success",
-    });
+    })
   } catch (error) {
     return next(customErrorHandel());
   }

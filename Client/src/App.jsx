@@ -8,7 +8,6 @@ import { About } from "./Pages/About/About";
 import { Experience } from "./Pages/Experience/Experience";
 import { Portfolio } from "./Pages/Portfolio/Portfolio";
 import { Project } from "./Pages/Project/Project";
-import { SinglePage } from "./Components/SinglePage/SinglePage";
 import { Youtube } from "./Pages/YoutubeVideo/Youtube";
 import { Footer } from "./Components/Footer/Footer";
 import { ErrorPage } from "./Components/404/ErrorPage";
@@ -70,8 +69,6 @@ function App() {
         />
         {/* project route */}
         <Route path="/project" element={<Project />} />
-        {/* single page project route */}
-        <Route path="/project/:id" element={<SinglePage />} />
         {/* youtube video route */}
         <Route path="/youtube-video" element={<Youtube />} />
         {/* error page route */}

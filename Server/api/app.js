@@ -13,7 +13,6 @@ import { adminLoginRoutrs } from "./routes/adminLogin.routrs.js";
 const PORT = process.env.PORT || 8000;
 const app = express();
 
-
 // // ******************************
 // // middleware
 // // ****************************** 

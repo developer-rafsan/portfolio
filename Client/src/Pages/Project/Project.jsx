@@ -101,7 +101,7 @@ export const Project = () => {
             <Loading />
           ) : !stor.data?.length ? (
             <DataNotFound />
-          ) : ( 
+          ) : (
             // project section display
             stor.data?.map(
               ({ _id, image, thumbnail, title, git, liveview }) => (
@@ -133,8 +133,14 @@ export const Project = () => {
                             <GrView />
                           </a>
                         </button>
-                        <button title="gitHub">
-                          <a target="_blank" href={git}>
+                        <button
+                          style={{
+                            opacity: !git ? 0.5 : "1",
+                            pointerEvents: !git ? "none" : "visible",
+                          }}
+                          title="gitHub"
+                        >
+                          <a target="_blank" href={git ? git : ""}>
                             <FaGithub />
                           </a>
                         </button>

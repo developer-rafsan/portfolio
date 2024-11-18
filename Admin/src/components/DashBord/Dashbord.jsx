@@ -28,9 +28,6 @@ export const Dashbord = () => {
     return toast.success("project delete success");
   };
 
-  console.log(stor);
-  
-
   useEffect(() => {
     fatchProjectData();
   }, [texting, search, filterCategory, page]);
