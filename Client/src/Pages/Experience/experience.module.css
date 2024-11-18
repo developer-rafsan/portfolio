@@ -87,6 +87,13 @@ responsive size
 */
 
 /* responsive section */
+@media screen and (max-width: 900px) {
+  section#experience  {
+    background-size: 200%;
+  }
+}
+
+/* responsive section */
 @media screen and (max-width: 500px) {
   section#experience .content {
     width: 350px;

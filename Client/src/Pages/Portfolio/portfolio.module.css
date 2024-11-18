@@ -152,6 +152,10 @@ responsive size
 
 /* responsive section */
 @media screen and (max-width: 900px) {
+  section#portfolio {
+    background-size: 200%;
+  }
+
   .itemGroup {
     grid-template-columns: repeat(1, 1fr);
     place-items: center;

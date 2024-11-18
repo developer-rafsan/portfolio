@@ -170,6 +170,10 @@ responsive size
 
 /* responsive section */
 @media screen and (max-width: 900px) {
+  section#projectSection {
+    background-size: 200%;
+  }
+
   .projectDisplay {
     grid-template-columns: repeat(2, 1fr);
   }

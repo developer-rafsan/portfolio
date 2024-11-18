@@ -87,24 +87,16 @@ responsive size
 
 /* responsive section */
 @media screen and (max-width: 900px) {
+  section.about {
+    background-size: 200%;
+  }
+
   .skillSection {
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
     gap: 20px;
   }
 
   .skillSection .item {
     width: 150px;
-  }
-}
-
-/* responsive section */
-@media screen and (max-width: 500px) {
-  .skillSection {
-    gap: 20px;
-  }
-
-  .skillSection .item {
-    width: 100px;
-    height: 150px;
   }
 }

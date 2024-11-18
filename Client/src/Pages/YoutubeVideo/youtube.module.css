@@ -140,6 +140,7 @@ responsive size
 @media screen and (max-width: 900px) {
   section#youtube {
     padding-top: 20px;
+    background-size: 200%;
   }
 
   .videoDisplay {

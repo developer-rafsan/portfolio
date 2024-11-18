@@ -124,6 +124,10 @@ responsive size
 
 /* responsive section */
 @media screen and (max-width: 900px) {
+  section#homePage {
+    background-size: 200%;
+  }
+
   .homeSection .content h1 {
     font-size: 20vw;
   }
