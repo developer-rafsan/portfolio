@@ -16,7 +16,6 @@ export const ProjectCreate = () => {
     git: "",
     liveview: "",
     category: "",
-    description: "",
     thumbnail: [],
     file: [],
     image: [],
@@ -87,7 +86,6 @@ export const ProjectCreate = () => {
         git: "",
         liveview: "",
         category: "",
-        description: "",
         thumbnail: [],
         file: [],
         image: [],
@@ -163,23 +161,11 @@ export const ProjectCreate = () => {
             </div>
           </div>
 
-          {/* description inpur section */}
-          <JoditEditor
-            ref={editor}
-            value={inputData.description}
-            onChange={(newContent) =>
-              setInputData({
-                ...inputData,
-                description: newContent,
-              })
-            }
-          />
-
           <div className={styles.FileUpload}>
             {/* file upload inpur section */}
             <div id={styles.fileUpload}>
               <label htmlFor="file">file uplode</label>
-              <input id="file" name="file" type="file" onChange={handleImage} />
+              <input id="file" accept=".zip,.rar,.7zip" name="file" type="file" onChange={handleImage} />
 
               {inputData.file?.map((item, index) => (
                 <ul key={index}>
@@ -232,7 +218,6 @@ export const ProjectCreate = () => {
             <div id={styles.imageUpload}>
               <label htmlFor="image">image upload</label>
               <input
-                multiple
                 id="image"
                 name="image"
                 accept="image/*"

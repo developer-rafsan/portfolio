@@ -2,6 +2,7 @@ section#projectSection {
   min-height: 100vh;
   background: url("/assets/border01.png");
   padding-top: 100px;
+  overflow-x: hidden;
 }
 
 .filter {
@@ -103,9 +104,9 @@ section#projectSection {
 
   & div {
     position: absolute;
-    bottom: 100%;
+    bottom: 0%;
     left: 100%;
-    background: rgb(236, 236, 236);
+    background: var(--primaryBackground);
     height: 100px;
     width: 50px;
     border-radius: 10px;
@@ -119,6 +120,7 @@ section#projectSection {
       border: none;
       outline: none;
       background: unset;
+      color: var(--ICC);
     }
   }
 }

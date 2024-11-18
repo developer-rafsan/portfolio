@@ -3,30 +3,26 @@ import mongoose from "mongoose";
 // ******************************
 // model create for project uplode
 // ******************************
-const createProjectSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    require: [true, "title must be required"],
-    trim: true,
-  },
-  git: {
-    type: String,
-  },
-  liveview: {
-    type: String,
-  },
-  category: {
-    type: String,
-  },
-  description: {
-    type: String,
-    require: [true, "description must be required"],
-  },
-  file: {
-    type : Object
-  },
-  thumbnail: [
-    {
+const createProjectSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      require: [true, "title must be required"],
+      trim: true,
+    },
+    git: {
+      type: String,
+    },
+    liveview: {
+      type: String,
+    },
+    category: {
+      type: String,
+    },
+    file: {
+      type: Object,
+    },
+    thumbnail: {
       public_id: {
         type: String,
       },
@@ -34,9 +30,7 @@ const createProjectSchema = new mongoose.Schema({
         type: String,
       },
     },
-  ],
-  image: [
-    {
+    image: {
       public_id: {
         type: String,
       },
@@ -44,16 +38,9 @@ const createProjectSchema = new mongoose.Schema({
         type: String,
       },
     },
-  ],
-  auther: {
-    type: String,
-    default: "Jahid Islam Rafsan",
   },
-  date: {
-    type: String,
-    default: `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} `,
-  },
-});
+  { timestamps: true }
+);
 
 export const createProjectModel = mongoose.model(
   "Project",

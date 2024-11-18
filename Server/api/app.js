@@ -16,11 +16,11 @@ const app = express();
 
 // // ******************************
 // // middleware
-// // ******************************
+// // ****************************** 
 app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
-app.use(adminLoginRoutrs);
+app.use(adminLoginRoutrs); 
 app.use(categoryRoutes);
 app.use(projectRoutes);
 app.use(errorHandel);

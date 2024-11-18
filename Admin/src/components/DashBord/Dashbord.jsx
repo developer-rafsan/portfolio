@@ -28,6 +28,9 @@ export const Dashbord = () => {
     return toast.success("project delete success");
   };
 
+  console.log(stor);
+  
+
   useEffect(() => {
     fatchProjectData();
   }, [texting, search, filterCategory, page]);
@@ -84,7 +87,7 @@ export const Dashbord = () => {
                   objectPosition: "top",
                   borderRadius: "10px",
                 }}
-                src={item.thumbnail ? item.thumbnail[0].url : item.image[0].url}
+                src={item.thumbnail ? item.thumbnail.url : item.image.url}
                 alt="thumbnail"
               />
               <div

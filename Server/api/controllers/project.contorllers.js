@@ -1,32 +1,22 @@
-import { v2 as cloudinary } from "cloudinary";
 import { cloudinaryFileUplode } from "../utils/cloudinary.js";
 import { createProjectModel } from "../model/projectUplode.model.js";
 import { customErrorHandel } from "../utils/customErrorHandel.js";
 import fs from "fs";
-import pLimit from "p-limit";
-
-const limit = pLimit(5);
 
 // project create api
 export const createProject = async (req, res, next) => {
   try {
     const { title, git, liveview } = req.body;
-    
-    const category = req.body.category.toLowerCase();    
+
+    const category = req.body.category.toLowerCase();
 
     // check title,category and description data
     if (!title || !category || !req.files?.image) {
       req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
       req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
-      req.files?.image &&
-        req.files?.image?.map((localpath) => {
-          fs.unlinkSync(localpath?.path);
-        });
+      req.files?.image && fs.unlinkSync(req.files?.image[0]?.path);
       return next(
-        customErrorHandel(
-          404,
-          "must be requard title, category and image"
-        )
+        customErrorHandel(404, "must be requard title, category and image")
       );
     }
 
@@ -39,20 +29,8 @@ export const createProject = async (req, res, next) => {
     const filelocalpath = req.files?.file && req.files?.file[0];
 
     // upload images
-    const imagelocalpath = req.files?.image;
-    const imagesToUpload = imagelocalpath?.map((image) => {
-      return limit(async () => {
-        const result = await cloudinaryFileUplode(image.path);
-        return result;
-      });
-    });
-
-    let uploads = await Promise.all(imagesToUpload);
-
-    for (let i = 0; i < uploads.length; i++) {
-      if (!uploads[i])
-        return next(customErrorHandel(404, "server error place try late"));
-    }
+    const imagelocalpath = req.files?.image && req.files?.image[0]?.path;
+    const uplodedImage = await cloudinaryFileUplode(imagelocalpath);
 
     // stor mongodb databash
     const responceProject = await createProjectModel.create({
@@ -62,7 +40,7 @@ export const createProject = async (req, res, next) => {
       category,
       thumbnail: uplodedthumbnail,
       file: filelocalpath,
-      image: [...uploads],
+      image: uplodedImage,
     });
 
     return res.status(200).json({
@@ -73,10 +51,7 @@ export const createProject = async (req, res, next) => {
   } catch (error) {
     req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
     req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
-    req.files?.image &&
-      req.files?.image?.map((localpath) => {
-        fs.unlinkSync(localpath?.path);
-      });
+    req.files?.image && fs.unlinkSync(req.files?.image[0]?.path);
     return next(customErrorHandel());
   }
 };
@@ -94,10 +69,10 @@ export const projectData = async (req, res, next) => {
     const query = {
       title: { $regex: search, $options: "i" },
     };
-    
+
     // filter by category
     if (category !== "all") query.category = category;
-    
+
     // node ase sort and dsc sort query
     const sortQuery = {};
 
@@ -131,34 +106,34 @@ export const projectData = async (req, res, next) => {
   }
 };
 
-
 // delete project
 export const deleteProject = async (req, res, next) => {
   const _id = req.params.id;
-
   try {
     const findProject = await createProjectModel.findById({ _id });
 
     if (!findProject) return next(customErrorHandel(402, "project not found"));
 
-    // cloudinary thumbnail image delete
-    await cloudinary.uploader
-      .destroy(findProject.thumbnail[0].public_id, {
-        type: "upload",
-      })
-      .then(console.log);
-
-    // cloidinary raw file delete
-    findProject?.file && fs.unlinkSync(findProject?.file?.path)
-
-    // cloudinary thumbnail image delete
-    for (let i = 0; i < findProject.image.length; i++) {
+    if (findProject.thumbnail) {
       await cloudinary.uploader
-        .destroy(findProject.image[i].public_id, {
+        .destroy(findProject.thumbnail?.public_id, {
           type: "upload",
         })
         .then(console.log);
     }
+
+    // cloidinary raw file delete
+    if (findProject.file) {
+      fs.unlinkSync(findProject.file?.path);
+    }
+
+    if (findProject.image) {
+      await cloudinary.uploader
+        .destroy(findProject.image?.public_id, {
+          type: "upload",
+        })
+        .then(console.log);
+    } 
 
     await createProjectModel.findByIdAndDelete({ _id });
 
@@ -172,8 +147,8 @@ export const deleteProject = async (req, res, next) => {
   }
 };
 
-export const downloadFile = async(req, res, next) => {
+export const downloadFile = async (req, res, next) => {
   let _id = req.params.id;
   const downloadProject = await createProjectModel.findById({ _id });
-  res.download(`${downloadProject?.file?.path}`)
+  res.download(`${downloadProject?.file?.path}`);
 };

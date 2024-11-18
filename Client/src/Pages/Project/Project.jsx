@@ -101,13 +101,13 @@ export const Project = () => {
             <Loading />
           ) : !stor.data?.length ? (
             <DataNotFound />
-          ) : (
+          ) : ( 
             // project section display
             stor.data?.map(
               ({ _id, image, thumbnail, title, git, liveview }) => (
                 <div key={_id} className={styles.card}>
                   <img
-                    src={thumbnail ? thumbnail[0].url : image[0].url}
+                    src={thumbnail ? thumbnail.url : image.url}
                     alt={title}
                   />
                   <div className={styles.content}>
@@ -128,7 +128,7 @@ export const Project = () => {
                         <button title="view">
                           <a
                             target="_blank"
-                            href={liveview ? liveview : image[0].url}
+                            href={liveview ? liveview : image.url}
                           >
                             <GrView />
                           </a>
