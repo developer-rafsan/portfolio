@@ -15,7 +15,7 @@ export const Dashbord = () => {
   const [search, serSearch] = useState("");
   const [page, setPage] = useState(1);
   const [filterCategory, setFilterCategory] = useState("All");
-  const [sort, setSort] = useState("asc");
+  const [sort, setSort] = useState("dsc");
 
   const fatchProjectData = async () => {
     const response = await projectGetApi(page, filterCategory, sort, search);

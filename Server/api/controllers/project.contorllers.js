@@ -74,13 +74,14 @@ export const projectData = async (req, res, next) => {
     // filter by category
     if (category !== "all") query.category = category;
 
+
     // node ase sort and dsc sort query
     const sortQuery = {};
 
     if (sort === "asc") {
-      sortQuery.createdAt = 1;
+      sortQuery._id = 1;
     } else {
-      sortQuery.createdAt = -1;
+      sortQuery._id = -1;
     }
 
     // find project query data
@@ -88,7 +89,7 @@ export const projectData = async (req, res, next) => {
       .find(query)
       .skip(page * limit)
       .limit(limit)
-      .sort({ createdAt: -1 });
+      .sort(sortQuery);
 
     // count total project
     const total = await createProjectModel.countDocuments(query);
