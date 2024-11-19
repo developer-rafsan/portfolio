@@ -65,6 +65,41 @@ section#projectSection {
     -1px -3px 5px rgba(0, 0, 0, 0.144);
   position: relative;
   outline: 5px solid var(--borderColor);
+
+  & div:nth-child(3) {
+    position: absolute;
+    background: #fff;
+    top: 10px;
+    right: 10px;
+    display: block;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: height .3s;
+  }
+
+  & div:nth-child(3):hover {
+    height: 130px;
+  }
+
+  & div:nth-child(3) div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & div button {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .card img {
@@ -78,60 +113,15 @@ section#projectSection {
 .content {
   position: absolute;
   bottom: 0%;
-  height: 50px;
+  min-height: 50px;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
-  background-image: linear-gradient(#ffffff00 10%, #000000de 50%);
+  background: url("/assets/background.svg") no-repeat;
+  background-size: cover;
   padding: 10px 15px;
-  border-radius: 20px;
-}
-
-.content div:nth-child(1) {
-  width: 90%;
-  display: flex;
-  align-items: start;
-  flex-direction: column;
-}
-
-.content div:nth-child(2) {
-  width: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-
-  & div {
-    position: absolute;
-    bottom: 0%;
-    left: 100%;
-    background: var(--primaryBackground);
-    height: 100px;
-    width: 50px;
-    border-radius: 10px;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    padding: 10px 0px;
-    display: none;
-
-    & button {
-      border: none;
-      outline: none;
-      background: unset;
-      color: var(--ICC);
-    }
-  }
-}
-
-.content div:nth-child(2) .active {
-  display: flex;
-}
-
-.content div:nth-child(2) svg {
-  font-size: 2rem;
-  cursor: pointer;
+  border-radius: 0px 0px 20px 20px;
 }
 
 .content h1 {
