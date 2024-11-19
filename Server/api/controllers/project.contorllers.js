@@ -78,9 +78,9 @@ export const projectData = async (req, res, next) => {
     const sortQuery = {};
 
     if (sort === "asc") {
-      sortQuery.updatedAt = -1;
+      sortQuery.createdAt = 1;
     } else {
-      sortQuery.updatedAt = 1;
+      sortQuery.createdAt = -1;
     }
 
     // find project query data
@@ -88,7 +88,7 @@ export const projectData = async (req, res, next) => {
       .find(query)
       .skip(page * limit)
       .limit(limit)
-      .sort(1);
+      .sort({ createdAt: -1 });
 
     // count total project
     const total = await createProjectModel.countDocuments(query);
@@ -113,9 +113,9 @@ export const deleteProject = async (req, res, next) => {
   try {
     const findProject = await createProjectModel.findById({ _id });
 
-    if (!findProject) return next(customErrorHandel(402, "project not found"));    
+    if (!findProject) return next(customErrorHandel(402, "project not found"));
 
-    if (findProject.thumbnail) {      
+    if (findProject.thumbnail) {
       await cloudinary.uploader
         .destroy(findProject.thumbnail?.public_id, {
           type: "upload",
@@ -127,14 +127,14 @@ export const deleteProject = async (req, res, next) => {
     if (findProject.file) {
       fs.unlinkSync(findProject.file?.path);
     }
-    
+
     if (findProject.image) {
       await cloudinary.uploader
         .destroy(findProject.image?.public_id, {
           type: "upload",
         })
         .then(console.log);
-    } 
+    }
 
     await createProjectModel.findByIdAndDelete({ _id });
 
@@ -142,7 +142,7 @@ export const deleteProject = async (req, res, next) => {
       success: true,
       statusCode: 200,
       message: "project delete success",
-    })
+    });
   } catch (error) {
     return next(customErrorHandel());
   }
