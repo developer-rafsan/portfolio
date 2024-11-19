@@ -78,9 +78,9 @@ export const projectData = async (req, res, next) => {
     const sortQuery = {};
 
     if (sort === "asc") {
-      sortQuery.createdAt = -1;
+      sortQuery.updatedAt = -1;
     } else {
-      sortQuery.createdAt = 1;
+      sortQuery.updatedAt = 1;
     }
 
     // find project query data
