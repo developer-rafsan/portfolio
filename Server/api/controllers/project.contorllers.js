@@ -88,7 +88,7 @@ export const projectData = async (req, res, next) => {
       .find(query)
       .skip(page * limit)
       .limit(limit)
-      .sort(-1);
+      .sort(1);
 
     // count total project
     const total = await createProjectModel.countDocuments(query);
