@@ -28,7 +28,7 @@ export const Project = () => {
   const fatchProjectData = async () => {
     setLoading(true);
     const response = await getProjectApi(page, filterCategory, sort, search);
-    setStor(response.data);
+    setStor(response.data.data.reverse());
     setLoading(false);
   };
 
@@ -99,11 +99,11 @@ export const Project = () => {
           {loading ? (
             // loader section
             <Loading />
-          ) : !stor.data?.length ? (
+          ) : !stor?.length ? (
             <DataNotFound />
           ) : (
             // project section display
-            stor.data?.map(
+            stor?.map(
               ({ _id, image, thumbnail, title, git, liveview }) => (
                 <div key={_id} className={styles.card}>
                   <img

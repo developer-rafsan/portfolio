@@ -64,7 +64,6 @@ export const projectData = async (req, res, next) => {
     const limit = req.query.limit || 10;
     const search = req.query.search || "";
     const category = req.query.category.toLowerCase() || "All";
-    const sort = req.query.sort || "asc";
 
     // search query
     const query = {
@@ -74,22 +73,11 @@ export const projectData = async (req, res, next) => {
     // filter by category
     if (category !== "all") query.category = category;
 
-
-    // node ase sort and dsc sort query
-    const sortQuery = {};
-
-    if (sort === "asc") {
-      sortQuery._id = 1;
-    } else {
-      sortQuery._id = -1;
-    }
-
     // find project query data
     const project = await createProjectModel
       .find(query)
       .skip(page * limit)
       .limit(limit)
-      .sort(sortQuery);
 
     // count total project
     const total = await createProjectModel.countDocuments(query);
@@ -98,7 +86,6 @@ export const projectData = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       statusCode: 200,
-      message: "project get success",
       total,
       limit,
       data: project,
