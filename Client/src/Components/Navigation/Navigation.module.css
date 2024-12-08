@@ -1,0 +1,67 @@
+.navigation {
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+}
+
+.navigation div:nth-child(1) {
+  height: 0;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.navigation div:nth-child(2) {
+  height: 0;
+  width: 100%;
+  background: rgb(48, 82, 177);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  overflow: hidden;
+
+  & a {
+    position: relative;
+    top: 25%;
+    font-size: 4rem;
+    text-transform: capitalize;
+    font-weight: 900;
+    z-index: 2;
+    user-select: none;
+    font-family: var(--secondaryFont);
+    letter-spacing: 1px;
+
+    &::after {
+      content: var(--dataText);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      font-size: 6vh;
+      opacity: 0;
+      z-index: 1;
+      text-wrap: nowrap;
+      transition: 1s;
+      line-height: 1;
+    }
+
+    &:hover::after {
+      opacity: 0.3;
+    }
+  }
+}

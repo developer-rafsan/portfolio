@@ -84,7 +84,7 @@ export const Dashbord = () => {
                   objectPosition: "top",
                   borderRadius: "10px",
                 }}
-                src={item.thumbnail ? item.thumbnail.url : item.image.url}
+                src={item.thumbnail ? item.thumbnail?.url : item.image?.url}
                 alt="thumbnail"
               />
               <div

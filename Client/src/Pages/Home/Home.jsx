@@ -1,76 +1,160 @@
-import React, { useRef } from "react";
-import styles from "./home.module.css";
-import { FaFacebook } from "react-icons/fa";
-import { IoLogoLinkedin } from "react-icons/io";
-import { FaYoutube } from "react-icons/fa";
-import { IoArrowForward } from "react-icons/io5";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-// gsap animation
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-gsap.registerPlugin(useGSAP);
+import styles from "./home.module.css";
+import { PORTFOLIODATA } from "./PORTFOLIODATA";
+import { FaRegCirclePlay } from "react-icons/fa6";
+import { FaRegCirclePause } from "react-icons/fa6";
+import { IoArrowForward } from "react-icons/io5";
+import { FaGithub } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa6";
+import { FaYoutube } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { Preloader } from "../../Components/preloader/Preloader";
 
 export const Home = () => {
-  // gsap animainon
-  let timelineAnimation = new gsap.timeline();
+  const [isPlay, setPlay] = useState(false);
 
-  // useref
-  const homeRaf = useRef();
-
-  useGSAP(
-    () => {
-      timelineAnimation.from("#animation", {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        stagger: {
-          amount: 1,
-        },
-      });
-    },
-    { scope: homeRaf.current }
-  );
+  const playVideo = (e) => {
+    !isPlay ? e.target.play() : e.target.pause();
+    setPlay(!isPlay);
+  };
 
   return (
-    <section ref={homeRaf} id={styles.homePage}>
+    <section id={styles.homePage}>
+      <Preloader text="home" />
       <div id="wrap" className={styles.homeSection}>
-        <div className={styles.content}>
-          <h4 id="animation"><span>WordPress</span> or <span>mern stack</span>  web application</h4>
-          <h1 id="animation">develop</h1>
+        <ul>
+          <li>wordpress</li>
+          <li>mern stack</li>
+          <li>Elementor</li>
+          <li>Node.js</li>
+        </ul>
+        <h4>WordPress expart mern stack web application developer</h4>
+        <div className={styles.linkGroup}>
+          <Link to="/project">Project</Link>
+          <span>-</span>
+          <Link to="/about">about me</Link>
         </div>
-        <div className={styles.buttonSection}>
-          <h6 id="animation"> &copy; MERN Stack Animation Website || 2024</h6>
-          <button id="animation">
-            <Link id="headerAnimation" to="/youtube-video">
-              watch our video <IoArrowForward />
-            </Link>
-          </button>
+        <div className={styles.Portfolio}>
+          <h1>
+            my <br /> Portfolio -
+          </h1>
 
-          <div className={styles.iconsGroup}>
-            <a
-              id="animation"
-              target="_Blank"
-              href="https://www.linkedin.com/in/jahid-islam-rafsan-72515a30a"
-            >
-              <IoLogoLinkedin />
-            </a>
-            <a
-              id="animation"
-              target="_Blank"
-              href="https://www.facebook.com/developer.rafsan"
-            >
-              <FaFacebook />
-            </a>
-            <a
-              id="animation"
-              target="_Blank"
-              href="https://www.youtube.com/@jahidislamrafsan"
-            >
-              <FaYoutube />
-            </a>
+          <div className={styles.itemGroup}>
+            {PORTFOLIODATA?.map((item) => (
+              <div key={item.id}>
+                <div className={styles.item}>
+                  {item.type === "image" && (
+                    <img src={item?.imaURL} alt="portfolio image" />
+                  )}
+
+                  {item.type === "video" &&
+                    (!isPlay ? (
+                      <FaRegCirclePlay className={styles.playVideoIcons} />
+                    ) : (
+                      <FaRegCirclePause className={styles.pauseVideoIcons} />
+                    ))}
+                  {item.type === "video" && (
+                    <video onClick={(e) => playVideo(e)}>
+                      <source src={item?.imaURL} type="video/mp4" />
+                    </video>
+                  )}
+                </div>
+                <div className={styles.portfolioButtom}>
+                  <button>
+                    <a target="_Blank" href={item.imaURL}>
+                      view more <IoArrowForward />
+                    </a>
+                  </button>
+                  <h3>{item.titel}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h1>
+            find <br /> me -
+          </h1>
+
+          <div className={styles.findSection}>
+            <div className={styles.item}>
+              <a
+                target="_blank"
+                href="https://github.com/developer-rafsan"
+                className={styles.content}
+              >
+                <FaGithub />
+                <div>
+                  <h5>github</h5>
+                  <p>/developer-rafsan</p>
+                </div>
+              </a>
+            </div>
+            <div className={styles.item}>
+              <a
+                target="_blank"
+                href="https://www.linkedin.com/in/jahid-islam-rafsan/"
+                className={styles.content}
+              >
+                <FaLinkedin />
+                <div>
+                  <h5>linkedin</h5>
+                  <p>/jahid-islam-rafsan</p>
+                </div>
+              </a>
+            </div>
+            <div className={styles.item}>
+              <a
+                href="https://www.youtube.com/@jahidislamrafsan"
+                target="_blank"
+                className={styles.content}
+              >
+                <FaYoutube />
+                <div>
+                  <h5>Youtube</h5>
+                  <p>@jahidislamrafsan</p>
+                </div>
+              </a>
+            </div>
+            <div className={styles.item}>
+              <a
+                href="https://www.facebook.com/developer.rafsan.page"
+                className={styles.content}
+              >
+                <FaFacebook />
+                <div>
+                  <h5>facebook page</h5>
+                  <p>/developer.rafsan</p>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
+
+        <div className={styles.collaborate}>
+          <p>Need a developer ?</p>
+          <a target="_blank" href="https://www.fiverr.com/rafsan954">
+            Let's Collaborate
+          </a>
+        </div>
+
+        <footer>
+          <h1>Say Hello</h1>
+          <div className={styles.content}>
+            <div>
+              <a href="https://wa.me/01966445521">+880 1966445521</a>
+              <a href="mailto:developer.rafsanx@gmail.com">
+                developer.rafsan@gmail.com
+              </a>
+            </div>
+
+            <div>
+              <Link to="/about">About</Link>
+              <Link to="/project">Gat into Touch</Link>
+            </div>
+          </div>
+          <p>&copy; Jahid Islam Rafsan || 2024</p>
+        </footer>
       </div>
     </section>
   );

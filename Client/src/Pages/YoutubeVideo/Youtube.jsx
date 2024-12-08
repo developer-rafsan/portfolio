@@ -5,6 +5,7 @@ import { Loading } from "../../Components/Loading/Loading";
 import { getYoutubeApi } from "../../Services/allAPI";
 import { BiX } from "react-icons/bi";
 import { Pagenation } from "../../Components/Pagenation/Pagenation";
+import { Preloader } from "../../Components/preloader/Preloader";
 
 export const Youtube = () => {
   const [videoData, setVideoData] = useState([]);
@@ -35,9 +36,10 @@ export const Youtube = () => {
 
   return (
     <section id={styles.youtube}>
-      <h2>youtube video</h2>
-
+      <Preloader text="youtube" />
       <div id="wrap">
+      <h2>youtube <br /> video -</h2>
+
         <div className={styles.videoDisplay}>
           {isloading ? (
             <Loading />

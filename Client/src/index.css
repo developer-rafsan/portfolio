@@ -1,11 +1,25 @@
 /* font style incloud */
-@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@font-face {
+  font-family: "fredokaOne";
+  src: url("./font/FredokaOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: "anitipasto-medium";
+  src: url("./font/AntipastoPro-Medium_trial.ttf");
+}
+
+@font-face {
+  font-family: "anitipasto-bold";
+  src: url("./font/AntipastoPro-Bold_trial.ttf");
+}
 
 /* universel style */
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  cursor: none;
 }
 
 /* scrollbar display none */
@@ -21,10 +35,9 @@ html {
 /* DAHK THEME STYLE */
 [DATA-THEME="DARK"] {
   /* Default style for dark theme */
-  background: url("/assets/background.svg") no-repeat;
-  background-size: cover;
+  background: #020308;
   color: #ffffff;
-  font-family: "Open Sans", sans-serif;
+  font-family: "anitipasto-medium";
   font-weight: 400;
 
   /* bankground colod */
@@ -40,8 +53,8 @@ html {
   --borderColor: #4d5263;
 
   /* font style */
-  --primaryFont: "Open Sans", sans-serif;
-  --secondaryFont: "Lilita One", sans-serif;
+  --primaryFont: "anitipasto-medium";
+  --secondaryFont: "fredokaOne";
 
   /* project section color */
   --PBC: #dcfb50;
@@ -94,8 +107,32 @@ html {
 }
 
 #wrap {
-  max-width: 90%;
+  width: 70%;
   margin: auto;
+}
+
+.cursorFast {
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  background-color: #fff;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 999;
+  transition: 0.2s;
+}
+
+.cursorSecend {
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  background-color: #000;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 999;
+  top: 20px;
+  left: 20px;
+  transition: 0.1s;
 }
 
 ul > li,
@@ -105,14 +142,8 @@ a {
   color: inherit;
 }
 
-#customCursor {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  border: 2px solid #FFFFFF;
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
+header .active {
+  background-color: #4d5263;
 }
 
 h1 {
@@ -160,6 +191,10 @@ responsive size
   html {
     font-size: 55.5%;
   }
+
+  #wrap {
+    width: 85%;
+  }
 }
 
 /* responsive section */
@@ -167,12 +202,20 @@ responsive size
   html {
     font-size: 50.5%;
   }
+
+  #wrap {
+    width: 95%;
+  }
 }
 
 /* responsive section */
 @media screen and (max-width: 1060px) {
   html {
     font-size: 45.5%;
+  }
+
+  #wrap {
+    width: 100%;
   }
 }
 

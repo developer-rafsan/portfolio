@@ -2,112 +2,85 @@ header {
   position: fixed;
   top: 0px;
   left: 0px;
-  height: 90px;
+  height: 80px;
   width: 100%;
-  backdrop-filter: blur(10px);
-  z-index: 9;
-  transition: 1s;
+  z-index: 99;
 }
 
-header.hidden {
-  top: -100%;
-}
-
-header .headerContent {
+.headerContent {
+  width: 100%;
   height: 100%;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 100px;
 }
 
-header .headerContent .logo img {
-  width: 120px;
+.headerContent img {
+  width: 150px;
 }
 
-header .menuHeader {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-}
-
-header .menuHeader li,
-header .menuHeader a {
-  font-size: 1.4rem;
-  cursor: pointer;
-  text-transform: capitalize;
-  color: #ffffff;
-}
-
-.moonIcons {
-  outline: none;
-  height: 40px;
-  min-width: 40px;
-  background: transparent;
-  cursor: pointer;
-  color: #ffffff;
-  font-weight: bolder;
-  font-size: 4rem;
-  display: grid;
-  place-content: center;
+.headerContent .menuNav,
+.headerContent .menuClose {
   position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  border: 2px solid #ffffff;
+  cursor: pointer;
+  height: 15px;
+  width: 30px;
+  z-index: 99;
 }
 
-.moonIcons::after {
+.headerContent .menuNav::after {
   content: "";
-  height: 100%;
-  width: 20px;
-  background-color: rgba(255, 255, 255, 0.24);
   position: absolute;
-  top: 0;
-  left: -20px;
-  z-index: 9;
-  transition: 0.5s;
-}
-
-.moonIcons:hover {
-  opacity: 1;
-}
-
-.moonIcons:hover::after {
-  left: 100%;
-}
-
-.moonIcons > div {
-  width: 200%;
-  height: 100%;
-  position: absolute;
-  top: 0;
+  top: 0px;
   left: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  transform: rotate(180deg);
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.headerContent .menuNav::before {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.headerContent .menuNav:hover::after {
+  transform: translateX(-5px);
+}
+
+.headerContent .menuNav:hover::before {
+  transform: translateX(5px);
+}
+
+.headerContent .menuClose::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  transform: translate(-50%, -50%) rotate(45deg);
   transition: 0.5s;
-  font-size: 2rem;
-  transform-origin: center;
 }
 
-.menuIcons {
-  display: none;
-}
-
-.menuIcons path {
-  pointer-events: none;
-}
-
-.closeIcons {
-  display: none;
-}
-
-.closeIcons path {
-  pointer-events: none;
+.headerContent .menuClose::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  transition: 0.5s;
 }
 
 /* 
@@ -119,76 +92,16 @@ responsive size
 500
 450
 375
+345
 */
 
 /* responsive section */
 @media screen and (max-width: 900px) {
-  .menuIcons {
-    display: block;
-    font-size: 5rem;
-    cursor: pointer;
-    position: absolute;
-    right: 70px;
+  .headerContent {
+    padding: 0px 20px;
   }
 
-  .closeIcons {
-    display: block;
-    font-size: 5rem;
-    cursor: pointer;
-    position: absolute;
-    right: 30px;
-    top: 30px;
-  }
-
-  .moonIcons {
-    height: 40px;
-    width: 40px;
-  }
-
-  header .menuHeader {
-    position: fixed;
-    flex-direction: column;
-    top: 0;
-    left: 0;
-    background: url("/assets/background.svg");
-    width: 70%;
-    height: 100vh;
-    z-index: 999;
-    gap: 20px;
-    animation: headerAnimation 0.5s ease-in-out;
-    transform: translateX(0%);
-  }
-
-  @keyframes headerAnimation {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0%);
-    }
-  }
-
-  header .menuHeader li,
-  header .menuHeader a {
-    font-size: 2rem;
-    height: 30px;
-    line-height: 30px;
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* responsive section */
-@media screen and (max-width: 500px) {
-  header {
-    bottom: 0px;
-    height: 60px;
-    width: 100%;
-    border-radius: 10px 10px 0px 0px;
-  }
-
-  header .menuHeader li,
-  header .menuHeader a {
-    font-size: 2.2rem;
+  .headerContent img {
+    width: 100px;
   }
 }

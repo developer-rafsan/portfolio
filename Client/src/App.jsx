@@ -1,26 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
-import locomotiveScroll from "locomotive-scroll";
-
 import { Header } from "./Components/Header/Header";
+import { Navigation } from "./Components/Navigation/Navigation";
 import { Home } from "./Pages/Home/Home";
 import { About } from "./Pages/About/About";
-import { Experience } from "./Pages/Experience/Experience";
-import { Portfolio } from "./Pages/Portfolio/Portfolio";
 import { Project } from "./Pages/Project/Project";
 import { Youtube } from "./Pages/YoutubeVideo/Youtube";
-import { Footer } from "./Components/Footer/Footer";
 import { ErrorPage } from "./Components/404/ErrorPage";
-import LocomotiveScroll from "locomotive-scroll";
 
 // theme function inport
 import { liteModeTheme } from "./THEME/lite.mode";
 import { darkModeTheme } from "./THEME/dark.mode";
-
-// gsap animation
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-gsap.registerPlugin(useGSAP);
 
 function App() {
   // theme active state
@@ -28,50 +18,53 @@ function App() {
     localStorage.getItem("THEME") || "DARK"
   );
 
+  const [activeNav, setActiveNav] = useState(false);
+
+  // cursor state
+  const [cursorPosetion, setCursorPosetion] = useState({
+    x: 0,
+    y: 0,
+  });
+
   useEffect(() => {
     // theme acrive condition
     themeActive === "LITE" ? liteModeTheme() : darkModeTheme();
 
-    const scroll = new LocomotiveScroll();
+    // cursor animation function
+    const mouseMoveFun = (e) => {
+      setCursorPosetion({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", mouseMoveFun);
+
+    return () => {
+      window.removeEventListener("mousemove", mouseMoveFun);
+    };
   }, []);
 
-  // mouse cursore animation with gsap functionality
-  useGSAP(() => {
-    // move cursore function defind
-    function cursoreMoveFunction(e) {
-      gsap.to("#customCursor", {
-        x: e.x - 10,
-        y: e.y - 10,
-      });
-    }
-    // move cursore function call
-    window.addEventListener("mousemove",cursoreMoveFunction);
-  });
+  // cursor animation style
+  const animationCursor = {
+    backgroundColor: "#FFF",
+    mixBlendMode: "difference",
+    transform: `translateX(${cursorPosetion.x - 25}px) translateY(${
+      cursorPosetion.y - 25
+    }px)`,
+  };
 
   return (
     <BrowserRouter>
-      {/*  custom cursor */}
-      <div id="customCursor"></div>
-      <Header themeActive={themeActive} setThemeActive={setThemeActive} />
+      <Header activeNav={activeNav} setActiveNav={setActiveNav} />
+      <Navigation setActiveNav={setActiveNav} />
+      <div className="cursorFast" style={animationCursor} />
+      <div className="cursorSecend" style={animationCursor} />
       <Routes>
-        {/* home route */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Home />
-              <About />
-              <Portfolio />
-              <Experience />
-              <Footer />
-            </>
-          }
-        />
-        {/* project route */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/project" element={<Project />} />
-        {/* youtube video route */}
         <Route path="/youtube-video" element={<Youtube />} />
-        {/* error page route */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

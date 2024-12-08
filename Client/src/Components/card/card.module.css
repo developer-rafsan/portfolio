@@ -1,0 +1,138 @@
+.card {
+  height: 210px;
+  width: 100% !important;
+  border-radius: 20px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.219),
+    -1px -3px 5px rgba(0, 0, 0, 0.144);
+  position: relative;
+  outline: 5px solid var(--borderColor);
+  overflow: hidden;
+
+  & div:nth-child(3) {
+    position: absolute;
+    background: #fff;
+    top: 10px;
+    right: 10px;
+    display: block;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: height 0.3s;
+  }
+
+  & div:nth-child(3):hover {
+    height: 130px;
+  }
+
+  & div:nth-child(3) div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & div button {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 20px;
+}
+
+.content {
+  position: absolute;
+  bottom: 0%;
+  min-height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background: #111;
+  background-size: cover;
+  padding: 10px 15px;
+  border-radius: 0px 0px 20px 20px;
+}
+
+.content h1 {
+  color: var(--PBC);
+  text-transform: capitalize;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.offertag {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  background: var(--primaryColor);
+  padding: 5px 10px;
+  user-select: none;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11),
+    -2px -2px 10px rgba(0, 0, 0, 0.11);
+
+  & h5 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: var(--borderColor);
+    font-weight: 800;
+  }
+}
+
+/* 
+responsive size
+1360
+1260
+1060
+900
+500
+450
+375
+345
+*/
+
+/* responsive section */
+@media screen and (max-width: 1060px) {
+  .card {
+    height: 200px;
+    width: 240px;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 900px) {
+  .card {
+    height: 230px;
+    width: 270px;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 500px) {
+  .content h1 {
+    font-size: 2rem;
+  }
+}
+
+/* responsive section */
+@media screen and (max-width: 375px) {
+  .card {
+    height: 190px;
+  }
+
+  .content h1 {
+    font-size: 2.5rem;
+  }
+}
