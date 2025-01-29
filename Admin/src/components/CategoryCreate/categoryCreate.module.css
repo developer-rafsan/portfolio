@@ -1,11 +1,37 @@
 .categoryForm {
-    background: var(--secondaryBackground);
-    padding: 10px;
-    position: absolute;
-    top: -170px;
-    right: 0px;
-    width: 320px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.322);
-    transition: 1s;
+  background: var(--secondaryBackground);
+  position: absolute;
+  top: 100%;
+  width: 320px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.322);
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.categoryForm input {
+  border: none;
+  outline: none;
+  width: 85% !important;
+  margin-bottom: 20px;
+  background: #eef7f5;
+  margin-bottom: 10px !important;
+}
+
+.categoryForm button {
+  border: none;
+  outline: none;
+  height: 40px;
+  width: 85% !important;
+  margin-bottom: 20px;
+  background: #8385fc;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
 }

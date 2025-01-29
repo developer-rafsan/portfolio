@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./categoryCreate.module.css";
 import { categoryCreateApi } from "../../Services/apiCall";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export const CategoryCreate = ({ categoryOpen }) => {
   const [inputData, setInputData] = useState({
@@ -33,10 +33,7 @@ export const CategoryCreate = ({ categoryOpen }) => {
   };
 
   return (
-    <div
-      className={styles.categoryForm}
-      style={{ transform: categoryOpen ? `scale(1)` : `scale(0)` }}
-    >
+    <div className={styles.categoryForm}>
       <input
         name="category"
         onChange={handelerInpur}

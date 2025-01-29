@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Dashbord } from "./components/DashBord/Dashbord";
-import { Login } from "./components/Login/Login";
-import { ProjectCreate } from "./components/ProjectCreate/ProjectCreate";
+import { Login } from "./pages/Login/Login";
+import { ProjectCreate } from "./pages/ProjectCreate/ProjectCreate";
+import { Dashbord } from "./pages/DashBord/Dashbord";
 
 function App() {
   const [adminLogin, setAdminLogin] = useState(false);

@@ -1,19 +1,19 @@
 export const PORTFOLIODATA = [
   {
     id: 1,
+    imaURL: "/portfolio/project1.jpeg",
+    titel: "Elementor Template Website",
+    type: "image",
+  },
+  {
+    id: 2,
     imaURL: "/portfolio/portfolio1.jpg",
     titel: "create Email Template",
     type: "image",
   },
   {
-    id: 2,
-    imaURL: "/portfolio/pcvertion.jpg",
-    titel: "create Figma To HTML Template",
-    type: "image",
-  },
-  {
     id: 3,
-    imaURL: "/portfolio/project1.jpg",
+    imaURL: "/portfolio/project3.jpeg",
     titel: "Elementor Template Website",
     type: "image",
   },
@@ -25,10 +25,11 @@ export const PORTFOLIODATA = [
   },
   {
     id: 5,
-    imaURL: "/portfolio/mern_project.jpg",
-    titel: "Create MERN Portfolio",
+    imaURL: "/portfolio/pcvertion.jpg",
+    titel: "create Figma To HTML Template",
     type: "image",
   },
+
   {
     id: 6,
     imaURL: "/portfolio/video.mp4",

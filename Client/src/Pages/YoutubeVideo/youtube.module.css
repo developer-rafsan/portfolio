@@ -1,7 +1,8 @@
 section#youtube {
   min-height: 100vh;
   width: 100%;
-  background: url('/assets/border01.png');
+  background: url("/assets/border01.png");
+  padding-bottom: 50px;
 }
 
 section#youtube h2 {
@@ -10,7 +11,7 @@ section#youtube h2 {
   width: 100%;
   font-family: var(--secondaryFont);
   text-transform: capitalize;
-  color: #FFF;
+  color: #fff;
   margin: 0px auto;
   padding-top: 100px;
   font-size: 5rem;
@@ -23,16 +24,17 @@ section#youtube h2 {
   place-items: center;
   position: relative;
   top: 50px;
-  padding-bottom: 10px;
 }
 
 .videoDisplay .item {
-  width: 300px;
-  height: 200px;
+  width: 100%;
+  max-height: 200px;
   border-radius: 20px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  background-color: red;
+  border-bottom: 1px solid aliceblue;
 }
 
 .videoDisplay .item img {
@@ -82,7 +84,7 @@ section#youtube h2 {
   min-height: 70%;
   border: 30px;
   border-radius: 20px;
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
 }
 
 .videoPlayer button {
@@ -127,7 +129,7 @@ responsive size
     gap: 30px;
   }
   .videoDisplay .item {
-    width: 250px;
+    width: 250x;
     height: 180px;
   }
   .videoPlayer iframe {

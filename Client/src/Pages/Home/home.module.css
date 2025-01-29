@@ -230,6 +230,31 @@ section#homePage {
 
   & a {
     font-size: 10rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    & svg {
+      font-size: 6rem;
+    }
+  }
+
+  & ::after {
+    content: "";
+    position: absolute;
+    left: 0%;
+    bottom: -10px;
+    height: 4px;
+    width: 0%;
+    background: #ffffff;
+    transition: width .3s ease-in-out;
+    border-radius: 10px;
+  }
+
+  & :hover::after {
+    width: 100%;
   }
 }
 
@@ -321,15 +346,15 @@ responsive size
 
   footer {
     padding: 50px 10px;
-  
+
     & .content {
       grid-template-columns: repeat(1, 1fr);
     }
-  
+
     & .content div {
       margin-bottom: 15px;
     }
-  
+
     & .content a {
       font-size: 2rem;
     }
@@ -337,7 +362,6 @@ responsive size
       font-size: 2rem;
     }
   }
-  
 }
 
 /* responsive section */

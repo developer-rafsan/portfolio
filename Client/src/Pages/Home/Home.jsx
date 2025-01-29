@@ -10,6 +10,8 @@ import { FaLinkedin } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { Preloader } from "../../Components/preloader/Preloader";
+import { FaArrowRight } from "react-icons/fa6";
+
 
 export const Home = () => {
   const [isPlay, setPlay] = useState(false);
@@ -112,7 +114,7 @@ export const Home = () => {
                 <FaYoutube />
                 <div>
                   <h5>Youtube</h5>
-                  <p>@jahidislamrafsan</p>
+                  <p>/jahidislamrafsan</p>
                 </div>
               </a>
             </div>
@@ -134,7 +136,7 @@ export const Home = () => {
         <div className={styles.collaborate}>
           <p>Need a developer ?</p>
           <a target="_blank" href="https://www.fiverr.com/rafsan954">
-            Let's Collaborate
+            Let's Collaborate <FaArrowRight />
           </a>
         </div>
 

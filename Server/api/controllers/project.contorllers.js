@@ -1,0 +1,104 @@
+import { cloudinaryFileUplode } from "../utils/cloudinary.js";
+import { createProjectModel } from "../model/projectUplode.model.js";
+import { customErrorHandel } from "../utils/customErrorHandel.js";
+import fs from "fs";
+
+// project create api
+export const createProject = async (req, res, next) => {
+  try {
+    const { title, git, liveview } = req.body;
+
+    const category = req.body.category.toLowerCase();
+
+    // check title,category and description data
+    if (!title || !category || !req.files?.image) {
+      req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
+      req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
+      req.files?.image && fs.unlinkSync(req.files?.image[0]?.path);
+      return next(
+        customErrorHandel(404, "must be requard title, category and image")
+      );
+    }
+
+    //  thumbnail upload optional
+    const thumbnaillocalpath =
+      req.files?.thumbnail && req.files?.thumbnail[0]?.path;
+    const uplodedthumbnail = await cloudinaryFileUplode(thumbnaillocalpath);
+
+    
+    //  file upload optional
+    const filelocalpath = req.files?.file && req.files?.file[0];
+
+    // upload images
+    const imagelocalpath = req.files?.image && req.files?.image[0]?.path;
+    const uplodedImage = await cloudinaryFileUplode(imagelocalpath);
+
+    // stor mongodb databash
+    const responceProject = await createProjectModel.create({
+      title,
+      git,
+      liveview,
+      category,
+      thumbnail: uplodedthumbnail,
+      file: filelocalpath,
+      image: uplodedImage,
+    });
+
+    return res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "project created success",
+    });
+  } catch (error) {
+    req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
+    req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
+    req.files?.image && fs.unlinkSync(req.files?.image[0]?.path);
+    return next(customErrorHandel());
+  }
+};
+
+// get filter project and all project
+export const projectData = async (req, res, next) => {
+  try {
+    const page = req.query.page - 1 || 0;
+    const limit = req.query.limit || 10;
+    const search = req.query.search || "";
+    const category = req.query.category.toLowerCase() || "All";
+
+    // search query
+    const query = {
+      title: { $regex: search, $options: "i" },
+    };
+
+    // filter by category
+    if (category !== "all") query.category = category;
+
+    // find project query data
+    const project = await createProjectModel
+      .find(query)
+      .skip(page * limit)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+        
+    // count total project
+    const total = await createProjectModel.countDocuments(query);
+
+    // response data
+    return res.status(200).json({
+      success: true,
+      statusCode: 200,
+      total,
+      limit,
+      data: project,
+    });
+  } catch (error) {
+    return next(customErrorHandel());
+  }
+};
+
+// file download api
+export const downloadFile = async (req, res, next) => {
+  let _id = req.params.id;
+  const downloadProject = await createProjectModel.findById({ _id });
+  res.download(`${downloadProject?.file?.path}`);
+};

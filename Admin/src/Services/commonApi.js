@@ -12,7 +12,7 @@ export const commonApi = async (method, url, body) => {
     return response;
   } catch (error) {
     console.log(error);
-    
+
     const err = error.response.data;
     return err;
   }

@@ -38,7 +38,9 @@ export const Youtube = () => {
     <section id={styles.youtube}>
       <Preloader text="youtube" />
       <div id="wrap">
-      <h2>youtube <br /> video -</h2>
+        <h2>
+          youtube <br /> video -
+        </h2>
 
         <div className={styles.videoDisplay}>
           {isloading ? (

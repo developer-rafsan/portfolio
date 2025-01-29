@@ -17,10 +17,14 @@ export const projectDeletetApi = async (id) => {
   return commonApi("DELETE", `${BASE_URL}/project/${id}`);
 };
 
-export const categoryGetApi = async (id) => {
+export const categoryGetApi = async () => {
   return commonApi("GET", `${BASE_URL}/getCategory`);
 };
 
 export const categoryCreateApi = async (data) => {
   return commonApi("POST", `${BASE_URL}/create-category`, data);
+};
+
+export const fileClean = async () => {
+  return commonApi("GET", `${BASE_URL}/reset`);
 };

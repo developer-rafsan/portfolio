@@ -28,31 +28,40 @@
       font-size: 1.8rem;
       text-transform: capitalize;
       cursor: pointer;
+
+      & a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
     }
   }
 
   & .experince {
+    margin-top: 100px;
     & h1 {
       font-size: 4rem;
-      margin-top: 100px;
       position: relative;
       width: fit-content;
+      width: 100%;
     }
 
     & h1::after {
       content: "";
       position: absolute;
-      height: 5px;
+      height: 2px;
       width: 100%;
-      top: 70%;
+      top: 80%;
       left: 0px;
-      background: rgb(97, 97, 230);
+      background: rgba(8, 8, 194, 0.575);
     }
 
     & div {
       width: 50%;
       position: relative;
       left: 40%;
+      margin-top: 50px;
     }
 
     & h5 {
@@ -109,7 +118,6 @@ footer {
   }
 }
 
-
 /* 
 responsive size
 1360
@@ -124,79 +132,71 @@ responsive size
 
 /* responsive section */
 @media screen and (max-width: 900px) {
+  .about {
+    padding: 20px 0px 0px 20px;
 
-    .about {
-        padding: 50px 0px 0px 20px;
-      
-        & .topContent {      
-          & p {
-            font-size: 2rem;
-            width: 90%;
-          }
-      
-          & button {
-            font-size: 2rem;
-          }
-        }
-      
-        & .experince {
-          & h1 {
-            font-size: 4rem;
-            margin-top: 100px;
-            position: relative;
-            width: fit-content;
-          }
-      
-          & h1::after {
-            content: "";
-            position: absolute;
-            height: 5px;
-            width: 100%;
-            top: 70%;
-            left: 0px;
-            background: rgb(97, 97, 230);
-          }
-      
-          & div {
-            width: 50%;
-            position: relative;
-            left: 40%;
-          }
-      
-          & h5 {
-            color: rgb(97, 97, 230);
-            font-size: 2.5rem;
-          }
-          & ul {
-            margin: 20px 0px;
-          }
-          & ul li {
-            font-size: 2rem;
-            line-height: 1.7;
-            margin-left: 20px;
-            list-style: circle;
-            opacity: 0.5;
-          }
-        }
-      }
-
-    footer {
-      padding: 50px 10px;
-    
-      & .content {
-        grid-template-columns: repeat(1, 1fr);
-      }
-    
-      & .content div {
-        margin-bottom: 15px;
-      }
-    
-      & .content a {
-        font-size: 2rem;
-      }
+    & .topContent {
       & p {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        width: 90%;
+      }
+
+      & button {
+        font-size: 3rem;
       }
     }
-    
+
+    & .experince {
+      margin-top: 100px;
+      & h1 {
+        font-size: 4rem;
+        position: relative;
+      }
+
+      & h1::after {
+        height: 3px;
+      }
+
+      & div {
+        width: 100%;
+        position: relative;
+        margin-top: 20px;
+        left: 0%;
+      }
+
+      & h5 {
+        color: rgb(97, 97, 230);
+        font-size: 3rem;
+      }
+      & ul {
+        margin: 20px 0px;
+      }
+      & ul li {
+        font-size: 2.5rem;
+        line-height: 1.7;
+        margin-left: 20px;
+        list-style: circle;
+        opacity: 0.5;
+      }
+    }
   }
+
+  footer {
+    padding: 50px 10px;
+
+    & .content {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    & .content div {
+      margin-bottom: 15px;
+    }
+
+    & .content a {
+      font-size: 2rem;
+    }
+    & p {
+      font-size: 2rem;
+    }
+  }
+}
