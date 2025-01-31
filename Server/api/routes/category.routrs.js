@@ -4,14 +4,15 @@ import {
   deleteCategory,
   getAllCategory,
 } from "../controllers/category.contorllers.js";
+import { deviceAuth } from "../middlewares/auth.middlewares.js";
 
 export const categoryRoutes = express();
 
-// create category router for admin
-categoryRoutes.post("/create-category", createCategory);
+// create category
+categoryRoutes.post("/create-category", deviceAuth, createCategory);
 
 // get all category
 categoryRoutes.get("/getCategory", getAllCategory);
 
-// delete category for admin
-categoryRoutes.delete("/delete-category/:id", deleteCategory);
+// delete category
+categoryRoutes.delete("/delete-category/:id", deviceAuth, deleteCategory);

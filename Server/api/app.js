@@ -1,5 +1,5 @@
 import database from "./database/connection.js";
-import 'dotenv/config'
+import "dotenv/config";
 database();
 
 import express from "express";
@@ -23,6 +23,6 @@ app.use(categoryRoutes);
 app.use(projectRoutes);
 app.use(errorHandel);
 
-app.listen(PORT, (res, req) => {
+app.listen(PORT, (req, res) => {
   console.log("server start " + PORT);
 });

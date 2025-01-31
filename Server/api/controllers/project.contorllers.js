@@ -1,6 +1,7 @@
 import { cloudinaryFileUplode } from "../utils/cloudinary.js";
 import { createProjectModel } from "../model/projectUplode.model.js";
 import { customErrorHandel } from "../utils/customErrorHandel.js";
+import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
 // project create api
@@ -25,7 +26,6 @@ export const createProject = async (req, res, next) => {
       req.files?.thumbnail && req.files?.thumbnail[0]?.path;
     const uplodedthumbnail = await cloudinaryFileUplode(thumbnaillocalpath);
 
-    
     //  file upload optional
     const filelocalpath = req.files?.file && req.files?.file[0];
 
@@ -79,7 +79,7 @@ export const projectData = async (req, res, next) => {
       .skip(page * limit)
       .limit(limit)
       .sort({ createdAt: -1 });
-        
+
     // count total project
     const total = await createProjectModel.countDocuments(query);
 
@@ -101,4 +101,48 @@ export const downloadFile = async (req, res, next) => {
   let _id = req.params.id;
   const downloadProject = await createProjectModel.findById({ _id });
   res.download(`${downloadProject?.file?.path}`);
+};
+
+// delete project
+export const deleteProject = async (req, res, next) => {
+  const _id = req.params.id;
+
+  try {
+    const findProject = await createProjectModel.findById({ _id });
+
+    if (!findProject) return next(customErrorHandel(402, "project not found"));
+
+    // thumbnail raw file delete
+    if (findProject.thumbnail?.length) {
+      await cloudinary.uploader
+        .destroy(findProject.thumbnail?.public_id, {
+          type: "upload",
+        })
+        .then(console.log);
+    }
+
+    fs.readdirSync("public/download").forEach((file) => {
+      if (findProject.file?.filename === file) {
+        fs.unlinkSync(findProject.file?.path);
+      }
+    });
+
+    if (findProject.image) {
+      await cloudinary.uploader
+        .destroy(findProject.image?.public_id, {
+          type: "upload",
+        })
+        .then(console.log);
+    }
+
+    await createProjectModel.findByIdAndDelete({ _id });
+
+    return res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "project delete success",
+    });
+  } catch (error) {
+    return next(customErrorHandel());
+  }
 };

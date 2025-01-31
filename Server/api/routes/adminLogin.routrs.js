@@ -1,11 +1,9 @@
 import express from "express";
 export const adminLoginRoutrs = express();
-import { adminlogin, deleteProject, resetFile } from "../controllers/adminlogin.js";
+import { adminlogin, resetFile } from "../controllers/adminlogin.js";
+import { deviceAuth } from "../middlewares/auth.middlewares.js";
 
-// login route for admin
-adminLoginRoutrs.post("/login", adminlogin);
-
-adminLoginRoutrs.get('/reset', resetFile)
-
-// delete project for admin
-adminLoginRoutrs.delete("/project/:id", deleteProject);
+// login route
+adminLoginRoutrs.post("/login", deviceAuth, adminlogin);
+// reset route
+adminLoginRoutrs.get("/reset", deviceAuth, resetFile);

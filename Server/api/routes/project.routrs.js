@@ -1,14 +1,15 @@
 import express from "express";
 export const projectRoutes = express();
-
 import { upload } from "../middlewares/multer.middlewares.js";
 import {
   createProject,
+  deleteProject,
   downloadFile,
-  projectData
+  projectData,
 } from "../controllers/project.contorllers.js";
+import { deviceAuth } from "../middlewares/auth.middlewares.js";
 
-// create poject router for admin
+// create poject
 projectRoutes.post(
   "/create-project",
   upload.fields([
@@ -16,6 +17,7 @@ projectRoutes.post(
     { name: "thumbnail", maxCount: 1 },
     { name: "image", maxCount: 5 },
   ]),
+  deviceAuth,
   createProject
 );
 
@@ -24,3 +26,6 @@ projectRoutes.get("/project", projectData);
 
 // get download file
 projectRoutes.get("/download/:id", downloadFile);
+
+// delete project
+projectRoutes.delete("/project/:id", deviceAuth, deleteProject);
