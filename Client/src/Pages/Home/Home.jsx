@@ -12,7 +12,6 @@ import { FaFacebook } from "react-icons/fa";
 import { Preloader } from "../../Components/preloader/Preloader";
 import { FaArrowRight } from "react-icons/fa6";
 
-
 export const Home = () => {
   const [isPlay, setPlay] = useState(false);
 

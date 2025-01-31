@@ -235,6 +235,7 @@ section#homePage {
     justify-content: center;
     align-items: center;
     gap: 20px;
+    text-align: center;
 
     & svg {
       font-size: 6rem;
@@ -249,7 +250,7 @@ section#homePage {
     height: 4px;
     width: 0%;
     background: #ffffff;
-    transition: width .3s ease-in-out;
+    transition: width 0.3s ease-in-out;
     border-radius: 10px;
   }
 
@@ -377,5 +378,18 @@ responsive size
 
   .findSection {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .collaborate {
+    gap: 50px;
+
+    & a {
+      font-size: 5rem;
+      gap: 10px;
+
+      & svg {
+        font-size: 3rem;
+      }
+    }
   }
 }

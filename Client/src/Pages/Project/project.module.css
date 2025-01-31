@@ -1,6 +1,5 @@
 section#projectSection {
   min-height: 100vh;
-  background: url("/assets/border01.png");
   overflow-x: hidden;
   padding-bottom: 50px;
 }
