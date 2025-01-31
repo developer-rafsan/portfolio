@@ -24,9 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 node_modules*
 .env*
-/.txt
 .txt
 .txt*
-/txt
-txt*
 
