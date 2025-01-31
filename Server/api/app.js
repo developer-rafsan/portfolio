@@ -9,7 +9,7 @@ import { errorHandel } from "./middlewares/errorHandel.js";
 import { projectRoutes } from "./routes/project.routrs.js";
 import { adminLoginRoutrs } from "./routes/adminLogin.routrs.js";
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 // // ******************************
