@@ -8,6 +8,12 @@ export const deviceAuth = (req, res, next) => {
   console.log("::ffff:" + USER_IP);
   console.log(ALLOW_IP);
   console.log(ALLOW_IP !== "::ffff:" + USER_IP);
+
+  res.status(200).json({
+    success: false,
+    USER_IP,
+    ALLOW_IP
+  });
   
   if (ALLOW_IP !== USER_IP && ALLOW_IP !== "::ffff:" + USER_IP)
     return next(customErrorHandel(404, "user not auth"));
