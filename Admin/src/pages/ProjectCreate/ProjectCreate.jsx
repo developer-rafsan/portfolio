@@ -54,6 +54,12 @@ export const ProjectCreate = () => {
     event.preventDefault();
     setLoading(true);
 
+    const res = localStorage.getItem("USER_IP");
+
+    const header = {
+      Authorization: res,
+    };
+
     const formData = new FormData();
 
     // content formData
@@ -69,7 +75,7 @@ export const ProjectCreate = () => {
     inputData.image?.map((item) => formData.append("image", item));
 
     // axios post back-end call
-    const response = await projectCreateApi(formData);
+    const response = await projectCreateApi(header, formData);
 
     setLoading(false);
 

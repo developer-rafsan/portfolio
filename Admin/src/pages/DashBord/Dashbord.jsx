@@ -30,14 +30,26 @@ export const Dashbord = () => {
   };
 
   const deleteHandeler = async (id) => {
-    const response = await projectDeletetApi(id);
+    const res = localStorage.getItem("USER_IP");
+
+    const header = {
+      Authorization: res,
+    };
+
+    const response = await projectDeletetApi(id, header);
     if (response.status === 200) settesting(response.data);
     return toast.success("project delete success");
   };
 
   const cleanupFunction = async () => {
     setCleanupLoad(true);
-    const response = await fileClean();
+    const res = localStorage.getItem("USER_IP");
+
+    const header = {
+      Authorization: res,
+    };
+
+    const response = await fileClean(header);
     if (response.status === 200) setCleanupLoad(false);
   };
 

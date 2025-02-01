@@ -4,4 +4,4 @@ export const CLOUD_API_KEY = process.env.CLOUD_API_KEY
 export const CLOUD_NAME = process.env.CLOUD_NAME
 export const EMAIL = process.env.EMAIL
 export const PASSWORD = process.env.PASSWORD
-export const ALLOW_IP = process.env.ALLOW_IP || "::1";
+export const ALLOW_IP = process.env.ALLOW_IP

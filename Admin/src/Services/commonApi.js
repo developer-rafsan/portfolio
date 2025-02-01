@@ -1,9 +1,14 @@
 import axios from "axios";
 
-export const commonApi = async (method, url, body) => {
+export const commonApi = async (method, url, header, body) => {
   const config = {
     method,
     url,
+    headers: header
+      ? header
+      : {
+          "Content-type": "application/json",
+        },
     data: body ? body : "",
   };
 

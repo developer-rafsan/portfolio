@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./login.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { loginApi } from "../../Services/apiCall";
+import axios from "axios";
 
 export const Login = ({ setAdminLogin }) => {
   const [inputFill, setInputFill] = useState({
@@ -13,11 +14,17 @@ export const Login = ({ setAdminLogin }) => {
   const submitHandeler = async (e) => {
     e.preventDefault();
 
+    const res = localStorage.getItem("USER_IP");
+
+    const header = {
+      Authorization: res,
+    };
+
     if (!inputFill.email || !inputFill.password)
       return toast.error("Mast Require Email and Password");
 
     setLoading(true);
-    const response = await loginApi(inputFill);
+    const response = await loginApi(header, inputFill);
 
     if (response.status !== 200) {
       setLoading(false);

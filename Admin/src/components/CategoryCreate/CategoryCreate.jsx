@@ -12,7 +12,14 @@ export const CategoryCreate = ({ categoryOpen }) => {
   const handelerSubmit = async () => {
     if (!inputData.category || !inputData.password)
       return toast.error("must be requer category and password");
-    const response = await categoryCreateApi(inputData);
+
+    const res = localStorage.getItem("USER_IP");
+
+    const header = {
+      Authorization: res,
+    };
+
+    const response = await categoryCreateApi(header, inputData);
     if (response.status === 200) {
       setInputData({
         category: "",
