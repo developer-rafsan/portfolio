@@ -1,17 +1,16 @@
 .Pagenation {
-    text-align: right;
-    margin-top: 60px;
+  text-align: right;
 }
 
 .Pagenation button {
-    height: 40px;
-    width: 40px;
-    background: transparent;
-    border: 1px solid var(--primaryColor);
-    margin: 0px 5px;
-    margin-top: 20px;
-    color: var(--primaryColor);
-    cursor: pointer;
-    font-weight: bolder;
-    font-size: 1.5rem;
+  height: 30px;
+  width: 30px;
+  background: transparent;
+  border: 1px solid var(--primaryColor);
+  margin: 0px 5px;
+  color: var(--primaryColor);
+  cursor: pointer;
+  font-weight: bolder;
+  font-size: 1.5rem;
+  border-radius: 50%;
 }

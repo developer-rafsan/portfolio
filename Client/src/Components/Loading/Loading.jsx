@@ -1,6 +1,17 @@
 import React from "react";
 import styles from "./loading.module.css";
 
-export const Loading = () => {
-  return <h3>loading...</h3>;
+export const Loading = ({ count }) => {
+  return (
+    <>
+      {Array(count)
+        .fill()
+        .map(() => (
+          <div className={styles.cardSkliton}>
+            <div className={styles.imageSkliton}></div>
+            <div className={styles.contentSkliton}></div>
+          </div>
+        ))}
+    </>
+  );
 };

@@ -20,7 +20,7 @@ export const Card = ({ _id, image, thumbnail, title, git, liveview, file }) => {
 
   return (
     <div className={styles.card}>
-      <img src={thumbnail ? thumbnail.url : image.url} alt={title} />
+      <img src={thumbnail ? thumbnail.url : image.url} alt={title} loading="lazy" />
       <div className={styles.content}>
         <h1>{title ? title.substring(0, 50) : ""}</h1>
       </div>

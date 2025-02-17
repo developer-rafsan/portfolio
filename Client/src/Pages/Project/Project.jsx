@@ -7,7 +7,7 @@ import { Pagenation } from "../../Components/Pagenation/Pagenation";
 import { Card } from "../../Components/card/Card";
 import { Preloader } from "../../Components/preloader/Preloader";
 
-export const Project = () => {
+export default function Project() {
   const [stor, setStor] = useState();
   const [page, setPage] = useState(1);
   const [filterCategory, setFilterCategory] = useState("All");
@@ -37,14 +37,15 @@ export const Project = () => {
   }, [search, filterCategory, page]);
 
   const activeStyle = {
-    background: "var(--primaryColor)",
-    color: "var(--primaryBackground)",
+    background: "#FFF",
+    color: "#000",
+    fontWeight: "800",
   };
 
   return (
     <section id={styles.projectSection}>
       <Preloader text="project" />
-      <div id="wrap">
+      <div style={{ position: "relative" }} id="wrap">
         {/* filter ber */}
         <div className={styles.filter}>
           <ul>
@@ -81,7 +82,7 @@ export const Project = () => {
         <div className={styles.projectDisplay}>
           {loading ? (
             // loader section
-            <Loading />
+            <Loading count={10} />
           ) : !stor.data?.length ? (
             <DataNotFound />
           ) : (
@@ -89,8 +90,10 @@ export const Project = () => {
             stor.data?.map((item, index) => <Card key={index} {...item} />)
           )}
         </div>
-        <Pagenation {...stor} setPage={setPage} page={page} />
+        <div className={styles.Pagenation}>
+          <Pagenation {...stor} setPage={setPage} page={page} />
+        </div>
       </div>
     </section>
   );
-};
+}

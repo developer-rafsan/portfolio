@@ -70,20 +70,19 @@ section#homePage {
   .itemGroup {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     place-items: center;
     gap: 50px;
     margin-top: 20px;
   }
 
   .itemGroup .item {
+    background-color: rgb(51, 48, 48);
     max-height: 500px;
-    width: 100%;
+    max-width: 100%;
     border-radius: 10px;
-    cursor: pointer;
     overflow: hidden;
-    outline: 10px solid var(--borderColor);
-    transition: transform 0.2s;
+    outline: 5px solid var(--borderColor);
     position: relative;
   }
 
@@ -92,12 +91,12 @@ section#homePage {
     display: flex;
     justify-content: start;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
   }
 
   .itemGroup .portfolioButtom h3 {
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 400;
     text-transform: capitalize;
     cursor: default;
   }
@@ -120,12 +119,23 @@ section#homePage {
 
   .itemGroup div button {
     height: 45px;
-    width: 200px;
+    width: 150px;
     background: transparent;
     border-radius: 30px;
-    border: 2px solid #ffffff;
+    border: 2px solid #ffffff80;
     cursor: pointer;
     transition: 0.5s;
+
+    & a {
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+      cursor: pointer;
+      gap: 5px;
+      font-size: 1.1rem;
+    }
   }
 
   .itemGroup div button:hover {
@@ -133,29 +143,20 @@ section#homePage {
     border: none;
   }
 
-  .itemGroup div button a {
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    cursor: pointer;
-    gap: 10px;
-  }
-
   .itemGroup div button a svg {
     transform: rotate(-45deg);
     font-size: 2rem;
-  }
-
-  .itemGroup .item:hover {
-    transform: scale(0.95);
   }
 
   .itemGroup .item img {
     width: 100%;
     object-fit: cover;
     object-position: top;
+    transition: transform 0.2s;
+  }
+
+  .itemGroup .item:hover img {
+    transform: scale(1.02);
   }
 
   .itemGroup .item video {
@@ -311,7 +312,7 @@ responsive size
 /* responsive section */
 @media screen and (max-width: 1400px) {
   .homeSection h4 {
-    font-size: 4.5rem;
+    font-size: 4rem;
     width: 80%;
   }
 }
@@ -328,10 +329,10 @@ responsive size
 
   .Portfolio {
     .itemGroup {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
     .itemGroup div button {
-      width: 150px;
+      width: 120px;
     }
   }
 
@@ -374,6 +375,13 @@ responsive size
 
   .Portfolio {
     padding: 0px 30px 30px 30px;
+
+    .itemGroup {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .itemGroup div button {
+      width: 120px;
+    }
   }
 
   .findSection {

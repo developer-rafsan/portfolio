@@ -62,7 +62,6 @@ export const preloader = () => {
     ease: "Power3.in",
   }).to("#preloader", {
     duration: 1,
-    delay: 1,
     height: "0%",
     transformOrigin: "right top",
     stagger: {

@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Header } from "./Components/Header/Header";
 import { Navigation } from "./Components/Navigation/Navigation";
-import { Home } from "./Pages/Home/Home";
-import { About } from "./Pages/About/About";
-import { Project } from "./Pages/Project/Project";
-import { Youtube } from "./Pages/YoutubeVideo/Youtube";
-import { ErrorPage } from "./Components/404/ErrorPage";
+const Home = React.lazy(() => import("./Pages/Home/Home"));
+const About = React.lazy(() => import("./Pages/About/About"));
+const Project = React.lazy(() => import("./Pages/Project/Project"));
+const Youtube = React.lazy(() => import("./Pages/YoutubeVideo/Youtube"));
+const ErrorPage = React.lazy(() => import("./Components/404/ErrorPage"));
 
 // theme function inport
 import { liteModeTheme } from "./THEME/lite.mode";
@@ -58,14 +58,15 @@ function App() {
     <BrowserRouter>
       <Header activeNav={activeNav} setActiveNav={setActiveNav} />
       <Navigation setActiveNav={setActiveNav} />
+      {/* cursor animation */}
       <div className="cursorFast" style={animationCursor} />
       <div className="cursorSecend" style={animationCursor} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/project" element={<Project />} />
-        <Route path="/youtube-video" element={<Youtube />} />
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="/" element={<Suspense><Home /></Suspense>} />
+        <Route path="/about" element={<Suspense><About /></Suspense>} />
+        <Route path="/project" element={<Suspense><Project /></Suspense>} />
+        <Route path="/youtube-video" element={<Suspense><Youtube /></Suspense>} />
+        <Route path="*" element={<Suspense><ErrorPage /></Suspense>} />
       </Routes>
     </BrowserRouter>
   );

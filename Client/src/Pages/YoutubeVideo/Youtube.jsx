@@ -7,7 +7,7 @@ import { BiX } from "react-icons/bi";
 import { Pagenation } from "../../Components/Pagenation/Pagenation";
 import { Preloader } from "../../Components/preloader/Preloader";
 
-export const Youtube = () => {
+export default function Youtube() {
   const [videoData, setVideoData] = useState([]);
   const [isloading, setloading] = useState(false);
   const [liteBoxActive, setliteBoxActive] = useState(false);
@@ -44,7 +44,7 @@ export const Youtube = () => {
 
         <div className={styles.videoDisplay}>
           {isloading ? (
-            <Loading />
+            <Loading count={8} />
           ) : (
             currentVideo?.map((item, index) => (
               <div key={index} className={styles.item}>
@@ -64,12 +64,14 @@ export const Youtube = () => {
             ))
           )}
         </div>
-        <Pagenation
-          limit={videoPerPage}
-          total={videoData.length}
-          setPage={setCurrentPage}
-          page={currentPage}
-        />
+        <div className={styles.Pagenation}>
+          <Pagenation
+            limit={videoPerPage}
+            total={videoData.length}
+            setPage={setCurrentPage}
+            page={currentPage}
+          />
+        </div>
       </div>
 
       {liteBoxActive && (
@@ -85,4 +87,4 @@ export const Youtube = () => {
       )}
     </section>
   );
-};
+}

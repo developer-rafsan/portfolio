@@ -1,4 +1,4 @@
-export const PORTFOLIODATA = [
+const PORTFOLIODATA = [
   {
     id: 1,
     imaURL: "/portfolio/project1.jpeg",
@@ -37,3 +37,5 @@ export const PORTFOLIODATA = [
     type: "video",
   },
 ];
+
+export default PORTFOLIODATA;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./home.module.css";
-import { PORTFOLIODATA } from "./PORTFOLIODATA";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { FaRegCirclePause } from "react-icons/fa6";
 import { IoArrowForward } from "react-icons/io5";
@@ -9,10 +8,11 @@ import { FaGithub } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
-import { Preloader } from "../../Components/preloader/Preloader";
 import { FaArrowRight } from "react-icons/fa6";
+import PORTFOLIODATA from "./PORTFOLIODATA";
+import { Preloader } from "../../Components/preloader/Preloader";
 
-export const Home = () => {
+export default function Home() {
   const [isPlay, setPlay] = useState(false);
 
   const playVideo = (e) => {
@@ -36,6 +36,8 @@ export const Home = () => {
           <span>-</span>
           <Link to="/about">about me</Link>
         </div>
+
+        {/* portfolio section */}
         <div className={styles.Portfolio}>
           <h1>
             my <br /> Portfolio -
@@ -46,7 +48,17 @@ export const Home = () => {
               <div key={item.id}>
                 <div className={styles.item}>
                   {item.type === "image" && (
-                    <img src={item?.imaURL} alt="portfolio image" />
+                    <img
+                      src={item?.imaURL}
+                      alt="portfolio image"
+                      loading="lazy"
+                    />
+                  )}
+
+                  {item.type === "video" && (
+                    <video onClick={(e) => playVideo(e)}>
+                      <source src={item?.imaURL} type="video/mp4" />
+                    </video>
                   )}
 
                   {item.type === "video" &&
@@ -55,11 +67,6 @@ export const Home = () => {
                     ) : (
                       <FaRegCirclePause className={styles.pauseVideoIcons} />
                     ))}
-                  {item.type === "video" && (
-                    <video onClick={(e) => playVideo(e)}>
-                      <source src={item?.imaURL} type="video/mp4" />
-                    </video>
-                  )}
                 </div>
                 <div className={styles.portfolioButtom}>
                   <button>
@@ -73,6 +80,7 @@ export const Home = () => {
             ))}
           </div>
 
+          {/* find me section */}
           <h1>
             find <br /> me -
           </h1>
@@ -143,8 +151,10 @@ export const Home = () => {
           <h1>Say Hello</h1>
           <div className={styles.content}>
             <div>
-              <a href="https://wa.me/01966445521">+880 1966445521</a>
-              <a href="mailto:developer.rafsanx@gmail.com">
+              <a target="_blank" href="https://wa.me/01966445521">
+                +880 1966445521
+              </a>
+              <a target="_blank" href="mailto:developer.rafsanx@gmail.com">
                 developer.rafsan@gmail.com
               </a>
             </div>
@@ -159,4 +169,4 @@ export const Home = () => {
       </div>
     </section>
   );
-};
+}

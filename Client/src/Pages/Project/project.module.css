@@ -28,10 +28,10 @@ section#projectSection {
   font-size: 1.5rem;
   text-transform: capitalize;
   padding: 5px 10px;
-  color: var(--PBC);
-  font-weight: bold;
+  color: #fff;
+  font-weight: 500;
   cursor: pointer;
-  border: 1px solid var(--PBC);
+  border: 1px solid #fff;
   border-radius: 10px;
 }
 
@@ -57,6 +57,12 @@ section#projectSection {
   margin-top: 20px;
 }
 
+.Pagenation {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
 /* 
 responsive size
 1360
@@ -73,6 +79,11 @@ responsive size
 @media screen and (max-width: 1760px) {
   .projectDisplay {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .Pagenation {
+    position: absolute;
+    bottom: -50px;
+    right: 0px;
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "creat a server for portfolio",
   "main": "app.js",
   "type": "module",

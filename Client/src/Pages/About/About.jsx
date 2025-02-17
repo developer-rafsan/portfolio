@@ -4,7 +4,7 @@ import { MdOutlineViewInAr } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Preloader } from "../../Components/preloader/Preloader";
 
-export const About = () => {
+export default function About() {
   return (
     <section>
       <Preloader text="about" />
