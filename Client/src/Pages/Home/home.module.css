@@ -328,10 +328,11 @@ responsive size
   }
 
   .Portfolio {
-    .itemGroup {
+    & .itemGroup {
       grid-template-columns: repeat(2, 1fr);
     }
-    .itemGroup div button {
+    
+    & .itemGroup div button {
       width: 120px;
     }
   }
@@ -376,10 +377,10 @@ responsive size
   .Portfolio {
     padding: 0px 30px 30px 30px;
 
-    .itemGroup {
+    & .itemGroup {
       grid-template-columns: repeat(1, 1fr);
     }
-    .itemGroup div button {
+    & .itemGroup div button {
       width: 120px;
     }
   }
