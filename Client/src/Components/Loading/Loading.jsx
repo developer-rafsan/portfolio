@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./loading.module.css";
 
-export const Loading = ({ count }) => {
+export default function Loading({ count }) {
   return (
     <>
+    {/* loading section */}
       {Array(count)
-        .fill()
+        .fill(null)
         .map(() => (
           <div className={styles.cardSkliton}>
             <div className={styles.imageSkliton}></div>

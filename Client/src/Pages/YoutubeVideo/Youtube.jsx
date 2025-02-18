@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./youtube.module.css";
 import { FaCirclePlay } from "react-icons/fa6";
-import { Loading } from "../../Components/Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import { getYoutubeApi } from "../../Services/allAPI";
 import { BiX } from "react-icons/bi";
 import { Pagenation } from "../../Components/Pagenation/Pagenation";

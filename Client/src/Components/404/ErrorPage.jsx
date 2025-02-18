@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./errorPage.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 
-export const ErrorPage = () => {
+export default function ErrorPage() {
   const navigate = useNavigate();
   return (
     <section className={styles.ErrorPage}>

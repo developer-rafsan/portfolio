@@ -6,7 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import styles from "./card.module.css";
 import { downloadApi } from "../../Services/allAPI";
 
-export const Card = ({ _id, image, thumbnail, title, git, liveview, file }) => {
+export default function Card({ _id, image, thumbnail, title, git, liveview, file }) {
   // download file
   const downloadFile = async (id) => {
     const response = await downloadApi(id);
@@ -20,15 +20,19 @@ export const Card = ({ _id, image, thumbnail, title, git, liveview, file }) => {
 
   return (
     <div className={styles.card}>
+      {/* project thumbnail */}
       <img src={thumbnail ? thumbnail.url : image.url} alt={title} loading="lazy" />
+      {/* project title */}
       <div className={styles.content}>
         <h1>{title ? title.substring(0, 50) : ""}</h1>
       </div>
       <div>
+        {/* all button group */}
         <button>
           <BiAddToQueue />
         </button>
         <div>
+          {/* code download button */}
           <button
             style={{
               opacity: !file ? 0.2 : "1",
@@ -39,11 +43,13 @@ export const Card = ({ _id, image, thumbnail, title, git, liveview, file }) => {
           >
             <FaCloudDownloadAlt />
           </button>
+          {/* live utton */}
           <button>
             <a target="_blank" href={liveview ? liveview : image.url}>
               <GrView />
             </a>
           </button>
+          {/* github button */}
           <button
             style={{
               opacity: !git ? 0.2 : "1",
@@ -57,6 +63,8 @@ export const Card = ({ _id, image, thumbnail, title, git, liveview, file }) => {
           </button>
         </div>
       </div>
+
+      {/* free code tag */}
       <div className={styles.offertag}>
         <h5>free source code</h5>
       </div>

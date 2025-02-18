@@ -6,6 +6,7 @@ import { Preloader } from "../../Components/preloader/Preloader";
 
 export default function About() {
   return (
+    // about me section
     <section>
       <Preloader text="about" />
       <div className={styles.about} id="wrap">

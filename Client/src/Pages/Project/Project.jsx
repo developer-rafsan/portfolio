@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import styles from "./project.module.css";
 import { DataNotFound } from "../../Components/DataNotFound/DataNotFound";
-import { Loading } from "../../Components/Loading/Loading";
 import { getCategoryApi, getProjectApi } from "../../Services/allAPI";
 import { Pagenation } from "../../Components/Pagenation/Pagenation";
-import { Card } from "../../Components/card/Card";
+const Card = React.lazy(()=> import("../../Components/card/Card"));
+const Loading = React.lazy(()=> import("../../Components/Loading/Loading"));
 import { Preloader } from "../../Components/preloader/Preloader";
 
 export default function Project() {
@@ -36,6 +36,7 @@ export default function Project() {
     fatchProjectData();
   }, [search, filterCategory, page]);
 
+  // active style
   const activeStyle = {
     background: "#FFF",
     color: "#000",
@@ -44,6 +45,7 @@ export default function Project() {
 
   return (
     <section id={styles.projectSection}>
+      {/* preloader section */}
       <Preloader text="project" />
       <div style={{ position: "relative" }} id="wrap">
         {/* filter ber */}
@@ -81,15 +83,18 @@ export default function Project() {
 
         <div className={styles.projectDisplay}>
           {loading ? (
-            // loader section
-            <Loading count={10} />
+            // if loader, render this componant
+            <Suspense><Loading count={10} /></Suspense>
           ) : !stor.data?.length ? (
+            // if data not found, render this componant
             <DataNotFound />
           ) : (
-            // project section display
-            stor.data?.map((item, index) => <Card key={index} {...item} />)
+            // project display
+            stor.data?.map((item, index) => <Suspense><Card key={index} {...item} /></Suspense>)
           )}
         </div>
+
+        {/* pagenation */}
         <div className={styles.Pagenation}>
           <Pagenation {...stor} setPage={setPage} page={page} />
         </div>

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 export const Navigation = ({ setActiveNav }) => {
   return (
+    // mavigation bar 
     <nav id='navigation' className={styles.navigation}>
       <div id='navigationbg1'></div>
       <div id='navigationbg2'>

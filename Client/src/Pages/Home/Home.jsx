@@ -22,8 +22,10 @@ export default function Home() {
 
   return (
     <section id={styles.homePage}>
+      {/* preloader section */}
       <Preloader text="home" />
       <div id="wrap" className={styles.homeSection}>
+        {/* hero section */}
         <ul>
           <li>wordpress</li>
           <li>mern stack</li>
@@ -45,8 +47,10 @@ export default function Home() {
 
           <div className={styles.itemGroup}>
             {PORTFOLIODATA?.map((item) => (
+              // portfolio card
               <div key={item.id}>
                 <div className={styles.item}>
+                  {/* image card */}
                   {item.type === "image" && (
                     <img
                       src={item?.imaURL}
@@ -55,12 +59,14 @@ export default function Home() {
                     />
                   )}
 
+                  {/* video card */}
                   {item.type === "video" && (
                     <video onClick={(e) => playVideo(e)}>
                       <source src={item?.imaURL} type="video/mp4" />
                     </video>
                   )}
 
+                  {/* video play button */}
                   {item.type === "video" &&
                     (!isPlay ? (
                       <FaRegCirclePlay className={styles.playVideoIcons} />
@@ -140,6 +146,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* collaborate section */}
         <div className={styles.collaborate}>
           <p>Need a developer ?</p>
           <a target="_blank" href="https://www.fiverr.com/rafsan954">
@@ -147,6 +154,7 @@ export default function Home() {
           </a>
         </div>
 
+        {/* footer section */}
         <footer>
           <h1>Say Hello</h1>
           <div className={styles.content}>

@@ -1,5 +1,6 @@
 import gsap from "gsap";
 
+// animation for close navbar
 export const closeNavigation = () => {
   const tl = gsap.timeline();
   tl.to(["#navigationbg2, #navigationbg1"], {
@@ -21,6 +22,7 @@ export const closeNavigation = () => {
     });
 };
 
+// ainmation for open navbar
 export const openNavigation = () => {
   const tl = gsap.timeline();
   tl.to("body", {
@@ -51,6 +53,7 @@ export const openNavigation = () => {
     });
 };
 
+// animation for pre loader
 export const preloader = () => {
   const tl = gsap.timeline();
   tl.to(".preloaderText", {

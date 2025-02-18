@@ -56,11 +56,14 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/* header section */}
       <Header activeNav={activeNav} setActiveNav={setActiveNav} />
+      {/* navigation section */}
       <Navigation setActiveNav={setActiveNav} />
       {/* cursor animation */}
       <div className="cursorFast" style={animationCursor} />
       <div className="cursorSecend" style={animationCursor} />
+      {/* page route */}
       <Routes>
         <Route path="/" element={<Suspense><Home /></Suspense>} />
         <Route path="/about" element={<Suspense><About /></Suspense>} />

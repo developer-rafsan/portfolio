@@ -19,6 +19,8 @@ export const Header = ({ activeNav, setActiveNav }) => {
         <Link className={styles.logo} to="/">
           <img src="/assets/logo.svg" alt="logo" />
         </Link>
+
+        {/* nav icons */}
         <div
           onClick={() => setActiveNav(!activeNav)}
           className={!activeNav ? styles.menuNav : styles.menuClose}

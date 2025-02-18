@@ -11,11 +11,6 @@ export const getCategoryApi = async () => {
   return await commonAPI("GET",`${BASE_URL}/getCategory`);
 };
 
-// get single page api
-export const getSinglePageApi = async (id) => {
-  return await commonAPI("GET",`${BASE_URL}/project/${id}`);
-};
-
 // get youtube video api
 export const getYoutubeApi = async () => {
   return await commonAPI("GET",`${YOUTUBE_URL}`);
