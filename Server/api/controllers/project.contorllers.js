@@ -1,4 +1,4 @@
-import { cloudinaryFileUplode } from "../utils/cloudinary.js";
+import { cloudinaryFileUpload } from "../utils/cloudinary.js";
 import { createProjectModel } from "../model/projectUplode.model.js";
 import { customErrorHandel } from "../utils/customErrorHandel.js";
 import { v2 as cloudinary } from "cloudinary";
@@ -7,34 +7,35 @@ import fs from "fs";
 // project create api
 export const createProject = async (req, res, next) => {
   try {
-    const { title, git, liveview } = req.body;
+    const { title, git, liveview, category: rawCategory } = req.body;
+    const { files } = req;
+    const category = rawCategory.toLowerCase();
 
-    const category = req.body.category.toLowerCase();
+    // Helper function to clean up uploaded files
+    const cleanupFiles = () => {
+      files?.thumbnail && fs.unlinkSync(files.thumbnail[0].path);
+      files?.file && fs.unlinkSync(files.file[0].path);
+      files?.image && fs.unlinkSync(files.image[0].path);
+    };
 
-    // check title,category and description data
-    if (!title || !category || !req.files?.image) {
-      req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
-      req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
-      req.files?.image && fs.unlinkSync(req.files?.image[0]?.path);
+    // Validate required fields
+    if (!title || !category || !files?.image) {
+      cleanupFiles();
       return next(
         customErrorHandel(404, "must be requard title, category and image")
       );
     }
 
-    //  thumbnail upload optional
-    const thumbnaillocalpath =
-      req.files?.thumbnail && req.files?.thumbnail[0]?.path;
-    const uplodedthumbnail = await cloudinaryFileUplode(thumbnaillocalpath);
+    // Handle file uploads
+    const [uplodedthumbnail, uplodedImage] = await Promise.all([
+      files?.thumbnail && cloudinaryFileUpload(files.thumbnail[0].path),
+      files?.image && cloudinaryFileUpload(files.image[0].path)
+    ]);
 
-    //  file upload optional
-    const filelocalpath = req.files?.file && req.files?.file[0];
+    const filelocalpath = files?.file && files.file[0];
 
-    // upload images
-    const imagelocalpath = req.files?.image && req.files?.image[0]?.path;
-    const uplodedImage = await cloudinaryFileUplode(imagelocalpath);
-
-    // stor mongodb databash
-    const responceProject = await createProjectModel.create({
+    // Create project in database
+    await createProjectModel.create({
       title,
       git,
       liveview,
@@ -50,9 +51,7 @@ export const createProject = async (req, res, next) => {
       message: "project created success",
     });
   } catch (error) {
-    req.files?.thumbnail && fs.unlinkSync(req.files?.thumbnail[0]?.path);
-    req.files?.file && fs.unlinkSync(req.files?.file[0]?.path);
-    req.files?.image && fs.unlinkSync(req.files?.image[0]?.path);
+    cleanupFiles();
     return next(customErrorHandel());
   }
 };
@@ -60,35 +59,32 @@ export const createProject = async (req, res, next) => {
 // get filter project and all project
 export const projectData = async (req, res, next) => {
   try {
-    const page = req.query.page - 1 || 0;
-    const limit = req.query.limit || 10;
-    const search = req.query.search || "";
-    const category = req.query.category.toLowerCase() || "All";
+    const { page = 1, limit = 10, search = "", category = "All" } = req.query;
+    const skip = (page - 1) * limit;
+    const normalizedCategory = category.toLowerCase();
 
-    // search query
+    // Build query object
     const query = {
       title: { $regex: search, $options: "i" },
+      ...(normalizedCategory !== "all" && { category: normalizedCategory })
     };
 
-    // filter by category
-    if (category !== "all") query.category = category;
+    // Execute queries in parallel
+    const [project, total] = await Promise.all([
+      createProjectModel
+        .find(query)
+        .skip(skip)
+        .limit(Number(limit))
+        .sort({ createdAt: -1 })
+        .lean(),
+      createProjectModel.countDocuments(query)
+    ]);
 
-    // find project query data
-    const project = await createProjectModel
-      .find(query)
-      .skip(page * limit)
-      .limit(limit)
-      .sort({ createdAt: -1 });
-
-    // count total project
-    const total = await createProjectModel.countDocuments(query);
-
-    // response data
     return res.status(200).json({
       success: true,
       statusCode: 200,
       total,
-      limit,
+      limit: Number(limit),
       data: project,
     });
   } catch (error) {
@@ -98,44 +94,54 @@ export const projectData = async (req, res, next) => {
 
 // file download api
 export const downloadFile = async (req, res, next) => {
-  let _id = req.params.id;
-  const downloadProject = await createProjectModel.findById({ _id });
-  res.download(`${downloadProject?.file?.path}`);
+  try {
+    const { id } = req.params;
+    const downloadProject = await createProjectModel.findById(id);
+
+    if (!downloadProject?.file?.path) {
+      return next(customErrorHandel(404, "File not found"));
+    }
+
+    res.download(downloadProject.file.path);
+  } catch (error) {
+    return next(customErrorHandel());
+  }
 };
 
 // delete project
 export const deleteProject = async (req, res, next) => {
-  const _id = req.params.id;
+  const { id: _id } = req.params;
 
   try {
-    const findProject = await createProjectModel.findById({ _id });
+    const findProject = await createProjectModel.findById(_id);
 
-    if (!findProject) return next(customErrorHandel(402, "project not found"));
-
-    // thumbnail raw file delete
-    if (findProject.thumbnail?.length) {
-      await cloudinary.uploader
-        .destroy(findProject.thumbnail?.public_id, {
-          type: "upload",
-        })
-        .then(console.log);
+    if (!findProject) {
+      return next(customErrorHandel(402, "project not found"));
     }
 
-    fs.readdirSync("public/download").forEach((file) => {
-      if (findProject.file?.filename === file) {
-        fs.unlinkSync(findProject.file?.path);
+    // Delete thumbnail from cloudinary if exists
+    if (findProject.thumbnail?.length && findProject.thumbnail?.public_id) {
+      await cloudinary.uploader.destroy(findProject.thumbnail.public_id, {
+        type: "upload",
+      });
+    }
+
+    // Delete local file if exists
+    if (findProject.file?.path && findProject.file?.filename) {
+      const filePath = `public/download/${findProject.file.filename}`;
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
       }
-    });
-
-    if (findProject.image) {
-      await cloudinary.uploader
-        .destroy(findProject.image?.public_id, {
-          type: "upload",
-        })
-        .then(console.log);
     }
 
-    await createProjectModel.findByIdAndDelete({ _id });
+    // Delete image from cloudinary if exists
+    if (findProject.image?.public_id) {
+      await cloudinary.uploader.destroy(findProject.image.public_id, {
+        type: "upload",
+      });
+    }
+
+    await createProjectModel.findByIdAndDelete(_id);
 
     return res.status(200).json({
       success: true,

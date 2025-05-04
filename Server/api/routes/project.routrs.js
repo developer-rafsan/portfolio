@@ -7,7 +7,6 @@ import {
   downloadFile,
   projectData,
 } from "../controllers/project.contorllers.js";
-import { deviceAuth } from "../middlewares/auth.middlewares.js";
 
 // create poject
 projectRoutes.post(
@@ -17,7 +16,6 @@ projectRoutes.post(
     { name: "thumbnail", maxCount: 1 },
     { name: "image", maxCount: 5 },
   ]),
-  deviceAuth,
   createProject
 );
 
@@ -28,4 +26,4 @@ projectRoutes.get("/project", projectData);
 projectRoutes.get("/download/:id", downloadFile);
 
 // delete project
-projectRoutes.delete("/project/:id", deviceAuth, deleteProject);
+projectRoutes.delete("/project/:id", deleteProject);

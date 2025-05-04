@@ -4,15 +4,17 @@ import { MONGOOSE_URL } from "../../config.js";
 // ******************************
 // mongoose connect
 // ******************************
-const uri = MONGOOSE_URL;
-
-export default function () {
-  mongoose
-    .connect(uri)
-    .then(() => {
-      console.log("Database Connacted...");
-    })
-    .catch((error) => {
-      console.log(error);
+const connectDB = async () => {
+  try {
+    const connection = await mongoose.connect(MONGOOSE_URL, {
+      serverSelectionTimeoutMS: 5000
     });
-}
+    
+    console.log(`Database Connected: ${connection.connection.host}`);
+  } catch (error) {
+    console.error(`Error connecting to database: ${error.message}`);
+    process.exit(1); // Exit process with failure
+  }
+};
+
+export default connectDB;

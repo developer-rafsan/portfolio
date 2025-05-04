@@ -7,40 +7,66 @@ const createProjectSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      require: [true, "title must be required"],
+      required: true, // Fixed 'require' to 'required'
       trim: true,
+      maxLength: [100, "Title cannot exceed 100 characters"]
     },
     git: {
       type: String,
+      trim: true,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v); // Validates URL format if provided
+        },
+        message: "Git URL must be a valid URL"
+      }
     },
     liveview: {
       type: String,
+      trim: true,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v);
+        },
+        message: "Live view URL must be a valid URL"
+      }
     },
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true
     },
     file: {
-      type: Object,
+      filename: String,
+      path: String,
+      size: Number,
+      mimetype: String
     },
     thumbnail: {
-      public_id: {
-        type: String,
-      },
+      public_id: String,
       url: {
         type: String,
-      },
+        required: true
+      }
     },
     image: {
-      public_id: {
-        type: String,
-      },
+      public_id: String,
       url: {
         type: String,
-      },
-    },
+        required: true
+      }
+    }
   },
-  { timestamps: true }
+  { 
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
+
+// Add indexes for common queries
+createProjectSchema.index({ category: 1 });
+createProjectSchema.index({ title: 'text' });
 
 export const createProjectModel = mongoose.model(
   "Project",

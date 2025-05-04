@@ -4,17 +4,26 @@ import { customErrorHandel } from "../utils/customErrorHandel.js";
 import fs from "fs";
 
 // login admin plane for admin
-export const adminlogin = (req, res, next) => {
+export const adminlogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (EMAIL !== email || PASSWORD !== password)
-      return next(customErrorHandel(402, "invalid credentials"));
+
+    // Validate required fields
+    if (!email || !password) {
+      return next(customErrorHandel(400, "Email and password are required"));
+    }
+
+    // Check credentials
+    if (EMAIL !== email || PASSWORD !== password) {
+      return next(customErrorHandel(401, "Invalid credentials"));
+    }
 
     return res.status(200).json({
       success: true,
       statusCode: 200,
-      message: "login suscess",
+      message: "Login successful"
     });
+
   } catch (error) {
     return next(customErrorHandel());
   }
@@ -22,33 +31,38 @@ export const adminlogin = (req, res, next) => {
 
 // cline up file
 export const resetFile = async (req, res, next) => {
-  const findProject = await createProjectModel.find();
-  let databashfilepath = [];
-  let allfilepath = [];
+  try {
+    // Get all project filenames from database
+    const projects = await createProjectModel.find().select('file.filename').lean();
+    const databaseFilenames = projects.map(project => project.file?.filename).filter(Boolean);
 
-  fs.readdirSync("public/download").forEach((file) => {
-    allfilepath.push(file);
-  });
+    // Get all files in download directory
+    const downloadFiles = fs.readdirSync("public/download");
 
-  findProject.forEach((item) => {
-    databashfilepath.push(item.file?.filename);
-  });
+    // Find files that exist in directory but not in database
+    const unusedFiles = downloadFiles.filter(file => !databaseFilenames.includes(file));
 
-  const result = allfilepath.filter(function (obj) {
-    return databashfilepath.indexOf(obj) == -1;
-  });
+    // Delete unused files from download directory
+    if (unusedFiles.length) {
+      await Promise.all(
+        unusedFiles.map(file => fs.promises.unlink(`public/download/${file}`))
+      );
+    }
 
-  if (result.length)
-    result?.forEach((item) => fs.unlinkSync(`public/download/${item}`));
+    // Clean temp directory
+    const tempFiles = fs.readdirSync("public/temp");
+    await Promise.all(
+      tempFiles.map(file => fs.promises.unlink(`public/temp/${file}`))
+    );
 
-  fs.readdirSync("public/temp").forEach((file) => {
-    fs.unlinkSync(`public/temp/${file}`);
-  });
+    return res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "Cleaned extra files successfully",
+      filesRemoved: unusedFiles
+    });
 
-  return res.status(200).json({
-    success: true,
-    statusCode: 200,
-    message: "clean extra file",
-    filePath: allfilepath,
-  });
+  } catch (error) {
+    return next(customErrorHandel());
+  }
 };
