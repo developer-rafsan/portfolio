@@ -1,76 +1,73 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, useCallback, useMemo } from "react";
 import { Header } from "./Components/Header/Header";
 import { Navigation } from "./Components/Navigation/Navigation";
+
+// Lazy load pages
 const Home = React.lazy(() => import("./Pages/Home/Home"));
 const About = React.lazy(() => import("./Pages/About/About"));
 const Project = React.lazy(() => import("./Pages/Project/Project"));
 const Youtube = React.lazy(() => import("./Pages/YoutubeVideo/Youtube"));
 const ErrorPage = React.lazy(() => import("./Components/404/ErrorPage"));
 
-// theme function inport
+// Theme imports
 import { liteModeTheme } from "./THEME/lite.mode";
 import { darkModeTheme } from "./THEME/dark.mode";
 
 function App() {
-  // theme active state
-  const [themeActive, setThemeActive] = useState(
-    localStorage.getItem("THEME") || "DARK"
-  );
-
+  // Theme state
+  const [themeActive, setThemeActive] = useState(() => localStorage.getItem("THEME") || "DARK");
   const [activeNav, setActiveNav] = useState(false);
 
-  // cursor state
-  const [cursorPosetion, setCursorPosetion] = useState({
-    x: 0,
-    y: 0,
-  });
+  // Cursor state
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
+  // Memoize theme effect to avoid unnecessary re-renders
   useEffect(() => {
-    // theme acrive condition
-    themeActive === "LITE" ? liteModeTheme() : darkModeTheme();
+    if (themeActive === "LITE") {
+      liteModeTheme();
+    } else {
+      darkModeTheme();
+    }
+  }, [themeActive]);
 
-    // cursor animation function
-    const mouseMoveFun = (e) => {
-      setCursorPosetion({
-        x: e.clientX,
-        y: e.clientY,
-      });
-    };
-
-    window.addEventListener("mousemove", mouseMoveFun);
-
-    return () => {
-      window.removeEventListener("mousemove", mouseMoveFun);
-    };
+  // Cursor move handler
+  const mouseMoveHandler = useCallback((e) => {
+    setCursorPosition({ x: e.clientX, y: e.clientY });
   }, []);
 
-  // cursor animation style
-  const animationCursor = {
+  useEffect(() => {
+    window.addEventListener("mousemove", mouseMoveHandler);
+    return () => {
+      window.removeEventListener("mousemove", mouseMoveHandler);
+    };
+  }, [mouseMoveHandler]);
+
+  // Memoize cursor style for performance
+  const animationCursor = useMemo(() => ({
     backgroundColor: "#FFF",
     mixBlendMode: "difference",
-    transform: `translateX(${cursorPosetion.x - 25}px) translateY(${
-      cursorPosetion.y - 25
-    }px)`,
-  };
+    transform: `translateX(${cursorPosition.x - 25}px) translateY(${cursorPosition.y - 25}px)`,
+  }), [cursorPosition]);
+
+  // Memoize routes for optimization
+  const routes = useMemo(() => (
+    <Routes>
+      <Route path="/" element={<Suspense fallback={<div>Loading...</div>}><Home /></Suspense>} />
+      <Route path="/about" element={<Suspense fallback={<div>Loading...</div>}><About /></Suspense>} />
+      <Route path="/project" element={<Suspense fallback={<div>Loading...</div>}><Project /></Suspense>} />
+      <Route path="/youtube-video" element={<Suspense fallback={<div>Loading...</div>}><Youtube /></Suspense>} />
+      <Route path="*" element={<Suspense fallback={<div>Loading...</div>}><ErrorPage /></Suspense>} />
+    </Routes>
+  ), []);
 
   return (
     <BrowserRouter>
-      {/* header section */}
       <Header activeNav={activeNav} setActiveNav={setActiveNav} />
-      {/* navigation section */}
       <Navigation setActiveNav={setActiveNav} />
-      {/* cursor animation */}
       <div className="cursorFast" style={animationCursor} />
       <div className="cursorSecend" style={animationCursor} />
-      {/* page route */}
-      <Routes>
-        <Route path="/" element={<Suspense><Home /></Suspense>} />
-        <Route path="/about" element={<Suspense><About /></Suspense>} />
-        <Route path="/project" element={<Suspense><Project /></Suspense>} />
-        <Route path="/youtube-video" element={<Suspense><Youtube /></Suspense>} />
-        <Route path="*" element={<Suspense><ErrorPage /></Suspense>} />
-      </Routes>
+      {routes}
     </BrowserRouter>
   );
 }

@@ -64,32 +64,36 @@ export const projectData = async (req, res, next) => {
     const normalizedCategory = category.toLowerCase();    
 
     // Build query object for search and category filter
-    const query = {
-      title: { $regex: search, $options: "i" }, // Case-insensitive search by title
-    };
+    const query = {};
 
-    if (normalizedCategory !== "all") query.category = normalizedCategory;
-    
-console.log(query);
+    // Build query for search and category filter
+    if (search?.trim()) {
+      query.title = { $regex: search.trim(), $options: "i" };
+    }
 
-    // Execute queries in parallel
-    const project = await createProjectModel
-      .find(query)
-      .skip(skip)
-      .limit(Number(limit))
-      .sort({ createdAt: -1 })
-      .lean();
+    if (normalizedCategory !== "all") {
+      query.category = normalizedCategory;
+    }
+
+    // Get total count and paginated data in parallel for optimization
+    const [total, projects] = await Promise.all([
+      createProjectModel.countDocuments(query),
+      createProjectModel
+        .find(query)
+        .skip(Number(skip))
+        .limit(Number(limit))
+        .sort({ createdAt: -1 })
+        .lean()
+    ]);
 
     return res.status(200).json({
       success: true,
       statusCode: 200,
-      total: project.length,
+      total,
       limit: Number(limit),
-      data: project,
+      data: projects,
     });
-  } catch (error) {
-    console.log(error);
-    
+  } catch (error) {    
     return next(customErrorHandel());
   }
 };

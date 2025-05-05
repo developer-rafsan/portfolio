@@ -1,29 +1,38 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import styles from "./pagenation.module.css";
 
-export const Pagenation = ({ limit, total, setPage, page }) => {
-  const pageCount = Math.ceil(total / limit);
+export const Pagenation = React.memo(({ limit, total, setPage, page }) => {
+  const pageCount = useMemo(() => Math.ceil(total / limit), [total, limit]);
 
-  // pagenation active
-  const activeStyle = {
-    background: "var(--primaryColor)",
-    color: "var(--primaryBackground)",
-  };
-  // pagnation section
-  return (
-    <div className={styles.Pagenation}>
-      {pageCount > 1 &&
-        Array(pageCount)
-          .fill(null)
-          ?.map((item, index) => (
-            <button
-              style={index + 1 === page ? activeStyle : {}}
-              key={index}
-              onClick={() => setPage(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-    </div>
+  const handleSetPage = useCallback(
+    (newPage) => {
+      if (newPage !== page) setPage(newPage);
+    },
+    [setPage, page]
   );
-};
+
+  const activeStyle = useMemo(
+    () => ({
+      background: "var(--primaryColor)",
+      color: "var(--primaryBackground)",
+    }),
+    []
+  );
+
+  const pageButtons = useMemo(() => {
+    if (pageCount <= 1) return null;
+    return Array.from({ length: pageCount }, (_, idx) => (
+      <button
+        style={idx + 1 === page ? activeStyle : undefined}
+        key={idx}
+        onClick={() => handleSetPage(idx + 1)}
+        aria-current={idx + 1 === page ? "page" : undefined}
+        tabIndex={0}
+      >
+        {idx + 1}
+      </button>
+    ));
+  }, [pageCount, page, activeStyle, handleSetPage]);
+
+  return <div className={styles.Pagenation}>{pageButtons}</div>;
+});

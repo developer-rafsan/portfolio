@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import styles from "./youtube.module.css";
 import { FaCirclePlay } from "react-icons/fa6";
 import Loading from "../../Components/Loading/Loading";
@@ -9,30 +9,51 @@ import { Preloader } from "../../Components/preloader/Preloader";
 
 export default function Youtube() {
   const [videoData, setVideoData] = useState([]);
-  const [isloading, setloading] = useState(false);
-  const [liteBoxActive, setliteBoxActive] = useState(false);
-  const [videoActive, setvideoActive] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [liteBoxActive, setLiteBoxActive] = useState(false);
+  const [videoActive, setVideoActive] = useState(null);
 
-  // pagenation state
+  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const [videoPerPage, setVideoPerPage] = useState(8);
+  const videoPerPage = 8;
 
-  // fatch youtube data api
-  const fetchYoutubeData = async () => {
-    setloading(true);
-    const response = await getYoutubeApi();
-    setVideoData(response.data.items.reverse());
-    setloading(false);
-  };
+  // Fetch YouTube data API
+  const fetchYoutubeData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await getYoutubeApi();
+      // Defensive: check for response and items
+      const items = response?.data?.items || [];
+      // Reverse only if items exist and are array
+      setVideoData([...items].reverse());
+    } catch (e) {
+      setVideoData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     fetchYoutubeData();
+  }, [fetchYoutubeData]);
+
+  // Memoize current video slice for performance
+  const currentVideo = useMemo(() => {
+    const indexOfLastVideo = currentPage * videoPerPage;
+    const indexOfFirstVideo = indexOfLastVideo - videoPerPage;
+    return videoData.slice(indexOfFirstVideo, indexOfLastVideo);
+  }, [videoData, currentPage, videoPerPage]);
+
+  // Handlers
+  const handlePlay = useCallback((videoId) => {
+    setLiteBoxActive(true);
+    setVideoActive(videoId);
   }, []);
 
-  // pagenation get current video show
-  const indexOfLastVideo = currentPage * videoPerPage;
-  const indexOFFastVideo = indexOfLastVideo - videoPerPage;
-  const currentVideo = videoData?.slice(indexOFFastVideo, indexOfLastVideo);
+  const handleClose = useCallback(() => {
+    setLiteBoxActive(false);
+    setVideoActive(null);
+  }, []);
 
   return (
     <section id={styles.youtube}>
@@ -43,25 +64,37 @@ export default function Youtube() {
         </h2>
 
         <div className={styles.videoDisplay}>
-          {isloading ? (
-            <Loading count={8} />
+          {isLoading ? (
+            <Loading count={videoPerPage} />
           ) : (
-            currentVideo?.map((item, index) => (
-              <div key={index} className={styles.item}>
-                <img
-                  src={item?.snippet?.thumbnails?.standard?.url}
-                  alt="video image"
-                />
-                <div className={styles.hoverEffect}>
-                  <FaCirclePlay
-                    onClick={() => {
-                      setliteBoxActive(true);
-                      setvideoActive(item.snippet.resourceId.videoId);
-                    }}
+            currentVideo.map((item) => {
+              const videoId = item?.snippet?.resourceId?.videoId;
+              const thumbnail =
+                item?.snippet?.thumbnails?.standard?.url ||
+                item?.snippet?.thumbnails?.high?.url ||
+                item?.snippet?.thumbnails?.default?.url ||
+                "";
+              return (
+                <div key={videoId} className={styles.item}>
+                  <img
+                    src={thumbnail}
+                    alt={item?.snippet?.title || "video image"}
+                    loading="lazy"
                   />
+                  <div className={styles.hoverEffect}>
+                    <FaCirclePlay
+                      tabIndex={0}
+                      aria-label="Play video"
+                      onClick={() => handlePlay(videoId)}
+                      onKeyDown={e => {
+                        if (e.key === "Enter" || e.key === " ") handlePlay(videoId);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
         <div className={styles.Pagenation}>
@@ -74,13 +107,19 @@ export default function Youtube() {
         </div>
       </div>
 
-      {liteBoxActive && (
+      {liteBoxActive && videoActive && (
         <div className={styles.videoPlayer}>
           <iframe
             src={`https://www.youtube.com/embed/${videoActive}?autoplay=1`}
             title="YouTube video player"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
           ></iframe>
-          <button onClick={() => setliteBoxActive(false)}>
+          <button
+            onClick={handleClose}
+            aria-label="Close video"
+            className={styles.closeBtn}
+          >
             <BiX />
           </button>
         </div>

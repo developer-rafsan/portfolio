@@ -1,12 +1,94 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "./about.module.css";
 import { MdOutlineViewInAr } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Preloader } from "../../Components/preloader/Preloader";
 
+// Data-driven lists for optimization and maintainability
+const CORE_TECH = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "React.js",
+  "React-Redux",
+  "Node.Js",
+  "Express.Js",
+  "MongoDB",
+  "Tailwind CSS",
+  "Bootstrap",
+  "WordPress",
+  "Elementor",
+];
+
+const FAMILIAR_TECH = [
+  "Git & GitHub",
+  "Git Bash",
+  "Cloudinary",
+  "UI/UX",
+  "Figma",
+  "Photoshop",
+  "Illustrator",
+];
+
+const ON_THE_JOB = [
+  "Responsive Design",
+  "Version Control",
+  "JavaScript best practices, clean code",
+  "Continuous Integration/Development",
+];
+
+const CONTACTS = [
+  {
+    href: "https://wa.me/01966445521",
+    label: "+880 1966445521",
+    isMail: false,
+  },
+  {
+    href: "mailto:developer.rafsanx@gmail.com",
+    label: "developer.rafsan@gmail.com",
+    isMail: true,
+  },
+];
+
+const FOOTER_LINKS = [
+  { to: "/about", label: "About" },
+  { to: "/project", label: "Get into Touch" },
+];
+
 export default function About() {
+  // Memoize lists for performance
+  const coreTechList = useMemo(
+    () => CORE_TECH.map((tech) => <li key={tech}>{tech}</li>),
+    []
+  );
+  const familiarTechList = useMemo(
+    () => FAMILIAR_TECH.map((tech) => <li key={tech}>{tech}</li>),
+    []
+  );
+  const onTheJobList = useMemo(
+    () => ON_THE_JOB.map((item) => <li key={item}>{item}</li>),
+    []
+  );
+  const contactLinks = useMemo(
+    () =>
+      CONTACTS.map((c) => (
+        <a key={c.href} href={c.href}>
+          {c.label}
+        </a>
+      )),
+    []
+  );
+  const footerLinks = useMemo(
+    () =>
+      FOOTER_LINKS.map((link) => (
+        <Link key={link.to} to={link.to}>
+          {link.label}
+        </Link>
+      )),
+    []
+  );
+
   return (
-    // about me section
     <section>
       <Preloader text="about" />
       <div className={styles.about} id="wrap">
@@ -15,79 +97,33 @@ export default function About() {
             Jahid Islam <br /> Rafsan <span>-</span>
           </h1>
           <p>
-            Welcome, I'm Rafsan, a Web Developer. I have 4 years of experience
-            in web development. I gained lots of skills, for example, portfolio
-            website creation, business website creation, e-commerce website
-            creation, branding website creation, etc. Having successfully
-            collaborated with clients. With confidence, I am ideal for your
-            project. My programming skills are WORDPRESS, JavaScript, React,
-            React-Redux, Node Js, MongoDB, Express Js, Tailwind CSS, program
-            management etc. I can help create a Responsive and user-friendly
-            Design with SEO. Have a good day 😊
+            Welcome, I'm Rafsan, a Web Developer with 4 years of experience in web development. I have built portfolio, business, e-commerce, and branding websites, and have successfully collaborated with clients. My skills include WordPress, JavaScript, React, React-Redux, Node.js, MongoDB, Express.js, Tailwind CSS, and program management. I can help create responsive, user-friendly designs with SEO. Have a good day 😊
           </p>
-
-          <button>
-            <Link to="/project">
-              <MdOutlineViewInAr />
-              Get into Touch
-            </Link>
-          </button>
+          <Link to="/project" className={styles.ctaBtn}>
+            <MdOutlineViewInAr />
+            Get into Touch
+          </Link>
         </div>
         <div className={styles.experince}>
           <h1>Experience.</h1>
           <div>
             <h5>Core Technology</h5>
-            <ul>
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>JavaScript</li>
-              <li>React.js</li>
-              <li>React-Redex</li>
-              <li>Node.Js</li>
-              <li>Express.Js</li>
-              <li>MongoDB</li>
-              <li>Tailwindcss</li>
-              <li>Bootstrap</li>
-              <li>WordPress</li>
-              <li>Elementor</li>
-            </ul>
+            <ul>{coreTechList}</ul>
             <h5>Familiar Technology</h5>
-            <ul>
-              <li>Git & GitHub</li>
-              <li>Git Bash</li>
-              <li>Cloudinary</li>
-              <li>UI/UX</li>
-              <li>Figma</li>
-              <li>Photoshop</li>
-              <li>Illustrator</li>
-            </ul>
+            <ul>{familiarTechList}</ul>
             <h5>On The Job</h5>
-            <ul>
-              <li>Responsive Design</li>
-              <li>Version Control</li>
-              <li>JavaScript best practices, clean code</li>
-              <li>Continuous Integration/Development</li>
-            </ul>
+            <ul>{onTheJobList}</ul>
           </div>
         </div>
         <footer>
           <h1>Say Hello</h1>
           <div className={styles.content}>
-            <div>
-              <a href="https://wa.me/01966445521">+880 1966445521</a>
-              <a href="mailto:developer.rafsanx@gmail.com">
-                developer.rafsan@gmail.com
-              </a>
-            </div>
-
-            <div>
-              <Link to="/about">About</Link>
-              <Link to="/project">Gat into Touch</Link>
-            </div>
+            <div>{contactLinks}</div>
+            <div>{footerLinks}</div>
           </div>
           <p>&copy; Jahid Islam Rafsan || 2024</p>
         </footer>
       </div>
     </section>
   );
-};
+}

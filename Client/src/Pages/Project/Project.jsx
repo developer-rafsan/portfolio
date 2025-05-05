@@ -1,100 +1,147 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, useCallback, useMemo, Suspense } from "react";
 import styles from "./project.module.css";
 import { DataNotFound } from "../../Components/DataNotFound/DataNotFound";
 import { getCategoryApi, getProjectApi } from "../../Services/allAPI";
 import { Pagenation } from "../../Components/Pagenation/Pagenation";
-const Card = React.lazy(()=> import("../../Components/card/Card"));
-const Loading = React.lazy(()=> import("../../Components/Loading/Loading"));
+const Card = React.lazy(() => import("../../Components/card/Card"));
+const Loading = React.lazy(() => import("../../Components/Loading/Loading"));
 import { Preloader } from "../../Components/preloader/Preloader";
 
 export default function Project() {
-  const [stor, setStor] = useState();
+  const [stor, setStor] = useState({ data: [], total: 0, limit: 10 });
   const [page, setPage] = useState(1);
   const [filterCategory, setFilterCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("asc");
-
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState([]);
 
-  // fatch project data
-  const fatchProjectData = async () => {
+  // Fetch project data (memoized)
+  const fetchProjectData = useCallback(async () => {
     setLoading(true);
-    const response = await getProjectApi(page, filterCategory, sort, search);
-    setStor(response.data);
-    setLoading(false);
-  };
+    try {
+      const response = await getProjectApi(page, filterCategory, sort, search);
+      setStor(response?.data || { data: [], total: 0, limit: 10 });
+    } catch (e) {
+      setStor({ data: [], total: 0, limit: 10 });
+    } finally {
+      setLoading(false);
+    }
+  }, [page, filterCategory, sort, search]);
 
-  // fatch category item
-  const fatchCategory = async () => {
-    const response = await getCategoryApi();
-    setCategory(response.data.data);
-  };
+  // Fetch category data (memoized)
+  const fetchCategory = useCallback(async () => {
+    try {
+      const response = await getCategoryApi();
+      setCategory(response?.data?.data || []);
+    } catch (e) {
+      setCategory([]);
+    }
+  }, []);
 
+  // Debounce search input for optimization
   useEffect(() => {
-    fatchCategory();
-    fatchProjectData();
-  }, [search, filterCategory, page]);
+    const handler = setTimeout(() => {
+      fetchProjectData();
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [fetchProjectData, search]);
 
-  // active style
-  const activeStyle = {
-    background: "#FFF",
-    color: "#000",
-    fontWeight: "800",
-  };
+  // Fetch category on mount
+  useEffect(() => {
+    fetchCategory();
+    // eslint-disable-next-line
+  }, []);
+
+  // Fetch project data on filterCategory or page change
+  useEffect(() => {
+    fetchProjectData();
+  }, [fetchProjectData, filterCategory, page, sort]);
+
+  // Memoize active style
+  const activeStyle = useMemo(
+    () => ({
+      background: "#FFF",
+      color: "#000",
+      fontWeight: "800",
+    }),
+    []
+  );
+
+  // Memoize category list for rendering
+  const categoryList = useMemo(
+    () => [
+      { _id: "all", category: "All" },
+      ...category.filter((cat) => cat.category !== "All"),
+    ],
+    [category]
+  );
+
+  // Memoize project cards
+  const projectCards = useMemo(() => {
+    if (!stor.data?.length) return <DataNotFound />;
+    return stor.data.map((item, index) => (
+      <Suspense key={item._id || index} fallback={null}>
+        <Card {...item} />
+      </Suspense>
+    ));
+  }, [stor.data]);
 
   return (
     <section id={styles.projectSection}>
-      {/* preloader section */}
       <Preloader text="project" />
       <div style={{ position: "relative" }} id="wrap">
-        {/* filter ber */}
+        {/* filter bar */}
         <div className={styles.filter}>
           <ul>
-            <li
-              style={filterCategory === "All" ? activeStyle : {}}
-              onClick={() => {
-                setFilterCategory("All");
-              }}
-            >
-              all
-            </li>
-            {category?.map((category) => (
+            {categoryList.map((cat) => (
               <li
-                style={filterCategory === category.category ? activeStyle : {}}
+                key={cat._id}
+                style={filterCategory === cat.category ? activeStyle : {}}
                 onClick={() => {
-                  setFilterCategory(category.category);
+                  setFilterCategory(cat.category);
+                  setPage(1);
                 }}
-                key={category._id}
+                tabIndex={0}
+                aria-label={`Filter by ${cat.category}`}
+                onKeyDown={e => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setFilterCategory(cat.category);
+                    setPage(1);
+                  }
+                }}
               >
-                {category.category.toUpperCase()}
+                {cat.category.toUpperCase()}
               </li>
             ))}
           </ul>
           <div className={styles.scarch}>
             <input
-              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
               type="text"
               placeholder="Search..."
               name="search"
+              aria-label="Search projects"
+              autoComplete="off"
             />
           </div>
         </div>
 
         <div className={styles.projectDisplay}>
           {loading ? (
-            // if loader, render this componant
-            <Suspense><Loading count={10} /></Suspense>
-          ) : !stor.data?.length ? (
-            // if data not found, render this componant
-            <DataNotFound />
+            <Suspense fallback={null}>
+              <Loading count={stor.limit || 10} />
+            </Suspense>
           ) : (
-            // project display
-            stor.data?.map((item, index) => <Suspense><Card key={index} {...item} /></Suspense>)
+            projectCards
           )}
         </div>
 
-        {/* pagenation */}
+        {/* pagination */}
         <div className={styles.Pagenation}>
           <Pagenation {...stor} setPage={setPage} page={page} />
         </div>

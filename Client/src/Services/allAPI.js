@@ -1,22 +1,35 @@
 import { commonAPI } from "./apiCall";
 import { BASE_URL, YOUTUBE_URL } from "./apihelper";
 
-// get all project api
-export const getProjectApi = async (page, filterCategory,sort, search) => {
-  return await commonAPI("GET",`${BASE_URL}/project?page=${page}&sort=${sort}&category=${filterCategory.toString()}&search=${search}`);
+// Helper to build query strings efficiently
+const buildQuery = (params) =>
+  Object.entries(params)
+    .filter(([_, v]) => v !== undefined && v !== null && v !== "")
+    .map(
+      ([k, v]) =>
+        `${encodeURIComponent(k)}=${encodeURIComponent(
+          Array.isArray(v) ? v.join(",") : v
+        )}`
+    )
+    .join("&");
+
+// Get all projects API (optimized: skip empty params, avoid unnecessary .toString())
+export const getProjectApi = (page, filterCategory, sort, search) => {
+  const params = {
+    page,
+    sort,
+    category: filterCategory && filterCategory.length ? filterCategory : undefined,
+    search,
+  };
+  const query = buildQuery(params);
+  return commonAPI("GET", `${BASE_URL}/project${query ? "?" + query : ""}`);
 };
 
-// get category api
-export const getCategoryApi = async () => {
-  return await commonAPI("GET",`${BASE_URL}/getCategory`);
-};
+// Get category API
+export const getCategoryApi = () => commonAPI("GET", `${BASE_URL}/getCategory`);
 
-// get youtube video api
-export const getYoutubeApi = async () => {
-  return await commonAPI("GET",`${YOUTUBE_URL}`);
-};
+// Get YouTube video API
+export const getYoutubeApi = () => commonAPI("GET", YOUTUBE_URL);
 
-// file download api
-export const downloadApi = async(id)=>{
-  return await commonAPI("GET",`${BASE_URL}/download/${id}`);
-}
+// File download API
+export const downloadApi = (id) => commonAPI("GET", `${BASE_URL}/download/${id}`);
