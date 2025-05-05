@@ -57,37 +57,39 @@ export const createProject = async (req, res, next) => {
 };
 
 // get filter project and all project
-export const projectData = async (req, res, next) => {
+export const projectData = async (req, res, next) => { 
   try {
     const { page = 1, limit = 10, search = "", category = "All" } = req.query;
     const skip = (page - 1) * limit;
-    const normalizedCategory = category.toLowerCase();
+    const normalizedCategory = category.toLowerCase();    
 
-    // Build query object
+    // Build query object for search and category filter
     const query = {
-      title: { $regex: search, $options: "i" },
-      ...(normalizedCategory !== "all" && { category: normalizedCategory })
+      title: { $regex: search, $options: "i" }, // Case-insensitive search by title
     };
 
+    if (normalizedCategory !== "all") query.category = normalizedCategory;
+    
+console.log(query);
+
     // Execute queries in parallel
-    const [project, total] = await Promise.all([
-      createProjectModel
-        .find(query)
-        .skip(skip)
-        .limit(Number(limit))
-        .sort({ createdAt: -1 })
-        .lean(),
-      createProjectModel.countDocuments(query)
-    ]);
+    const project = await createProjectModel
+      .find(query)
+      .skip(skip)
+      .limit(Number(limit))
+      .sort({ createdAt: -1 })
+      .lean();
 
     return res.status(200).json({
       success: true,
       statusCode: 200,
-      total,
+      total: project.length,
       limit: Number(limit),
       data: project,
     });
   } catch (error) {
+    console.log(error);
+    
     return next(customErrorHandel());
   }
 };

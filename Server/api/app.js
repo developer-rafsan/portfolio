@@ -12,7 +12,7 @@ import { adminLoginRoutrs } from "./routes/adminLogin.routrs.js";
 database().catch(console.error);
 
 // Constants
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 // Middleware configuration
@@ -32,7 +32,7 @@ app.use(express.static("public", {
 app.use(express.json({ limit: '10mb' }));
 
 // Routes
-app.use('/api', [
+app.use('/', [
   adminLoginRoutrs,
   categoryRoutes,
   projectRoutes
