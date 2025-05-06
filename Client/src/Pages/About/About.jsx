@@ -52,7 +52,8 @@ const CONTACTS = [
 
 const FOOTER_LINKS = [
   { to: "/about", label: "About" },
-  { to: "/project", label: "Get into Touch" },
+  { to: "/project", label: "Get Touch" },
+  { to: "/youtube-video", label: "youtube" },
 ];
 
 export default function About() {
@@ -99,10 +100,6 @@ export default function About() {
           <p>
             Welcome, I'm Rafsan, a Web Developer with 4 years of experience in web development. I have built portfolio, business, e-commerce, and branding websites, and have successfully collaborated with clients. My skills include WordPress, JavaScript, React, React-Redux, Node.js, MongoDB, Express.js, Tailwind CSS, and program management. I can help create responsive, user-friendly designs with SEO. Have a good day 😊
           </p>
-          <Link to="/project" className={styles.ctaBtn}>
-            <MdOutlineViewInAr />
-            Get into Touch
-          </Link>
         </div>
         <div className={styles.experince}>
           <h1>Experience.</h1>

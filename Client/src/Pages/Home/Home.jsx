@@ -1,7 +1,13 @@
 import React, { useRef, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styles from "./home.module.css";
-import { FaRegCirclePlay, FaRegCirclePause, FaGithub, FaLinkedin, FaArrowRight } from "react-icons/fa6";
+import {
+  FaRegCirclePlay,
+  FaRegCirclePause,
+  FaGithub,
+  FaLinkedin,
+  FaArrowRight,
+} from "react-icons/fa6";
 import { IoArrowForward } from "react-icons/io5";
 import { FaYoutube, FaFacebook } from "react-icons/fa";
 import PORTFOLIODATA from "./PORTFOLIODATA";
@@ -65,18 +71,16 @@ export default function Home() {
           <div className={styles.item}>
             {/* image card */}
             {item.type === "image" && (
-              <img
-                src={item?.imaURL}
-                alt="portfolio"
-                loading="lazy"
-              />
+              <a href={item?.imaURL} target="_blank" rel="noopener noreferrer">
+                <img src={item?.imaURL} alt="portfolio" loading="lazy" />
+              </a>
             )}
 
             {/* video card */}
             {item.type === "video" && (
               <div style={{ position: "relative" }}>
                 <video
-                  ref={el => (videoRefs.current[item.id] = el)}
+                  ref={(el) => (videoRefs.current[item.id] = el)}
                   onClick={() => handleVideoPlayPause(item.id)}
                   tabIndex={0}
                   style={{ cursor: "pointer" }}
@@ -87,46 +91,8 @@ export default function Home() {
                   <source src={item?.imaURL} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-                <button
-                  type="button"
-                  className={styles.playPauseBtn}
-                  aria-label="Play/Pause"
-                  tabIndex={0}
-                  onClick={e => {
-                    e.stopPropagation();
-                    handleVideoPlayPause(item.id);
-                  }}
-                  style={{
-                    position: "absolute",
-                    left: 10,
-                    bottom: 10,
-                    background: "none",
-                    border: "none",
-                    color: "#fff",
-                    fontSize: 32,
-                    cursor: "pointer",
-                  }}
-                >
-                  {/* Show play if paused, pause if playing */}
-                  {videoRefs.current[item.id]?.paused !== false ? (
-                    <FaRegCirclePlay className={styles.playVideoIcons} />
-                  ) : (
-                    <FaRegCirclePause className={styles.pauseVideoIcons} />
-                  )}
-                </button>
               </div>
             )}
-          </div>
-          <div className={styles.portfolioButtom}>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={item.imaURL}
-              className={styles.viewMoreBtn}
-            >
-              view more <IoArrowForward />
-            </a>
-            <h3>{item.titel}</h3>
           </div>
         </div>
       )),
@@ -162,7 +128,7 @@ export default function Home() {
       <div id="wrap" className={styles.homeSection}>
         {/* hero section */}
         <ul>
-          {SKILLS.map(skill => (
+          {SKILLS.map((skill) => (
             <li key={skill}>{skill}</li>
           ))}
         </ul>
