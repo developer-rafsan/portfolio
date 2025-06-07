@@ -9,13 +9,20 @@ import { downloadApi } from "../../Services/allAPI";
 export default function Card({ _id, image, thumbnail, title, git, liveview, file }) {
   // download file
   const downloadFile = async (id) => {
+    console.log("clicked")
     const response = await downloadApi(id);
-    const aTag = document.createElement("a");
-    aTag.href = response.config.url;
-    aTag.setAttribute("download", "source-code");
-    document.body.appendChild(aTag);
-    aTag.click();
-    aTag.remove();
+    const downloadUrl = response.data.downloadUrl;
+
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.download = ""; // Optional: specify filename if needed
+
+    // Append to body and trigger download
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
   };
 
   return (

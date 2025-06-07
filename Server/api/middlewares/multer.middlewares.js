@@ -5,7 +5,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const { fieldname } = file;
     const baseDir = "public";
-    const uploadDir = fieldname === "file" ? "download" : "temp";
+    const uploadDir = "temp";
     const fullPath = `${baseDir}/${uploadDir}`;
 
     if (!fs.existsSync(fullPath)) {

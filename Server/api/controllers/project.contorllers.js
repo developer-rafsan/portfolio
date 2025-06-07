@@ -19,7 +19,7 @@ export const createProject = async (req, res, next) => {
     };
 
     // Validate required fields
-    if (!title || !category || !files?.image) {
+    if (!title || !category) {
       cleanupFiles();
       return next(
         customErrorHandel(404, "must be requard title, category and image")
@@ -27,21 +27,23 @@ export const createProject = async (req, res, next) => {
     }
 
     // Handle file uploads
-    const [uplodedthumbnail, uplodedImage] = await Promise.all([
+    const [uplodedthumbnail, uplodedImage, uploadFile] = await Promise.all([
       files?.thumbnail && cloudinaryFileUpload(files.thumbnail[0].path),
-      files?.image && cloudinaryFileUpload(files.image[0].path)
+      files?.image && cloudinaryFileUpload(files.image[0].path),
+      files?.file && cloudinaryFileUpload(files.file[0].path)
     ]);
 
-    const filelocalpath = files?.file && files.file[0];
+    console.log(uploadFile);
+    
 
     // Create project in database
-    await createProjectModel.create({
+    const project = await createProjectModel.create({
       title,
       git,
       liveview,
       category,
       thumbnail: uplodedthumbnail,
-      file: filelocalpath,
+      file: uploadFile,
       image: uplodedImage,
     });
 
@@ -49,6 +51,7 @@ export const createProject = async (req, res, next) => {
       success: true,
       statusCode: 200,
       message: "project created success",
+      project,
     });
   } catch (error) {
     cleanupFiles();
@@ -101,15 +104,22 @@ export const projectData = async (req, res, next) => {
 // file download api
 export const downloadFile = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const downloadProject = await createProjectModel.findById(id);
+    const { id: _id } = req.params;
+    const findProject = await createProjectModel.findById(_id);    
+    
+    const downloadUrl = cloudinary.url(findProject?.file.url, {
+      resource_type: "raw",
+      flags: "attachment",
+      secure: true
+    });
 
-    if (!downloadProject?.file?.path) {
-      return next(customErrorHandel(404, "File not found"));
-    }
-
-    res.download(downloadProject.file.path);
+    return res.status(200).json({
+      success: true,
+      statusCode: 200,
+      downloadUrl,
+    });
   } catch (error) {
+    console.log(error);
     return next(customErrorHandel());
   }
 };

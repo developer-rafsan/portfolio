@@ -36,10 +36,11 @@ const createProjectSchema = new mongoose.Schema(
       required: true
     },
     file: {
-      filename: String,
-      path: String,
-      size: Number,
-      mimetype: String
+      public_id: String,
+      url: {
+        type: String,
+        required: true
+      }
     },
     thumbnail: {
       public_id: String,

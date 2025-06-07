@@ -16,7 +16,8 @@ export const cloudinaryFileUpload = async (localFilePath) => {
     
     // Upload with optimized settings
     const response = await cloudinary.uploader.upload(localFilePath, {
-      resource_type: "auto",
+      resource_type: "raw",
+      type: "upload",
       quality: "auto", // Automatic quality optimization
       fetch_format: "auto", // Automatic format optimization
       flags: "attachment", // Preserve file attributes
