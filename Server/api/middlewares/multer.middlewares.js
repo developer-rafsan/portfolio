@@ -7,6 +7,7 @@ const storage = multer.diskStorage({
     const baseDir = "public";
     const uploadDir = "temp";
     const fullPath = `${baseDir}/${uploadDir}`;
+    
 
     if (!fs.existsSync(fullPath)) {
       fs.mkdirSync(fullPath, { recursive: true });

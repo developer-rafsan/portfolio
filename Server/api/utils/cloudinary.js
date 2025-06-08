@@ -7,7 +7,7 @@ cloudinary.config({
   cloud_name: CLOUD_NAME,
   api_key: CLOUD_API_KEY,
   api_secret: CLOUD_API_SECRET,
-  secure: true // Enable HTTPS
+  secure: true 
 });
 
 export const cloudinaryFileUpload = async (localFilePath) => {
@@ -16,7 +16,7 @@ export const cloudinaryFileUpload = async (localFilePath) => {
     
     // Upload with optimized settings
     const response = await cloudinary.uploader.upload(localFilePath, {
-      resource_type: "raw",
+      resource_type: "auto",
       type: "upload",
       quality: "auto", // Automatic quality optimization
       fetch_format: "auto", // Automatic format optimization

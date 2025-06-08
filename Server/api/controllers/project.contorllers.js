@@ -16,10 +16,10 @@ export const createProject = async (req, res, next) => {
       files?.thumbnail && fs.unlinkSync(files.thumbnail[0].path);
       files?.file && fs.unlinkSync(files.file[0].path);
       files?.image && fs.unlinkSync(files.image[0].path);
-    };
+    };    
 
     // Validate required fields
-    if (!title || !category) {
+    if (!title || !category || !files?.image.length) {
       cleanupFiles();
       return next(
         customErrorHandel(404, "must be requard title, category and image")
@@ -31,10 +31,7 @@ export const createProject = async (req, res, next) => {
       files?.thumbnail && cloudinaryFileUpload(files.thumbnail[0].path),
       files?.image && cloudinaryFileUpload(files.image[0].path),
       files?.file && cloudinaryFileUpload(files.file[0].path)
-    ]);
-
-    console.log(uploadFile);
-    
+    ]);    
 
     // Create project in database
     const project = await createProjectModel.create({
@@ -54,7 +51,12 @@ export const createProject = async (req, res, next) => {
       project,
     });
   } catch (error) {
-    cleanupFiles();
+    // Helper function to clean up uploaded files
+    const cleanupFiles = () => {
+      files?.thumbnail && fs.unlinkSync(files.thumbnail[0].path);
+      files?.file && fs.unlinkSync(files.file[0].path);
+      files?.image && fs.unlinkSync(files.image[0].path);
+    };
     return next(customErrorHandel());
   }
 };
@@ -108,7 +110,7 @@ export const downloadFile = async (req, res, next) => {
     const findProject = await createProjectModel.findById(_id);    
     
     const downloadUrl = cloudinary.url(findProject?.file.url, {
-      resource_type: "raw",
+      resource_type: "auto",
       flags: "attachment",
       secure: true
     });
@@ -142,17 +144,16 @@ export const deleteProject = async (req, res, next) => {
       });
     }
 
-    // Delete local file if exists
-    if (findProject.file?.path && findProject.file?.filename) {
-      const filePath = `public/download/${findProject.file.filename}`;
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
-
     // Delete image from cloudinary if exists
     if (findProject.image?.public_id) {
       await cloudinary.uploader.destroy(findProject.image.public_id, {
+        type: "upload",
+      });
+    }
+
+    // Delete image from cloudinary if exists
+    if(findProject.file?.length && findProject.file?.public_id) {
+      await cloudinary.uploader.destroy(findProject.file.public_id, {
         type: "upload",
       });
     }
