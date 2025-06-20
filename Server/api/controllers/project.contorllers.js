@@ -1,63 +1,75 @@
 import { cloudinaryFileUpload } from "../utils/cloudinary.js";
 import { createProjectModel } from "../model/projectUplode.model.js";
 import { customErrorHandel } from "../utils/customErrorHandel.js";
+import { resizeImage } from "../utils/imageResize.js";
 import { v2 as cloudinary } from "cloudinary";
-import fs from "fs";
+import sharp from "sharp";
+import fs from 'fs';
+import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
-// project create api
+
 export const createProject = async (req, res, next) => {
+  const { title, git, liveview, category: rawCategory } = req.body;
+  const { files } = req;
+  const category = rawCategory?.toLowerCase();
+  let resizedImagePath = [];
+  const [images, thumbnail, file] = [files?.image || null, files?.thumbnail ? files?.thumbnail[0] : null, files?.file[0] || null];  
+
+  // Helper to clean up original and resized files
+  const cleanupFiles = () => {    
+    try {      
+      images.forEach(image => fs.unlinkSync(image.path));
+      thumbnail && fs.unlinkSync(thumbnail.path);
+      file && fs.unlinkSync(file.path);
+    } catch (err) {
+      console.warn("File cleanup warning:", err.message);
+    }
+  };
+
   try {
-    const { title, git, liveview, category: rawCategory } = req.body;
-    const { files } = req;
-    const category = rawCategory.toLowerCase();
-
-    // Helper function to clean up uploaded files
-    const cleanupFiles = () => {
-      files?.thumbnail && fs.unlinkSync(files.thumbnail[0].path);
-      files?.file && fs.unlinkSync(files.file[0].path);
-      files?.image && fs.unlinkSync(files.image[0].path);
-    };    
-
-    // Validate required fields
-    if (!title || !category || !files?.image.length) {
+    if (!title || !category || !images?.length) {
       cleanupFiles();
       return next(
-        customErrorHandel(404, "must be requard title, category and image")
+        customErrorHandel(400, "Title, category, and image are required.")
       );
-    }
+    }    
 
-    // Handle file uploads
-    const [uplodedthumbnail, uplodedImage, uploadFile] = await Promise.all([
-      files?.thumbnail && cloudinaryFileUpload(files.thumbnail[0].path),
-      files?.image && cloudinaryFileUpload(files.image[0].path),
-      files?.file && cloudinaryFileUpload(files.file[0].path)
-    ]);    
+    // Resize each file before uploading
+    resizedImagePath = await Promise.all(
+      images
+        .filter(Boolean)
+        .map(image => resizeImage(image.path))
+    );
+    const resizedThumbPath = thumbnail ? await resizeImage(thumbnail.path) : null;   
 
-    // Create project in database
+    // Upload resized files to Cloudinary
+    const [uploadedImage, uploadedThumbnail, uploadedFile] = await Promise.all([
+      resizedImagePath?.forEach(image => cloudinaryFileUpload(image)),
+      resizedThumbPath ? cloudinaryFileUpload(resizedThumbPath) : null,
+      file && cloudinaryFileUpload(file.path)
+    ]);
+
+    // Save to database
     const project = await createProjectModel.create({
       title,
       git,
       liveview,
       category,
-      thumbnail: uplodedthumbnail,
-      file: uploadFile,
-      image: uplodedImage,
+      thumbnail: uploadedThumbnail,
+      file: uploadedFile,
+      image: uploadedImage,
     });
 
     return res.status(200).json({
       success: true,
-      statusCode: 200,
-      message: "project created success",
+      message: "Project created successfully",
       project,
     });
+
   } catch (error) {
-    // Helper function to clean up uploaded files
-    const cleanupFiles = () => {
-      files?.thumbnail && fs.unlinkSync(files.thumbnail[0].path);
-      files?.file && fs.unlinkSync(files.file[0].path);
-      files?.image && fs.unlinkSync(files.image[0].path);
-    };
-    return next(customErrorHandel());
+    cleanupFiles();
+    return next(customErrorHandel(500, "Something went wrong while creating the project."));
   }
 };
 
@@ -121,7 +133,6 @@ export const downloadFile = async (req, res, next) => {
       downloadUrl,
     });
   } catch (error) {
-    console.log(error);
     return next(customErrorHandel());
   }
 };

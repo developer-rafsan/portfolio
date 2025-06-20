@@ -2,8 +2,7 @@ import multer from "multer";
 import fs from "fs";
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const { fieldname } = file;
+  destination: function (req, file, cb) {  
     const baseDir = "public";
     const uploadDir = "temp";
     const fullPath = `${baseDir}/${uploadDir}`;
@@ -20,7 +19,7 @@ const storage = multer.diskStorage({
 });
 
 const limits = {
-  fileSize: 2 * 1024 * 1024, // 2MB limit
+  fileSize: 10 * 1024 * 1024, // 10MB limit
 };
 
 export const upload = multer({ 

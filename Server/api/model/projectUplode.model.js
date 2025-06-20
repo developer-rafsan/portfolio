@@ -46,7 +46,6 @@ const createProjectSchema = new mongoose.Schema(
       public_id: String,
       url: {
         type: String,
-        required: true
       }
     },
     image: {
