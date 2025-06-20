@@ -1,7 +1,7 @@
-export const MONGOOSE_URL = process.env.MONGOOSE_URL || "mongodb+srv://developer-rafsanx:rafsanx@portfolio.fi6xvnc.mongodb.net/Portfolio-Database?retryWrites=true&w=majority&appName=portfolio";
-export const CLOUD_API_SECRET = process.env.CLOUD_API_SECRET || "RAN6LDdMv69IogfocrE1cT1GqYc"
-export const CLOUD_API_KEY = process.env.CLOUD_API_KEY || "996322748538987"
-export const CLOUD_NAME = process.env.CLOUD_NAME || "djuwkvnxo"
-export const EMAIL = process.env.EMAIL || "developer.rafsanx@gmail.com"
-export const PASSWORD = process.env.PASSWORD || "Rafsan@123"
-export const ALLOW_IP = process.env.ALLOW_IP || "http://localhost:3000"
+export const MONGOOSE_URL = process.env.MONGOOSE_URL 
+export const CLOUD_API_SECRET = process.env.CLOUD_API_SECRET 
+export const CLOUD_API_KEY = process.env.CLOUD_API_KEY
+export const CLOUD_NAME = process.env.CLOUD_NAME 
+export const EMAIL = process.env.EMAIL
+export const PASSWORD = process.env.PASSWORD 
+export const ALLOW_IP = process.env.ALLOW_IP 

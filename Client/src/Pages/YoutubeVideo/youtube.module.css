@@ -27,8 +27,9 @@ section#youtube h2 {
 
 .videoDisplay .item {
   width: 100%;
-  max-height: 200px;
-  border-radius: 20px;
+  height: 250px;
+  max-height: 250px;
+  border-radius: 10px;
   position: relative;
   overflow: hidden;
   cursor: pointer;

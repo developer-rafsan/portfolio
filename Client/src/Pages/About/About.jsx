@@ -115,6 +115,10 @@ export default function About() {
         <footer>
           <h1>Say Hello</h1>
           <div className={styles.content}>
+            {/* logo */}
+            <Link className={styles.logo} to="/" tabIndex={0} aria-label="Home">
+              <img src="/assets/logo.svg" alt="logo" loading="lazy" />
+            </Link>
             <div>{contactLinks}</div>
             <div>{footerLinks}</div>
           </div>

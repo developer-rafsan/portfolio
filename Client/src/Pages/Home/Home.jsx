@@ -42,7 +42,7 @@ const SOCIAL_LINKS = [
 ];
 
 // Skills list for DRY
-const SKILLS = ["wordpress", "mern stack", "Elementor", "Node.js"];
+const SKILLS = ["wordpress", "mern stack", "Node.js"];
 
 export default function Home() {
   // Use a ref to track which video is playing for better control
@@ -74,24 +74,6 @@ export default function Home() {
               <a href={item?.imaURL} target="_blank" rel="noopener noreferrer">
                 <img src={item?.imaURL} alt="portfolio" loading="lazy" />
               </a>
-            )}
-
-            {/* video card */}
-            {item.type === "video" && (
-              <div style={{ position: "relative" }}>
-                <video
-                  ref={(el) => (videoRefs.current[item.id] = el)}
-                  onClick={() => handleVideoPlayPause(item.id)}
-                  tabIndex={0}
-                  style={{ cursor: "pointer" }}
-                  preload="none"
-                  poster={item?.poster}
-                  aria-label="Play portfolio video"
-                >
-                  <source src={item?.imaURL} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
             )}
           </div>
         </div>
@@ -169,6 +151,10 @@ export default function Home() {
         <footer>
           <h1>Say Hello</h1>
           <div className={styles.content}>
+            {/* logo */}
+            <Link className={styles.logo} to="/" tabIndex={0} aria-label="Home">
+              <img src="/assets/logo.svg" alt="logo" loading="lazy" />
+            </Link>
             <div>
               <a
                 target="_blank"
