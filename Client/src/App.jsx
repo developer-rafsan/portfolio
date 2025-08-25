@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { Suspense, useEffect, useState, useCallback, useMemo } from "react";
 import { Header } from "./Components/Header/Header";
 import { Navigation } from "./Components/Navigation/Navigation";
+import Spinner from "./Spinner";
 
 // Lazy load pages
 const Home = React.lazy(() => import("./Pages/Home/Home"));
@@ -62,11 +63,11 @@ function App() {
   // Memoize routes for optimization
   const routes = useMemo(() => (
     <Routes>
-      <Route path="/" element={<Suspense fallback={<div>Loading...</div>}><Home /></Suspense>} />
-      <Route path="/about" element={<Suspense fallback={<div>Loading...</div>}><About /></Suspense>} />
-      <Route path="/project" element={<Suspense fallback={<div>Loading...</div>}><Project /></Suspense>} />
-      <Route path="/youtube-video" element={<Suspense fallback={<div>Loading...</div>}><Youtube /></Suspense>} />
-      <Route path="*" element={<Suspense fallback={<div>Loading...</div>}><ErrorPage /></Suspense>} />
+      <Route path="/" element={<Suspense fallback={<Spinner size={30} color="red-500" bg="bg-gray-100" />}><Home /></Suspense>} />
+      <Route path="/about" element={<Suspense fallback={<Spinner size={30} color="red-500" bg="bg-gray-100" />}><About /></Suspense>} />
+      <Route path="/project" element={<Suspense fallback={<Spinner size={30} color="red-500" bg="bg-gray-100" />}><Project /></Suspense>} />
+      <Route path="/youtube-video" element={<Suspense fallback={<Spinner size={30} color="red-500" bg="bg-gray-100" />}><Youtube /></Suspense>} />
+      <Route path="*" element={<Suspense fallback={<Spinner size={30} color="red-500" bg="bg-gray-100" />}><ErrorPage /></Suspense>} />
     </Routes>
   ), []);
 
