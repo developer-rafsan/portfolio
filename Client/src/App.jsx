@@ -21,6 +21,15 @@ function App() {
 
   // Cursor state
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 900);
+
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 900);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   // Memoize theme effect to avoid unnecessary re-renders
   useEffect(() => {
@@ -65,8 +74,13 @@ function App() {
     <BrowserRouter>
       <Header activeNav={activeNav} setActiveNav={setActiveNav} />
       <Navigation setActiveNav={setActiveNav} />
-      <div className="cursorFast" style={animationCursor} />
-      <div className="cursorSecend" style={animationCursor} />
+      {/* Only show custom cursors on desktop */}
+      {isDesktop && (
+        <>
+          <div className="cursorFast" style={animationCursor} />
+          <div className="cursorSecend" style={animationCursor} />
+        </>
+      )}
       {routes}
     </BrowserRouter>
   );
